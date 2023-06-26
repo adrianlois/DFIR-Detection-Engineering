@@ -1,4 +1,4 @@
-# DFIR and Detection engineering - Tips
+# DFIR & Detection engineering - Tips
 Digital Forensics Incident Response and Detection engineering Tips: alternative bypass techniques used by bad actors.
 
 ### Obtener archivos con PID de procesos maliciosos

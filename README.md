@@ -121,7 +121,7 @@ type \\webdav-ip\path\file.ext > C:\path\file.ext
 type C:\path\file.ext > \\webdav-ip\path\file.ext
 ```
 
-### Bloquear conexiones USB: Rubber Ducky y Cactus WHID.
+### Bloquear conexiones USB: Rubber Ducky y Cactus WHID
 
 - HID - Hardware ID 
 - VID - Vendor ID

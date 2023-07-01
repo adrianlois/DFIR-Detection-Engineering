@@ -27,6 +27,14 @@ Get-ChildItem -Path F:\pid\ -Include *.evtx -Recurse | Copy-Item -Destination .\
 
 - Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
 
+### Artefactos de conexiones de clientes VPN
+
+Revisar posibles artefactos de conexiones de clientes VPN realizadas desde un PC comprometido por un actor malicioso.
+
+```
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles
+```
+
 
 # Bypass SIEM-SOC (Anti-Forensic)
 
@@ -178,3 +186,4 @@ HKCU\Software\PremiumSoft\NavicatOra\Servers
 HKCU\Software\TigerVNC\WinVNC4
 ```
 
+### 

@@ -48,7 +48,7 @@ debugfs: cat /etc/passwd
 ... modo interactivo ...
 ```
 
-### WAF Bypass (SSRF): usar acortamiento IP.
+### WAF Bypass (SSRF): usar acortamiento IP
 
 | Bloqueo            | Bypass           |
 |--------------------|------------------|
@@ -56,7 +56,7 @@ debugfs: cat /etc/passwd
 | http://127.0.0.1   | http://127.1     |
 | http://192.168.0.5 | http://192.168.5 |
 
-### Post-Explotación 
+### Post-Explotación - PrivEsc con scmanager
 LPE (Local Privilege Escalation) persistente y sin uso de archivos usando sc.exe otorgando permisos del SCM (Service Control Manager).
 
 - https://learn.microsoft.com/en-us/windows/win32/services/service-control-manager

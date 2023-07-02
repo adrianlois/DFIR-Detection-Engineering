@@ -1,5 +1,5 @@
 # DFIR & Detection engineering - Tips
-Digital Forensics Incident Response and Detection engineering Tips: alternative bypass techniques used by bad actors.
+Digital Forensics Incident Response and Detection engineering Tips: Detectar técnicas alternativas de bypass más utilizadas en sistemas de protección por actores maliciosos y análisis forense de artefactos comunes y no tan comunes.
 
 ## Artefactos - Logs Windows
 ### Logs de eventos de Windows

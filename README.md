@@ -36,16 +36,6 @@ Revisar posibles artefactos de conexiones de clientes VPN realizadas desde un PC
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles
 ```
 
-### Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
-
-Se conectaron al sistema a través de SSH e iniciaron procesos maliciosos. Incluso, si eliminaron el historial de comandos.
-
-Esta es una forma de obtener archivos con PID de procesos maliciosos (similar a casos de notty SSH) 
-
-```bash
-grep -l SSH_C /proc/*/environ
-```
-
 ### ¿Han eliminado el registro de eventos de Windows?
 
 ¿Los atacantes eliminaron todos los registros de eventos de Windows?
@@ -61,6 +51,93 @@ Get-ChildItem -Path F:\pid\ -Include *.evtx -Recurse | Copy-Item -Destination .\
 ```
 
 - Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
+
+### Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
+
+Se conectaron al sistema a través de SSH e iniciaron procesos maliciosos. Incluso, si eliminaron el historial de comandos.
+
+Esta es una forma de obtener archivos con PID de procesos maliciosos (similar a casos de notty SSH) 
+
+```bash
+grep -l SSH_C /proc/*/environ
+```
+
+### Filtros Wireshark para analistas
+
+- Filtrar por dirección IP.
+```
+“ip.addr == x.x.x.x", where "x.x.x.x" is the IP address you want to filter
+```
+
+- Filtrar por rango de direcciones IP.
+```
+"ip.addr >= x.x.x.x and ip.addr <= y.y.y.y", where "x.x.x.x" and "y.y.y.y" are the start and end IP addresses of the range
+```
+
+- Filtrar por interfaz de red.
+```
+"interface == eth0" to show only packets captured on the eth0 interface
+```
+
+- Filtrar por puerto.
+```
+"tcp.port == 80" or "udp.port == 53", where "80" and "53" are the port numbers you want to filter
+```
+
+- Filtrar por longitud del paquete.
+```
+"frame.len > 100" to show only packets that are longer than 100 bytes
+```
+
+- Filtrar por dirección MAC de origen o destino.
+```
+"eth.src == xx:xx:xx:xx:xx:xx" or "eth.dst == xx:xx:xx:xx:xx:xx", where "xx:xx:xx:xx:xx:xx" is the MAC address you want to filter
+```
+
+- Filtrar por código de estado HTTP.
+```
+"http.response.status_code == 200" to show only packets with a status code of 200
+```
+
+- Filtrar por método HTTP.
+```
+"http.request.method == GET" to show only packets with a GET method. You can substitute GET with other HTTP methods such as POST, PUT, DELETE, etc
+```
+
+- Filtrar por URI HTTP.
+```
+"http.request.uri contains 'example.com'" to show only packets that have a URI containing "example.com". You can substitute "example.com" with any other URI string
+```
+
+- Filtrar por código de respuesta HTTP.
+```
+"http.response.code == 404" to show only packets with a 404 response code
+```
+
+- Filtrar por cookie HTTP.
+```
+"http.cookie contains 'sessionid'" to show only packets that contain a cookie with the name "sessionid"
+```
+
+- Filtrar por flags TCP.
+```
+"tcp.flags.syn == 1" to show only packets with the SYN flag set. You can substitute SYN with any other TCP flag, such as ACK, RST, FIN, URG, or PSH
+```
+
+- Filtrar por tamaño de paquete.
+```
+"frame.len > 1000" to show only packets larger than 1000 bytes.
+```
+
+- Filtrar por nombre de dominio DNS.
+```
+"dns.qry.name contains 'example.com'" to show only DNS packets that have a domain name containing "example.com". You can substitute "example.com" with any other domain name
+```
+
+- Filtrar por tipo de protocolo TLS.
+```
+"tls.handshake.type == 1" to show only packets with a TLS handshake type of ClientHello
+```
 
 
 # Bypass SIEM-SOC (Anti-Forensic)

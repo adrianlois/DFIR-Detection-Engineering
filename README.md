@@ -50,7 +50,7 @@ VSS (Volume Shadow Copy) podría ser una opción pero hay escenarios donde esto 
 Get-ChildItem -Path F:\pid\ -Include *.evtx -Recurse | Copy-Item -Destination .\evtx_files
 ```
 
-- Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
+> Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
 
 ### Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
 
@@ -64,79 +64,83 @@ grep -l SSH_C /proc/*/environ
 
 ### Filtros Wireshark para analistas
 
-- Filtrar por dirección IP.
+> Referencia: https://www.wireshark.org/docs/dfref/
+
+- Filtrar por dirección IP. Donde "x.x.x.x" es la dirección IP que desea filtrar.
 ```
-“ip.addr == x.x.x.x", where "x.x.x.x" is the IP address you want to filter
+ip.addr == x.x.x.x
 ```
 
-- Filtrar por rango de direcciones IP.
+- Filtrar por rango de direcciones IP. Donde "x.x.x.x" e "y.y.y.y" son las direcciones IP inicial y final del rango.
 ```
-"ip.addr >= x.x.x.x and ip.addr <= y.y.y.y", where "x.x.x.x" and "y.y.y.y" are the start and end IP addresses of the range
-```
-
-- Filtrar por interfaz de red.
-```
-"interface == eth0" to show only packets captured on the eth0 interface
+ip.addr >= x.x.x.x and ip.addr <= y.y.y.y
 ```
 
-- Filtrar por puerto.
+- Filtrar por interfaz de red. Mostrar sólo los paquetes capturados en la interfaz eth0.
 ```
-"tcp.port == 80" or "udp.port == 53", where "80" and "53" are the port numbers you want to filter
-```
-
-- Filtrar por longitud del paquete.
-```
-"frame.len > 100" to show only packets that are longer than 100 bytes
+interface == eth0
 ```
 
-- Filtrar por dirección MAC de origen o destino.
+- Filtrar por puerto. Donde "80" y "53" son los números de puerto que desees filtrar.
 ```
-"eth.src == xx:xx:xx:xx:xx:xx" or "eth.dst == xx:xx:xx:xx:xx:xx", where "xx:xx:xx:xx:xx:xx" is the MAC address you want to filter
-```
-
-- Filtrar por código de estado HTTP.
-```
-"http.response.status_code == 200" to show only packets with a status code of 200
+tcp.port == 80
+udp.port == 53
 ```
 
-- Filtrar por método HTTP.
+- Filtrar por longitud del paquete. Mostrar sólo los paquetes de más de 100 bytes.
 ```
-"http.request.method == GET" to show only packets with a GET method. You can substitute GET with other HTTP methods such as POST, PUT, DELETE, etc
-```
-
-- Filtrar por URI HTTP.
-```
-"http.request.uri contains 'example.com'" to show only packets that have a URI containing "example.com". You can substitute "example.com" with any other URI string
+frame.len > 100
 ```
 
-- Filtrar por código de respuesta HTTP.
+- Filtrar por dirección MAC de origen o destino. Donde "xx:xx:xx:xx:xx:xx" es la dirección MAC origen y destino que desees filtrar.
 ```
-"http.response.code == 404" to show only packets with a 404 response code
-```
-
-- Filtrar por cookie HTTP.
-```
-"http.cookie contains 'sessionid'" to show only packets that contain a cookie with the name "sessionid"
+eth.src == xx:xx:xx:xx:xx:xx
+eth.dst == xx:xx:xx:xx:xx:xx
 ```
 
-- Filtrar por flags TCP.
+- Filtrar por código de estado HTTP. Mostrar sólo los paquetes con un código de estado de 200.
 ```
-"tcp.flags.syn == 1" to show only packets with the SYN flag set. You can substitute SYN with any other TCP flag, such as ACK, RST, FIN, URG, or PSH
-```
-
-- Filtrar por tamaño de paquete.
-```
-"frame.len > 1000" to show only packets larger than 1000 bytes.
+http.response.status_code == 200
 ```
 
-- Filtrar por nombre de dominio DNS.
+- Filtrar por método HTTP. Mostrar sólo los paquetes con método GET. Puede sustituir GET por otros métodos HTTP como POST, PUT, DELETE, etc.
 ```
-"dns.qry.name contains 'example.com'" to show only DNS packets that have a domain name containing "example.com". You can substitute "example.com" with any other domain name
+http.request.method == GET
 ```
 
-- Filtrar por tipo de protocolo TLS.
+- Filtrar por URI HTTP. Mostrar sólo los paquetes que tienen un URI que contiene "ejemplo.com". Puede sustituir "ejemplo.com" por cualquier otra cadena URI.
 ```
-"tls.handshake.type == 1" to show only packets with a TLS handshake type of ClientHello
+http.request.uri contains 'ejemplo.com'
+```
+
+- Filtrar por código de respuesta HTTP. Mostrar sólo los paquetes con un código de respuesta 404.
+```
+http.response.code == 404
+```
+
+- Filtrar por cookie HTTP. Mostrar sólo los paquetes que contienen una cookie con el nombre "sessionid".
+```
+http.cookie contains 'sessionid'
+```
+
+- Filtrar por flags TCP. Mostrar sólo los paquetes con la bandera SYN activada. Puede sustituir SYN por cualquier otro indicador TCP, como ACK, RST, FIN, URG o PSH.
+```
+tcp.flags.syn == 1
+```
+
+- Filtrar por tamaño de paquete. Mostrar sólo los paquetes de más de 1000 bytes.
+```
+frame.len > 1000
+```
+
+- Filtrar por nombre de dominio DNS. Mostrar sólo los paquetes DNS que tengan un nombre de dominio que contenga "ejemplo.com", se puede sustituir por cualquier otro nombre de dominio.
+```
+dns.qry.name contains 'example.com'
+```
+
+- Filtrar por tipo de protocolo TLS. Mostrar sólo los paquetes con un tipo de protocolo TLS ClientHello.
+```
+tls.handshake.type == 1
 ```
 
 

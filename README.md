@@ -293,3 +293,9 @@ HKCU\Software\PremiumSoft\NavicatMARIADB\Servers
 HKCU\Software\PremiumSoft\NavicatOra\Servers
 HKCU\Software\TigerVNC\WinVNC4
 ```
+
+### Forensia (Anti-Forensic)
+
+Herramienta antiforense para Red Teamers, utilizada para borrar algunas huellas en la fase posterior a la explotación.
+
+- https://github.com/PaulNorman01/Forensia

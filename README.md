@@ -1,7 +1,7 @@
 # DFIR & Detection engineering - Tips
 **Digital Forensics Incident Response and Detection engineering**.
 
-Detectar técnicas alternativas y más utilizadas por actores maliciosos para la evisión de sistemas de protección y monitorización. Análisis forense de artefactos comunes y no tan comunes.
+Detectar técnicas alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización. Análisis forense de artefactos comunes y no tan comunes.
 
 ## Artefactos - Logs Windows
 ### Logs de eventos de Windows

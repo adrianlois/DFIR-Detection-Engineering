@@ -4,7 +4,7 @@
 Detectar técnicas alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización. Análisis forense de artefactos comunes y no tan comunes.
 
 - [DFIR y Artefactos](#dfir-y-artefactos)
-- [Detección de técnicas: bypass SIEM, SOC y Anti-Forense](#detección-de-técnicas-bypass-siem-soc-anti-forensic)
+- [Detección de técnicas: bypass SIEM, SOC y Anti-Forense](#detección-de-técnicas-bypass-siem-soc-y-anti-forense)
 
 # DFIR y Artefactos
 

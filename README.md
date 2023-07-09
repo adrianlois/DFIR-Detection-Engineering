@@ -3,6 +3,9 @@
 
 Detectar técnicas alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización. Análisis forense de artefactos comunes y no tan comunes.
 
+- [DFIR y Artefactos](#dfir-y-artefactos)
+- [Detección de técnicas: bypass SIEM, SOC y Anti-Forense](#detección-de-técnicas-bypass-siem-soc-anti-forensic)
+
 # DFIR y Artefactos
 
 ### Logs de eventos de Windows
@@ -368,7 +371,7 @@ Los archivos adjuntos tipo Word abiertos en directamente a través de en Outlook
 > Referencia: https://www.sans.org/posters/?focus-area=digital-forensics
 
 
-# Detección de técnicas: bypass SIEM-SOC (Anti-Forensic)
+# Detección de técnicas: bypass SIEM, SOC y Anti-Forense
 
 ### Comando Windows: net y net1
 

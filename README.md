@@ -6,7 +6,7 @@ Detectar técnicas alternativas y más utilizadas por actores maliciosos para la
 - [DFIR y Artefactos](#dfir-y-artefactos)
 - [Detección de técnicas: bypass SIEM, SOC y Anti-Forense](#detección-de-técnicas-bypass-siem-soc-y-anti-forense)
 
-# DFIR y Artefactos
+# 🔍 DFIR y Artefactos
 
 ### Logs de eventos de Windows
 
@@ -408,7 +408,7 @@ Process: rundll32.exe | Pid: 5287 | Address: 0x6a1000
 > Referencia: https://www.sans.org/posters/?focus-area=digital-forensics
 
 
-# Detección de técnicas: bypass SIEM, SOC y Anti-Forense
+# 📓 Detección de técnicas: bypass SIEM, SOC y Anti-Forense
 
 ### Comando Windows: net y net1
 

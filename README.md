@@ -292,7 +292,7 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 - USBDeview: https://www.nirsoft.net/utils/usb_devices_view.html
 - USB Forensic Tracker (USBFT) Windows, Linux y MacOS: https://www.orionforensics.com/forensics-tools/usb-forensic-tracker
 
-### 🔳 Saber si un archivo malicioso se descargó de internet y conocer su URL de origen (Zone.Identifier)
+### 🔳 Conocer la URL de descarga de un archivo (Zone.Identifier)
 
 Saber si un archivo malicioso se descargó de Internet y desde que URL o se creó en el sistema local.
 

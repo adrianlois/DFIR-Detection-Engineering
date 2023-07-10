@@ -31,6 +31,8 @@ Detectar técnicas alternativas y más utilizadas por actores maliciosos para la
 | `%WINDIR%\INF\setupapi.dev.log` | Contiene información de unidades Plug and Play y la instalación de drivers | Versión de SO, Kernel, Service Pack, arquitectura, modo de inicio, fechas, rutas, lista de drivers, dispositivos conectados, dispositivos iniciados o parados |
 | `%WINDIR%\INF\setupapi.app.log` | Contiene información del registro de instalación de las aplicaciones | Fechas, rutas, sistema operativo, versiones, ficheros, firma digital, dispositivos |
 | `%WINDIR%\Performance\Winsat\winsat.log` | Contiene trazas de utilización de la aplicación WINSAT que miden el rendimiento del sistema | Fechas, valores sobre la tarjeta gráfica, CPU, velocidades, puertos USB |
+| `%ProgramData%\Microsoft\Windows Defender\Support` | Contiene pruebas históricas de WD (Windows Defender). Los nombres de los archivos serán- MPLog-\*.log, MPDetection-\*.log, MPDeviceControl-\*.log | Fechas, versiones productos, servicios, notificaciones, CPU, ProcessImageName, EstimatedImpact, binarios, etc. |
+| `%ProgramData%\Microsoft\Windows Defender\Scans\Scans\History` | Cuando se detecta una amenaza, WD almacena un archivo binario "DetectionHistory" | Se pueden analizar estos archivos utilizando herramientas como DHParser |
 
 ### Artefactos de conexiones de clientes VPN
 
@@ -64,6 +66,14 @@ Get-ChildItem -Path F:\pid\ -Include *.evtx -Recurse | Copy-Item -Destination .\
 ```
 
 > Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
+
+### Volatility: clipboard
+
+Desde un volcado de memoria, los datos del portapapeles pueden se interesantes para revelar información.
+```
+volatility.exe -f memdump.bin --profile=Win10x64_10586 clipboard
+```
+> Referencia: https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf
 
 ### Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
 
@@ -248,10 +258,10 @@ Carpeta "Windows.old"
 Volume Shadow Copies
 ```
 
-**Event ID 6416**: El Sistema reconoció un nuevo dispositivo externo.
+**Event ID 6416**: El Sistema reconoció un nuevo dispositivo externo. 
 - https://learn.microsoft.com/es-es/windows/security/threat-protection/auditing/event-6416
 
-**Logman**: Capturar el seguimiento de eventos de USBs.
+**Logman**: Capturar el seguimiento de eventos de USBs. 
 - https://learn.microsoft.com/es-es/windows-hardware/drivers/usbcon/how-to-capture-a-usb-event-trace
 
 `Linux`
@@ -366,6 +376,33 @@ Los archivos adjuntos tipo Word abiertos en directamente a través de en Outlook
 %LocalAppdata%\Microsoft\Windows\INetCache\Content.Outlook\<Folder>\
 ```
 
+### Asinación de IPs en equipos
+
+En un incidente se descubre que se envió un paquete de red mal formado desde una dirección IP, pero el atacante elimina dicho registro. Se puede consultar la siguiente rama del registro para encontrar el equipo en la red que tenía esa dirección IP. Cada subclave tendrá un registro DHCP con los valores DhcpIPAddress, DhcpNameServer, etc.
+```
+HKLM\SYSTEM\ControlSet00*\Services\Tcpip\Parameters\Interfaces
+```
+
+### Windows Firewall (wf.msc): Reglas residuales de software desintalado
+
+Comprobar las reglas de entrada y salida en Windows Firewall **"wf.msc"**. Un actor malicioso podría haber instalado software que creó reglas de firewall. La mayoría de las aplicaciones no borran estas reglas, incluso cuando se desinstala.
+
+### Persistencia: suplantación de procesos del sistema
+
+Detección de 2 procesos con el mismo PID pero diferentes direcciones de memoria, podría indicar un proceso de inyección malicioso. 
+
+Algunos ejemplos en procesos conocidos.
+```
+Process: explorer.exe | Pid: 547  | Address: 0xa20000
+Process: explorer.exe | Pid: 547  | Address: 0x5d1000
+
+Process: svchost.exe  | Pid: 1447 | Address: 0x6d0000
+Process: svchost.exe  | Pid: 1447 | Address: 0x210000
+
+Process: rundll32.exe | Pid: 5287 | Address: 0xa90000
+Process: rundll32.exe | Pid: 5287 | Address: 0x6a1000
+```
+
 ### SANS - Posters & Cheat Sheets (DFIR)
 
 > Referencia: https://www.sans.org/posters/?focus-area=digital-forensics
@@ -455,7 +492,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Utilities\query" 
 
 Al consultar la rama del registro se ejecutará una Powershell.exe.
 ```cmd
-query hacker
+query pwned
 ```
 
 La detección puede ser complicada si se reemplaza "powershell.exe" por un ejecutable malicioso o tipo [LOLbin](https://lolbas-project.github.io/).
@@ -545,9 +582,15 @@ Habilitado:    UseLogonCredential = 1
 Deshabilitado: UseLogonCredential = 0
 ```
 
-### Detectar máquina virtual con WMIC
+### Detectar si un sistema es una máquina virtual con PowerShell o WMIC
 
+PowerShell
+```ps
+Get-MpComputerStatus | Select-Object "IsVirtualMachine" | fl
 ```
+
+CMD
+```cmd
 WMIC BIOS > wmic_bios.txt
 
 ...
@@ -556,7 +599,7 @@ BIOSVersion     SMBIOSBIOSVersion
 ...
 ```
 
-### Técnicas de ofuscación en línea de comandos (Windows)
+### Técnicas de ofuscación en la ejecucación de comandos en Windows
 
 > https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
 

@@ -408,6 +408,9 @@ Process: rundll32.exe | Pid: 5287 | Address: 0x6a1000
 > Referencia: https://www.sans.org/posters/?focus-area=digital-forensics
 
 
+---
+
+
 # 📓 Detección de técnicas: bypass SIEM, SOC y Anti-Forense
 
 ### 🔳 Comando Windows: net y net1

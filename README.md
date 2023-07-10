@@ -297,12 +297,12 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 Saber si un archivo malicioso se descargó de Internet y desde que URL o se creó en el sistema local.
 
 PowerShell
-```ps
+```
 Get-Content -Path .\<FileName> -Stream Zone.Identifier -Encoding oem
 ```
 
 CMD
-```cmd
+```
 notepad <FileName>:Zone.Identifier
 ```
 

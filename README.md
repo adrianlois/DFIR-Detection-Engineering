@@ -294,6 +294,8 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 
 ### 🔳 Análisis Forense de logs en AnyDesk, Team Viewer y LogMeIn 
 
+#### `AnyDesk`
+
 **`AnyDesk`**
 
 El registro "ad.trace" revela información como:

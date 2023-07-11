@@ -294,7 +294,7 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 
 ### 🔳 Análisis Forense de logs en AnyDesk, Team Viewer y LogMeIn 
 
-**AnyDesk**
+<u>**AnyDesk**</u>
 
 El registro "ad.trace" revela información como:
 - IP remota desde donde se conectó el actor
@@ -309,15 +309,16 @@ En el log "ad.trace" de la carpeta del usuario *AppData* buscamos por los criter
 
 En el mismo fichero buscamos por el término "External address" y esto revelará la dirección IP remota donde se conectó el actor malicioso.
 
+<u>**Team Viewer**</u>
+
+Referencia logs Team Viewer: 
+- https://community.teamviewer.com/Spanish/kb/articles/4694-como-localizar-los-archivos-de-registro
+
+Arquitectura de comunicaciones Team Viewer: 
+- https://static.teamviewer.com/resources/2020/11/security-encryprion-1.jpg
 
 
-**Team Viewer**
-
-- Referencia logs Team Viewer: https://community.teamviewer.com/Spanish/kb/articles/4694-como-localizar-los-archivos-de-registro
-- Arquitectura de comunicaciones Team Viewer:https://static.teamviewer.com/resources/2020/11/security-encryprion-1.jpg
-
-
-**LogMeIn**
+<u>**LogMeIn**</u>
 
 Artefactos LogMeIn.
 ```

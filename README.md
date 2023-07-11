@@ -292,6 +292,45 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 - USBDeview: https://www.nirsoft.net/utils/usb_devices_view.html
 - USB Forensic Tracker (USBFT) Windows, Linux y MacOS: https://www.orionforensics.com/forensics-tools/usb-forensic-tracker
 
+### 🔳 Análisis Forense de logs en AnyDesk, Team Viewer y LogMeIn 
+
+**AnyDesk**
+
+El registro "ad.trace" revela información como:
+- IP remota desde donde se conectó el actor
+- Actividad de transferencia de archivos
+
+```
+%ProgramData%\AnyDesk\ad_svc.trace
+%AppData%\Anydesk\ad.trace
+```
+
+En el log "ad.trace" de la carpeta del usuario *AppData* buscamos por los criterios "files" y "app.prepare_task". Esto revelará desde qué carpeta se están copiando los archivos y también la cantidad de archivos copiados.
+
+En el mismo fichero buscamos por el término "External address" y esto revelará la dirección IP remota donde se conectó el actor malicioso.
+
+
+
+**Team Viewer**
+
+- Referencia logs Team Viewer: https://community.teamviewer.com/Spanish/kb/articles/4694-como-localizar-los-archivos-de-registro
+- Arquitectura de comunicaciones Team Viewer:https://static.teamviewer.com/resources/2020/11/security-encryprion-1.jpg
+
+
+**LogMeIn**
+
+Artefactos LogMeIn.
+```
+C:\Program Data\LogMeIn
+C:\Users\<username>\AppData\Local\LogMeIn
+```
+```
+SOFTWARE\LogMeIn\Toolkit\DesktopSharing
+SOFTWARE\LogMeIn\V5 LogMeIn\Toolkit\Filesharing
+SOFTWARE\LogMeIn\V5
+SOFTWARE\LogMeIn Ignition
+```
+
 ### 🔳 Conocer la URL de descarga de un archivo (Zone.Identifier)
 
 Saber si un archivo malicioso se descargó de Internet y desde que URL o se creó en el sistema local.

@@ -417,6 +417,12 @@ Los archivos adjuntos tipo Word abiertos en directamente a través de en Outlook
 %LocalAppdata%\Microsoft\Windows\INetCache\Content.Outlook\<Folder>\
 ```
 
+###  🔳 Analizar malware en fichero XLSX (MS Excel)
+
+Descomprimir el fichero .xlsx, dentro de la carpeta "XL" abrir editando el archivo llamado "workbook.xml", buscar el término **"absPath"**. Contiene la última ubicación de guardado del archivo donde veríamos al autor (C:\\<\user>\\..\\file.xlsx).
+
+Como técnica anti forense esta metadata se puede eliminar desde Excel "inspeccionando el documento" y borrando las "propiedades de documento e información personal". 
+
 ### 🔳 Asinación de IPs en equipos
 
 En un incidente se descubre que se envió un paquete de red mal formado desde una dirección IP, pero el atacante elimina dicho registro. Se puede consultar la siguiente rama del registro para encontrar el equipo en la red que tenía esa dirección IP. Cada subclave tendrá un registro DHCP con los valores DhcpIPAddress, DhcpNameServer, etc.

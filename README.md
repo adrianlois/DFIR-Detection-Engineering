@@ -417,11 +417,52 @@ Los archivos adjuntos tipo Word abiertos en directamente a través de en Outlook
 %LocalAppdata%\Microsoft\Windows\INetCache\Content.Outlook\<Folder>\
 ```
 
-###  🔵 Analizar malware en fichero XLSX (MS Excel)
+### 🔵 Analizar malware en fichero XLSX (MS Excel)
 
 Descomprimir el fichero .xlsx, dentro de la carpeta "XL" abrir editando el archivo llamado "workbook.xml", buscar el término **"absPath"**. Contiene la última ubicación de guardado del archivo donde veríamos al autor (C:\\<\user>\\..\\file.xlsx).
 
 Como técnica anti forense esta metadata se puede eliminar desde Excel "inspeccionando el documento" y borrando las "propiedades de documento e información personal". 
+
+### 🔵 Análisis de ShellBags
+
+Shellbags son un conjunto de claves de registro que contienen detalles sobre la carpeta vista de un usuario, como su tamaño, posición e icono. Proporcionan marcas de tiempo, información contextual y muestran el acceso a directorios y otros recursos, lo que podría apuntar a evidencia que alguna vez existió. 
+
+Se crea una entrada de shellbag para cada carpeta recién explorada, indicaciones de actividad, actuando como un historial de qué elementos del directorio pueden haberse eliminado de un sistema desde entonces, o incluso evidenciar el acceso de dispositivos extraíbles donde están ya no adjunto.
+
+El análisis de Shellbag puede exponer información sobre:
+
+- Accesos a carpetas.
+
+Por ejemplo, elementos de escritorio, categorías/elementos del panel de control, letra de unidad, directorios o incluso archivos comprimidos.
+
+- Evidencia de eliminación, sobrescritura o cambio de nombre de carpeta.
+- Patrones transversales y de navegación de directorios.
+
+Esto también podría incluir evidencia de acceso remoto (RDP o VNC), así como la eliminación de archivos binarios o el acceso a recursos de red.
+
+**Artefactos de las Shellbags**
+
+`NTUSER.DAT`
+```
+HKCU\Software\Microsoft\Windows\Shell\Bags
+HKCU\Software\Microsoft\Windows\Shell\BagMRU
+```
+
+`USRCLASS.DAT`
+```
+HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU
+HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags
+```
+
+- ***MRUListExt***: Valor de 4 bytes que indica el orden en el que se accedió por última vez a cada carpeta secundaria de la jerarquía BagMRU.
+- ***NodeSlot***: Contiene las preferencias de visualización y la configuración de shellbag.
+- ***NodeSlots***: Sólo está en la clave raíz de BagMRU y se actualiza cada vez que se crea una nueva shellbag.
+
+> Referencia detallada de la interpretación de ShellBags: https://www.4n6k.com/2013/12/shellbags-forensics-addressing.html
+
+**Herramienta para explorar y análizar Shellbags tanto de forma online como offline**
+
+-  **ShellBags Explorer** (GUI) o **SBECmd** (CLI): https://ericzimmerman.github.io/#!index.md
 
 ### 🔵 Asignación de IPs en equipos
 

@@ -1,7 +1,7 @@
 # DFIR & Detection engineering
 
 <div align="center">
-<img width="400px" src="dfir-logo.png" /><br />
+<img width="430px" src="dfir-logo.png" /><br />
 <strong>Digital Forensics Incident Response and Detection engineering</strong><p></p>
 </div>
 

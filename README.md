@@ -1,14 +1,17 @@
-<div align="center">
-<img width="450px" src="dfir-logo.png" /><br />
-<strong>Digital Forensics Incident Response and Detection engineering</strong><p></p>
-</div>
+<h1 align="center">
+  <img src="dfir-logo.png" alt="DFIR & Detection Engineering" width="450">
+  <br>
+  Digital Forensics Incident Response and Detection engineering
+</h1>
 
-<a name="readme-top"></a>
+---
 
 Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y técnicas de detección alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.
 
 - 🔍 [Análisis forense y artefactos](#-análisis-forense-y-artefactos)
 - 📓 [Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
+
+---
 
 # 🔍 Análisis forense y artefactos
 

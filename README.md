@@ -239,7 +239,8 @@ HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags
 - ***NodeSlot***: Contiene las preferencias de visualización y la configuración de shellbag.
 - ***NodeSlots***: Sólo está en la clave raíz de BagMRU y se actualiza cada vez que se crea una nueva shellbag.
 
-> Referencia detallada de la interpretación de ShellBags: https://www.4n6k.com/2013/12/shellbags-forensics-addressing.html
+> Referencia detallada de la interpretación de ShellBags: 
+> https://www.4n6k.com/2013/12/shellbags-forensics-addressing.html
 
 **Herramienta para explorar y análizar Shellbags tanto de forma online como offline**
 

@@ -4,8 +4,6 @@
   Digital Forensics Incident Response and Detection engineering
 </h1>
 
----
-
 Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y técnicas de detección alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.
 
 - 🔍 [Análisis forense y artefactos](#-análisis-forense-y-artefactos)

@@ -8,7 +8,7 @@
 Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y técnicas de detección alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.
 
 - 🔍 [Análisis forense y artefactos](#-análisis-forense-y-artefactos)
-- 📓 [Detección de técnicas: bypass SIEM, SOC y Anti-Forense](#-detección-de-técnicas-bypass-siem-soc-y-anti-forense)
+- 📓 [Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
 
 # 🔍 Análisis forense y artefactos
 
@@ -509,7 +509,7 @@ Process: rundll32.exe | Pid: 5287 | Address: 0x6a1000
 ---
 
 
-# 📓 Detección de técnicas: bypass SIEM, SOC y Anti-Forense
+# 📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense
 
 ### 🔵 Comando Windows: net y net1
 

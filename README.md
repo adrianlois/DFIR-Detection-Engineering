@@ -18,7 +18,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 |------|------|------------|
 | `%WINDIR%\System32\config` `%WINDIR%\System32\winevt\Logs` | Contiene los logs de Windows accesibles desde el visor de eventos | Casi todas. Entradas, fechas, accesos, permisos, programas, usuario, etc. |
 
-### 🔵 Logs de registros varios sobre instalación (Windows)
+### 🔵 Logs de registros varios sobre instalaciones en Windows
 
 | Path | Info | Evidencias |
 |------|------|------------|

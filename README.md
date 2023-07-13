@@ -1,10 +1,10 @@
-# DFIR & Detection engineering - Tips
+# DFIR & Detection engineering
 **Digital Forensics Incident Response and Detection engineering**.
 
-Detectar técnicas alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización. Análisis forense de artefactos comunes y no tan comunes.
+Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y técnicas de detección alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.
 
-- [DFIR y Artefactos](#-dfir-y-artefactos)
-- [Detección de técnicas: bypass SIEM, SOC y Anti-Forense](#-detección-de-técnicas-bypass-siem-soc-y-anti-forense)
+- 🔍 [DFIR y análisis de artefactos](#-dfir-y-análisis-de-artefactos)
+- 📓 [Detección de técnicas: bypass SIEM, SOC y Anti-Forense](#-detección-de-técnicas-bypass-siem-soc-y-anti-forense)
 
 # 🔍 DFIR y Artefactos
 
@@ -423,7 +423,7 @@ Descomprimir el fichero .xlsx, dentro de la carpeta "XL" abrir editando el archi
 
 Como técnica anti forense esta metadata se puede eliminar desde Excel "inspeccionando el documento" y borrando las "propiedades de documento e información personal". 
 
-### 🔵 Asinación de IPs en equipos
+### 🔵 Asignación de IPs en equipos
 
 En un incidente se descubre que se envió un paquete de red mal formado desde una dirección IP, pero el atacante elimina dicho registro. Se puede consultar la siguiente rama del registro para encontrar el equipo en la red que tenía esa dirección IP. Cada subclave tendrá un registro DHCP con los valores DhcpIPAddress, DhcpNameServer, etc.
 ```

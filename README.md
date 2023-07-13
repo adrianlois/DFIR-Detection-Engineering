@@ -1,12 +1,15 @@
 # DFIR & Detection engineering
+
+<div align="center"><img width="400px" src="dfir-logo.png" /></div>
+
 **Digital Forensics Incident Response and Detection engineering**.
 
 Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y técnicas de detección alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.
 
-- 🔍 [DFIR y análisis de artefactos](#-dfir-y-análisis-de-artefactos)
+- 🔍 [Análisis forense y artefactos](#-análisis-forense-y-artefactos)
 - 📓 [Detección de técnicas: bypass SIEM, SOC y Anti-Forense](#-detección-de-técnicas-bypass-siem-soc-y-anti-forense)
 
-# 🔍 DFIR y Artefactos
+# 🔍 Análisis forense y artefactos
 
 ### 🔵 Logs de eventos de Windows
 

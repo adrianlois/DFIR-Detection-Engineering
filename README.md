@@ -235,6 +235,8 @@ HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU
 HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags
 ```
 
+Descripción de valores relevantes:
+
 - ***MRUListExt***: Valor de 4 bytes que indica el orden en el que se accedió por última vez a cada carpeta secundaria de la jerarquía BagMRU.
 - ***NodeSlot***: Contiene las preferencias de visualización y la configuración de shellbag.
 - ***NodeSlots***: Sólo está en la clave raíz de BagMRU y se actualiza cada vez que se crea una nueva shellbag.

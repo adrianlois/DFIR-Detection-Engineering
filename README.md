@@ -65,7 +65,7 @@ VSS (Volume Shadow Copy) podría ser una opción pero hay escenarios donde esto 
 Get-ChildItem -Path F:\pid\ -Include *.evtx -Recurse | Copy-Item -Destination .\evtx_files
 ```
 
-> Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
+- Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
 
 ### 🔵 Volatility: clipboard
 
@@ -73,7 +73,7 @@ Desde un volcado de memoria, los datos del portapapeles pueden se interesantes p
 ```
 volatility.exe -f memdump.bin --profile=Win10x64_10586 clipboard
 ```
-> Referencia: https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf
+- Referencia: https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf
 
 ### 🔵 Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
 
@@ -87,7 +87,7 @@ grep -l SSH_C /proc/*/environ
 
 ### 🔵 Filtros Wireshark para analistas
 
-> Referencia: https://www.wireshark.org/docs/dfref/
+- Referencia: https://www.wireshark.org/docs/dfref
 
 - Filtrar por dirección IP. Donde "x.x.x.x" es la dirección IP que desea filtrar.
 ```
@@ -172,7 +172,7 @@ Si un contenedor malicioso modifica archivos o acciones de malware al iniciarse,
 
 Extraer el sistema de archivos de contenedores de Docker. 
 
-> Referencia: https://iximiuz.com/en/posts/docker-image-to-filesystem
+- Referencia: https://iximiuz.com/en/posts/docker-image-to-filesystem
 
 Ejemplo con una imagen oficial de nginx.
 
@@ -499,7 +499,7 @@ Process: rundll32.exe | Pid: 5287 | Address: 0x6a1000
 
 ### 🔵 SANS - Posters & Cheat Sheets (DFIR)
 
-> Referencia: https://www.sans.org/posters/?focus-area=digital-forensics
+- Referencia: https://www.sans.org/posters/?focus-area=digital-forensics
 
 
 ---
@@ -696,19 +696,19 @@ BIOSVersion     SMBIOSBIOSVersion
 ...
 ```
 
-### ⭕ Técnicas de ofuscación en la ejecucación de comandos en Windows
+### 🔵 Técnicas de ofuscación en la ejecucación de comandos en Windows
 
-> https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
+- https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
 
 
-### ⭕ Detectar acciones de AutoRun al abrir una Command Prompt (cmd)
+### 🔵 Detectar acciones de AutoRun al abrir una Command Prompt (cmd)
 
 Un atacante creó un valor *"AutoRun"* en la siguiente clave de registro, aquí pudo agregar un comando malicioso como sus datos de valor. Ahora, cada vez que se inicie una consola cmd este comando se ejecutará automáticamente.
 ```
 HKLM\SOFTWARE\Microsoft\Command Processor
 ```
 
-### ⭕ Extensiones ejecutables alternativas a .exe
+### 🔵 Extensiones ejecutables alternativas a .exe
 
 Un atancante puede renombrar la extensión de un fichero malicioso a extensiones como: 
 

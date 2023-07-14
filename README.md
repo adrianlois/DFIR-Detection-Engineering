@@ -267,7 +267,7 @@ Visualizar ficheros *"thumbcache_\*.db"*.
 Un usuario envió imágenes a través de Whatsapp, después las eliminó de su dispositivo móvil, pero estas imágenes todavía están en la carpeta "sent" de WhatsApp.
 
 ```
-Internal storage/Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images/Sent
+"Internal storage/Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images/Sent"
 ```
 
 ### 🔵 Comprobar si un usuario ejecutó el comando "sudo"

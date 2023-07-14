@@ -1,7 +1,7 @@
 <h1 align="center">
   <img src="dfir-logo.png" alt="DFIR & Detection Engineering" width="450">
   <br>
-  Digital Forensics Incident Response and Detection engineering
+  Digital Forensics Incident Response & Detection Engineering
 </h1>
 
 Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y técnicas de detección alternativas y más utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.

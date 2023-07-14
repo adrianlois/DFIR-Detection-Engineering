@@ -529,7 +529,7 @@ debugfs: cat /etc/passwd
 ... modo interactivo ...
 ```
 
-### 🔵 WAF Bypass (SSRF): usar acortamiento IP
+### 🔵 WAF Bypass (SSRF): usar acortamiento IP local
 
 | Bloqueo            | Bypass           |
 |--------------------|------------------|

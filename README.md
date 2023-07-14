@@ -9,7 +9,6 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 - 🔍 [Análisis forense y artefactos](#-análisis-forense-y-artefactos)
 - 📓 [Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
 
-- - -
 ---
 
 # 🔍 Análisis forense y artefactos

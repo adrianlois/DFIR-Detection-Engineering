@@ -126,24 +126,27 @@ eth.src == xx:xx:xx:xx:xx:xx
 eth.dst == xx:xx:xx:xx:xx:xx
 ```
 
-- Filtrar por código de estado HTTP. Mostrar sólo los paquetes con un código de estado de 200.
-```
-http.response.status_code == 200
-```
-
 - Filtrar por método HTTP. Mostrar sólo los paquetes con método GET. Puede sustituir GET por otros métodos HTTP como POST, PUT, DELETE, etc.
 ```
 http.request.method == GET
+http.request.method == POST && frame contains "login"
 ```
 
-- Filtrar por URI HTTP. Mostrar sólo los paquetes que tienen un URI que contiene "ejemplo.com". Puede sustituir "ejemplo.com" por cualquier otra cadena URI.
+- Filtrar por códigos de estado HTTP.
 ```
-http.request.uri contains 'ejemplo.com'
-```
+# Respuestas Ok.
+http.response.code == 200
 
-- Filtrar por código de respuesta HTTP. Mostrar sólo los paquetes con un código de respuesta 404.
-```
+# Respuestas de redireccionamiento. 301 redirección permanente y 302 redirección temporal.
+http.response.code == 301 or http.response.code == 302
+
+# Respuestas de error "Not Found". 
 http.response.code == 404
+```
+
+- Filtrar por URI HTTP. Mostrar sólo los paquetes que tienen un URI que contiene "domain.com". Puede sustituir "domain.com" por cualquier otra cadena URI.
+```
+http.request.uri contains 'domain.com'
 ```
 
 - Filtrar por cookie HTTP. Mostrar sólo los paquetes que contienen una cookie con el nombre "sessionid".
@@ -151,24 +154,106 @@ http.response.code == 404
 http.cookie contains 'sessionid'
 ```
 
-- Filtrar por flags TCP. Mostrar sólo los paquetes con la bandera SYN activada. Puede sustituir SYN por cualquier otro indicador TCP, como ACK, RST, FIN, URG o PSH.
-```
-tcp.flags.syn == 1
-```
-
 - Filtrar por tamaño de paquete. Mostrar sólo los paquetes de más de 1000 bytes.
 ```
 frame.len > 1000
 ```
 
-- Filtrar por nombre de dominio DNS. Mostrar sólo los paquetes DNS que tengan un nombre de dominio que contenga "ejemplo.com", se puede sustituir por cualquier otro nombre de dominio.
+- Filtros DNS.
 ```
-dns.qry.name contains 'example.com'
+# Paquetes DNS que tengan un nombre de dominio que contenga "domain.com"
+dns.qry.name contains 'domain.com'
+dns.resp.name == domain.com 
+
+# Consulta/respuesta de puntero DNS (PTR, DNS Inverso)
+dns.qry.type == 12
+
+# Consultas MX
+dns.qry.type == 15
+
+# Solo consultas DNS.
+dns.flags.response == 0
+
+# Solo consultas de respuesta DNS.
+dns.flags.response eq 1 # only DNS response queries
+
+# Errores DNS.
+dns.flags.rcode != 0 or (dns.flags.response eq 1 and dns.qry.type eq 28 and !dns.aaaa)
+
+# NXDominio no existente.
+dns.flags.rcode == 3
+
+# No Error, nslookup microsoft.com 193.247.121.196.
+((dns.flags.rcode == 3) && !(dns.qry.name contains ".local") && !(dns.qry.name contains ".svc") && !(dns.qry.name contains ".cluster"))
+(dns.flags.rcode == 0) && (dns.qry.name == "microsoft.com")
+
+dns.flags.rcode != 0 or (dns.flags.response eq 1 and dns.qry.type eq 28 and !dns.aaaa)
 ```
 
-- Filtrar por tipo de protocolo TLS. Mostrar sólo los paquetes con un tipo de protocolo TLS ClientHello.
+- Filtros TLS.
 ```
+# TLS handshake.
+tls.record.content_type == 22
+
+# Filtrar por tipo de handshake SSL/TLS.
+ssl.handshake.type = TLS
+ssl.handshake.type = SSL
+
+# Paquetes "TLS Client Hello".
 tls.handshake.type == 1
+
+# Paquetes "TLS Server Hello".
+tls.handshake.type == 2
+
+# Conexión cerrada.
+tls.record.content_type == 21
+
+# Paquetes relacionados con la comunicación entre el cliente y el servidor que involucren el sitio web "badsite.com".
+tls.handshake.extensions_server_name contains "badsite.com"
+
+# Cuando se produce el timeout, el cliente suele enviar un RST al servidor para filtrar los paquetes con el timeout del handshake. 
+(tcp.flags.reset eq 1) and (tcp.flags.ack eq 0)
+
+# Paquetes que tardan en responder a SYNACK durante el handshake del servidor.
+tcp.flags eq 0x012 && tcp.time_delta gt 0.0001
+```
+
+- Filtros GeoIP
+```
+# Excluir el tráfico procedente de Estados Unidos.
+ip and not ip.geoip.country == "United States" 
+
+# Ciudad de destino [IPv4].
+ip.geoip.dst_city == "Dublin" 
+
+# Ciudad de origen o destino [IPv4].
+ip.geoip.city == "Dublin"
+ip.geoip.dst_country == "Ireland"
+ip.geoip.dst_country_iso == "IE"
+
+# Todos los países de destino excepto Estados Unidos.
+!ip.geoip.country == "United States" 
+not ip.geoip.country == "United States"
+```
+
+- Establecer un filtro para los valores HEX de 0x22 0x34 0x46 en cualquier offset.
+```
+udp contains 22:34:46
+```
+
+- Filtrar por flags TCP. Mostrar sólo los paquetes con la bandera SYN activada. Puede sustituir SYN por cualquier otro indicador TCP, como ACK, RST, FIN, URG o PSH.
+```
+tcp.flags.syn == 1
+```
+
+- Mostrar todos los flags SYNACK TCP.
+```
+tcp.flags.syn == 1 && tcp.flags.ack == 1
+```
+
+- Mostrar paquetes con reconocimientos duplicados en TCP.
+```
+tcp.analysis.duplicate_ack
 ```
 
 ### 🔵 Análisis Forense en contenedores Docker 

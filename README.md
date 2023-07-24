@@ -806,7 +806,7 @@ Un atancante puede renombrar la extensión de un fichero malicioso a extensiones
 
 Todas se ejecutarán de la misma forma que .exe.
 
-### 🔵 Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (tipo de flujo en directorios $INDEX_ALLOCATION)
+### 🔵 Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (tipo de flujo NTFS en directorios $INDEX_ALLOCATION)
 
 Un posible actor malicioso podría crear una carpeta visible a través de línea de comandos ejecutando un dir y/o también verla en un explorador de Windows. 
 
@@ -817,7 +817,7 @@ md <nombre_carpeta>.::$index_allocation
 md <nombre_carpeta>.:$I30:$index_allocation
 ```
 
-De esta forma aparecerá el nombre del cirectorio seguido de un punto, pero cuando se intente acceder a el ya sea de forma gráfica con doble clic o vía consola con "cd" se mostrará un mensaje de error indicando que la "ubicación no está disponible o no es correcta para ese equipo". Una manera de solucionar esto sería acceder vía "cd" en consola e indicando: "*nombre carpeta.+flujo vacío+tipo de flujo*".
+De esta forma aparecerá el nombre del cirectorio seguido de un punto, pero cuando se intente acceder a el ya sea de forma gráfica con doble clic o vía consola con "cd" se mostrará un mensaje de error indicando que la "ubicación no está disponible o no es correcta para ese equipo". Una manera de solucionar esto sería acceder vía "cd" en consola e indicando: "*nombre carpeta.+flujo vacío+tipo de flujo*". (Esto no está soportado en Powershell)
 
 ```
 cd <nombre_carpeta>.::$index_allocation

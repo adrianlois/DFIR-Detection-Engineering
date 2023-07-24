@@ -810,12 +810,18 @@ Todas se ejecutarán de la misma forma que .exe.
 
 Un posible actor malicioso podría crear una carpeta visible a través de línea de comandos ejecutando un dir y/o también verla en un explorador de Windows. 
 
-En ambas situaciones no es posible acceder a este directorio debibo a que el nombre no a sido creado como lo vemos en pantalla o en el output de consola, sino que es posible que haya sido creado con un punto al final del nombre, estableciendo un tipo de flujo *$INDEX_ALLOCATION* y un nombre de flujo *$I30* o vacío (ambos son equivalentes). 
-
-De esta forma veremos el directorio con el nombre seguido de un punto pero cuando intentemos acceder a el ya sea de forma gráfica con doble clic o vía consola con "cd" nos avisará en un mensaje de error indicando que la "ubicación no está disponible o no es correcta para ese equipo". Algo que podemos solucionar esto accediendo vía consola e indicando: "*nombre carpeta.+flujo vacío+tipo de flujo*".
+En ambas situaciones no es posible acceder a este directorio debibo a que el nombre no a sido creado como lo vemos en pantalla o en el output de consola, sino que es posible que haya sido creado con un punto al final del nombre, estableciendo un tipo de flujo *$INDEX_ALLOCATION* y un nombre de flujo *$I30* o vacío, ambos son equivalentes. 
 
 ```
-<nombre_carpeta>.::$index_allocation
+md <nombre_carpeta>.::$index_allocation
+md <nombre_carpeta>.:$I30:$index_allocation
+```
+
+De esta forma aparecerá el nombre del cirectorio seguido de un punto, pero cuando se intente acceder a el ya sea de forma gráfica con doble clic o vía consola con "cd" se mostrará un mensaje de error indicando que la "ubicación no está disponible o no es correcta para ese equipo". Una manera de solucionar esto sería acceder vía "cd" en consola e indicando: "*nombre carpeta.+flujo vacío+tipo de flujo*".
+
+```
+cd <nombre_carpeta>.::$index_allocation
+cd <nombre_carpeta>.:$I30:$index_allocation
 ```
 
 - Flujos NTFS: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/c54dec26-1551-4d3a-a0ea-4fa40f848eb3

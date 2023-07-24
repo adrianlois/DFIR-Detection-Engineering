@@ -93,7 +93,7 @@ grep -l SSH_C /proc/*/environ
 ### 🔵 Filtros Wireshark para analistas
 
 - Referencia: https://www.wireshark.org/docs/dfref
-- Brim Zed (herramienta que simplifica el análisis de datos superestructurados .pcapng): https://www.brimdata.io/download/
+- Brim Zed (herramienta que simplifica el análisis de datos superestructurados .pcapng): https://www.brimdata.io/download
 
 - Filtrar por dirección IP. Donde "x.x.x.x" es la dirección IP que desea filtrar.
 ```

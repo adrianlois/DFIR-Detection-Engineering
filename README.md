@@ -588,6 +588,14 @@ Process: rundll32.exe | Pid: 5287 | Address: 0xa90000
 Process: rundll32.exe | Pid: 5287 | Address: 0x6a1000
 ```
 
+### 🔵 Detectar malware Linux fileless (memfd)
+
+Estos malware asignan bytes maliciosos en la memoria y se ejecutan. Una forma de detección es usar *memfd* para cualquier proceso y esto nos puede indicar malware sin archivos (fileless). 
+
+```bash
+cat /proc/*/maps | grep "memfd"
+```
+
 ### 🔵 SANS - Posters & Cheat Sheets (DFIR)
 
 - Referencia: https://www.sans.org/posters/?focus-area=digital-forensics

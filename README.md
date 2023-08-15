@@ -614,7 +614,9 @@ net1 accounts
 net accounts
 ```
 
-### 🔵 *debugfs* para ejecutar comandos
+### 🔵 *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria
+Si un actor malicioso accede a un archivo crítico, este puede estar auditado y los investigadores de SOC recibirán una alerta. Pero, si se usan el comando "*debugfs*" para acceder al archivo, es posible omitir esta alerta.
+- https://gtfobins.github.io/gtfobins/debugfs/
 ```bash
 df -h
 sudo debugfs /dev/sda1
@@ -858,3 +860,24 @@ C:\malware>cd test2.::$index_allocation
 C:\malware\test2.::$index_allocation>cd ..
 C:\malware>
 ```
+
+### 🔵 Auditoría en el uso privilegiado de los siguientes comandos
+Los siguientes comandos privilegiados deberían auditarse:
+|   |   |   |   |   |   |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| agetty | cvsbug | fdisk | ipcs | mkswap | quotacheck |
+| arp | debugfs | fsck | lpc |mountd | quotaoff |
+| badblocks | dmesg | ftpd | lpd | nfsd | quotaon |
+| Cfdisk | dumpe2fs | inetd | makedev | nslookup | renice | 
+| Chroot | e2fsck | init | mke2fs | overchan | repquota |
+| Crond | edquota | nndstart | mkfs | plipconfig | rpcinfo |
+| ctrlaltdel | fdformat | ipcrm | mklost+found | portmap |
+
+Los siguientes comandos no se instalan por defecto, no obstante en caso de instalarse por requerimientos del sistema deberían también ser auditados: 
+|   |   |   |   |   |   |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| archive | expire | klogd | newsdaily | pppd | rpcrwalld |
+| buffchan | expireover | named-xfer | newslog | pppstats | rquotad |
+| chat | fastrm | named | newsrequeue | prunehistory | rpcrquotad |
+| comsat | filechan | namedreload | nnrpd | rarp | rshd |
+

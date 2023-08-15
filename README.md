@@ -616,7 +616,7 @@ net accounts
 
 ### 🔵 *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria
 Si un actor malicioso accede a un archivo crítico, este puede estar auditado y los investigadores de SOC recibirán una alerta. Pero, si se usan el comando "*debugfs*" para acceder al archivo, es posible omitir esta alerta.
-- https://gtfobins.github.io/gtfobins/debugfs/
+- https://gtfobins.github.io/gtfobins/debugfs
 ```bash
 df -h
 sudo debugfs /dev/sda1

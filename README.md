@@ -881,3 +881,20 @@ Los siguientes comandos no se instalan por defecto, no obstante en caso de insta
 | chat | fastrm | named | newsrequeue | prunehistory | rpcrquotad |
 | comsat | filechan | namedreload | nnrpd | rarp | rshd |
 
+### 🔵 Bypass Windows Defender y AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)
+Una forma de poder eludir el sistema de protección por defecto de Windows es renombrar el fichero del proceso de ejecución del servicio de Windows Defender. De forma que al iniciar el sistema este no se pueda ejecutar al no encontrar correctamente el nombre de este fichero que levanta el proceso de servicio de Windows Defender. Esto permite a actores maliciosos poder ejecutar binarios maliciosos como por ejemplo Mimikatz u otros.
+
+**MsMpEng.exe** es el proceso principal de la aplicación antimalware Windows Defender. Windows Defender viene preinstalado en Windows 11 y Windows 10, ubicado en "*C:\Program Files\Windows Defender\MsMpEng.exe*"
+
+Este proceso no se puede modificar renombrándolo ya que está constantantemente en uso, aunque se esté en contexto de usuario privilegiado como administrador. Pero lo que si es posible es renombrar la llamada de este fichero en el inicio del sistema, editando previamente las claves de registro correspondientes de "ControlSet00X" de forma offline: exportando, modificando la extensión del valor modificado de MsMpEng, creando una nueva clave ControlSet donde se importará este cambio, cambiar los valores por defecto del sistema a esta nueva clave para que inicie por defecto el sistema asignando este nuevo ControlSet y finalmente reiniciar el equipo.
+
+1. Regedit > export hive: HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001 > guardar en nuevo fichero reg1.dat.
+2. Editar desde [HxD](https://mh-nexus.de/en/hxd): 
+    - Abrir reg1.dat > buscar "msmpeng.exe" > establecer "text encoding: Unicode UTF-16".
+3. Renombrar extensión: "msmpeng.exe" en "msmpeng.xxx" > guardar reg1.dat.
+4. Regedit > crear nueva key vacía > HKEY_LOCAL_MACHINE\SYSTEM\ControlSet007 > import reg1.dat.
+5. Cambiar ControlSet por defecto del sistema, 1 al valor correspondiente del ControlSet establecido anteriormente 7:
+    - Cambiar HKEY_LOCAL_MACHINE\SYSTEM\Select > "Current" > Value: 7
+    - Cambiar HKEY_LOCAL_MACHINE\SYSTEM\Select > "Default" > Value: 7
+    - Cambiar HKEY_LOCAL_MACHINE\SYSTEM\Select > "LastKnowGood" > Value: 7
+6. Reiniciar equipo.

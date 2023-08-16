@@ -861,7 +861,7 @@ C:\malware\test2.::$index_allocation>cd ..
 C:\malware>
 ```
 
-### 🔵 Auditoría en el uso privilegiado de los siguientes comandos
+### ➥ Auditoría en el uso privilegiado de los siguientes comandos
 Los siguientes comandos privilegiados deberían auditarse:
 |   |   |   |   |   |   |
 |:-:|:-:|:-:|:-:|:-:|:-:|
@@ -881,7 +881,7 @@ Los siguientes comandos no se instalan por defecto, no obstante en caso de insta
 | chat | fastrm | named | newsrequeue | prunehistory | rpcrquotad |
 | comsat | filechan | namedreload | nnrpd | rarp | rshd |
 
-### 🔵 Bypass Windows Defender y AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)
+### ▶️ Bypass Windows Defender y AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)
 Una forma de poder eludir el sistema de protección por defecto de Windows es renombrar el fichero del proceso de ejecución del servicio de Windows Defender. De forma que al iniciar el sistema este no se pueda ejecutar al no encontrar correctamente el nombre de este fichero que levanta el proceso de servicio de Windows Defender. Esto permite a actores maliciosos poder ejecutar binarios maliciosos como por ejemplo Mimikatz u otros.
 
 **MsMpEng.exe** es el proceso principal de la aplicación antimalware Windows Defender. Windows Defender viene preinstalado en Windows 11 y Windows 10, ubicado en "*C:\Program Files\Windows Defender\MsMpEng.exe*"

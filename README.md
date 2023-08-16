@@ -893,7 +893,7 @@ Este proceso no se puede modificar renombrándolo ya que está constantantemente
     - Abrir reg1.dat > buscar "msmpeng.exe" > establecer "text encoding: Unicode UTF-16".
 3. Renombrar extensión: "msmpeng.exe" en "msmpeng.xxx" > guardar reg1.dat.
 4. Regedit > crear nueva key vacía > `HKEY_LOCAL_MACHINE\SYSTEM\ControlSet007` > import reg1.dat.
-5. Cambiar ControlSet por defecto del sistema, 1 al valor correspondiente del ControlSet establecido anteriormente 7:
+5. Por orden ControlSet001 es la rama que el sistema carga por defecto al iniciarse. Cambiar el orden de esta prioridad en la rama "HKLM\SYSTEM\Select" correspondiente del ControlSet creado anteriormente y correspondiente a ControlSet007:
     - Cambiar `HKEY_LOCAL_MACHINE\SYSTEM\Select` > "Current" > Value: 7
     - Cambiar `HKEY_LOCAL_MACHINE\SYSTEM\Select` > "Default" > Value: 7
     - Cambiar `HKEY_LOCAL_MACHINE\SYSTEM\Select` > "LastKnowGood" > Value: 7

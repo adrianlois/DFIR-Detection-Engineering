@@ -44,7 +44,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 | File Path | Info |
 |-----------|------|
 | `/var/log/syslog` | Los mensajes globales del sistema incluyendo trazas que generan algunos servicios durante el arranque, trazas que dejan los programas que se ejecutan por parte del demonio CROND, logs sobre procesos de autenticación llevados a cabo por los usuarios, etc. |
-| `/var/log/auth.log` (Debian y derivados) `/var/log/secure` (Red Hat y derivados) | Almacena los eventos relacionados con mecanismos de autorización, por ejemplo, cuando un usuario nicia sesión en el sistema. |
+| `/var/log/auth.log` (Debian y derivados) ; `/var/log/secure` (Red Hat y derivados) | Almacena los eventos relacionados con mecanismos de autorización, por ejemplo, cuando un usuario nicia sesión en el sistema. |
 | `/var/log/kern.log` | Este fichero almacena los logs producidos por el kernel. |
 | `/var/log/dpkg.log` | En sistemas basados en Debian se genera este fichero cuando se instala o desinstala software utilizando DPKG. Contiene las trazas y eventos producidos durante el proceso de instalación. |
 | `/var/log/btmp` | Este fichero incluye trazas sobre los intentos de autenticación fallido en el sistema. |

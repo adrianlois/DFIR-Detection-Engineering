@@ -6,8 +6,56 @@
 
 Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y detección de técnicas utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.
 
-- 🔍 [Análisis forense y artefactos](#-análisis-forense-y-artefactos)
-- 📓 [Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
+# Índice
+
+- [🔍 Análisis forense y artefactos](#-anlisis-forense-y-artefactos)
+    - [▶️ Logs de eventos de Windows](#-logs-de-eventos-de-windows)
+    - [▶️ Logs de registros sobre instalaciones de Windows](#-logs-de-registros-sobre-instalaciones-de-windows)
+    - [▶️ Logs del sistema de Linux](#-logs-del-sistema-de-linux)
+    - [▶️ Logs de aplicaciones de Linux](#-logs-de-aplicaciones-de-linux)
+    - [▶️ Logs journalctl (systemd)](#-logs-journalctl-systemd)
+    - [▶️ Artefactos de conexiones de clientes VPN](#-artefactos-de-conexiones-de-clientes-vpn)
+    - [▶️ Persistencia en servicios](#-persistencia-en-servicios)
+    - [▶️ ¿Han eliminado el registro de eventos de Windows?](#-han-eliminado-el-registro-de-eventos-de-windows)
+    - [▶️ Volatility: clipboard](#-volatility-clipboard)
+    - [▶️ Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)](#-obtener-archivos-con-pid-de-procesos-maliciosos-conexiones-ssh-linux)
+    - [▶️ Filtros Wireshark para analistas](#-filtros-wireshark-para-analistas)
+    - [▶️ Análisis Forense en contenedores Docker](#-anlisis-forense-en-contenedores-docker)
+    - [▶️ Análisis y artefactos de ShellBags](#-anlisis-y-artefactos-de-shellbags)
+    - [▶️ Thumbcache Viewer](#-thumbcache-viewer)
+    - [▶️ Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp](#-forense-android-evidencias-de-imgenes-eliminadas-y-enviadas-por-whatsapp)
+    - [▶️ Comprobar si un usuario ejecutó el comando "sudo"](#-comprobar-si-un-usuario-ejecut-el-comando-sudo)
+    - [▶️ Artefactos en dispositivos USB (Windows, Linux y MacOS)](#-artefactos-en-dispositivos-usb-windows-linux-y-macos)
+    - [▶️ Análisis Forense de logs en AnyDesk, Team Viewer y LogMeIn](#-anlisis-forense-de-logs-en-anydesk-team-viewer-y-logmein)
+    - [▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)](#-conocer-la-url-de-descarga-de-un-archivo-zoneidentifier)
+    - [▶️ Artefactos forense - MS Word](#-artefactos-forense---ms-word)
+    - [▶️ Analizar malware en fichero XLSX (MS Excel)](#-analizar-malware-en-fichero-xlsx-ms-excel)
+    - [▶️ Asignación de IPs en equipos](#-asignacin-de-ips-en-equipos)
+    - [▶️ Windows Firewall (wf.msc): Reglas residuales de software desintalado](#-windows-firewall-wfmsc-reglas-residuales-de-software-desintalado)
+    - [▶️ Persistencia: suplantación de procesos del sistema](#-persistencia-suplantacin-de-procesos-del-sistema)
+    - [▶️ Detectar malware Linux fileless (memfd)](#-detectar-malware-linux-fileless-memfd)
+    - [▶️ SANS - Posters & Cheat Sheets (DFIR)](#-sans---posters--cheat-sheets-dfir)
+- [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-deteccin-de-tcnicas-de-evasin-en-sistemas-siem-soc-y-anti-forense)
+    - [▶️ Comando Windows: net y net1](#-comando-windows-net-y-net1)
+    - [▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
+    - [▶️ WAF Bypass (SSRF): usar acortamiento IP local](#-waf-bypass-ssrf-usar-acortamiento-ip-local)
+    - [▶️ Post-Explotación - PrivEsc con scmanager](#-post-explotacin---privesc-con-scmanager)
+    - [▶️ Comando history](#-comando-history)
+    - [▶️ Deshabilitar el uso del historial en la Shell](#-deshabilitar-el-uso-del-historial-en-la-shell)
+    - [▶️ DLL Hijacking *cscapi.dll*](#-dll-hijacking-cscapidll)
+    - [▶️ Otra técnica de ejecución de CMD o PowerShell](#-otra-tcnica-de-ejecucin-de-cmd-o-powershell)
+    - [▶️ Uso de *type* para descargar o subir ficheros](#-uso-de-type-para-descargar-o-subir-ficheros)
+    - [▶️ Forensia (Anti-Forensic)](#-forensia-anti-forensic)
+    - [▶️ Bloquear conexiones USB: Rubber Ducky y Cactus WHID](#-bloquear-conexiones-usb-rubber-ducky-y-cactus-whid)
+    - [▶️ Claves de registro de Windows donde se almacenan las contraseñas](#-claves-de-registro-de-windows-donde-se-almacenan-las-contraseas)
+    - [▶️ WDigest Authentication: Habilitado / Deshabilitado](#-wdigest-authentication-habilitado--deshabilitado)
+    - [▶️ Detectar si un sistema es una máquina virtual con PowerShell o WMIC](#-detectar-si-un-sistema-es-una-mquina-virtual-con-powershell-o-wmic)
+    - [▶️ Técnicas de ofuscación en la ejecucación de comandos en Windows](#-tcnicas-de-ofuscacin-en-la-ejecucacin-de-comandos-en-windows)
+    - [▶️ Detectar acciones de AutoRun al abrir una Command Prompt (cmd)](#-detectar-acciones-de-autorun-al-abrir-una-command-prompt-cmd)
+    - [▶️ Extensiones ejecutables alternativas a .exe](#-extensiones-ejecutables-alternativas-a-exe)
+    - [▶️ Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (tipo de flujo NTFS en directorios $INDEX_ALLOCATION)](#-detectar-malware-que-se-est-ejecutando-desde-una-carpeta-que-no-permite-su-acceso-por-error-de-ubicacin-tipo-de-flujo-ntfs-en-directorios-index_allocation)
+    - [▶️ Auditoría en el uso privilegiado de los siguientes comandos](#-auditora-en-el-uso-privilegiado-de-los-siguientes-comandos)
+    - [▶️ Deshabilitar Windows Defender para eludir la detección de AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)](#-deshabilitar-windows-defender-para-eludir-la-deteccin-de-amsi-en-la-ejecucin-de-binarios-maliciosos-renombrar-msmpengexe-a-travs-del-registro-controlset00x)
 
 ---
 
@@ -19,7 +67,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 |-----------|------|------------|
 | `%WINDIR%\System32\config` `%WINDIR%\System32\winevt\Logs` | Contiene los logs de Windows accesibles desde el visor de eventos | Casi todas. Entradas, fechas, accesos, permisos, programas, usuario, etc. |
 
-### ▶️ Logs de registros varios sobre instalaciones en Windows
+### ▶️ Logs de registros sobre instalaciones de Windows
 
 | File Path | Info | Evidencias |
 |-----------|------|------------|
@@ -35,22 +83,237 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 | `%AppData%\setupapi.log` | Contiene información de unidades, services pack y hotfixes | Unidades locales y extraibles, programas de instalación, programas instalados, actualizaciones de seguridad, reconocimiento de dispositivos conectados |
 | `%WINDIR%\INF\setupapi.dev.log` | Contiene información de unidades Plug and Play y la instalación de drivers | Versión de SO, Kernel, Service Pack, arquitectura, modo de inicio, fechas, rutas, lista de drivers, dispositivos conectados, dispositivos iniciados o parados |
 | `%WINDIR%\INF\setupapi.app.log` | Contiene información del registro de instalación de las aplicaciones | Fechas, rutas, sistema operativo, versiones, ficheros, firma digital, dispositivos |
-| `%WINDIR%\Performance\Winsat\winsat.log` | Contiene trazas de utilización de la aplicación WINSAT que miden el rendimiento del sistema | Fechas, valores sobre la tarjeta gráfica, CPU, velocidades, puertos USB |
+| `%WINDIR%\Performance\Winsat\winsat.log` | Contiene registros de utilización de la aplicación WINSAT que miden el rendimiento del sistema | Fechas, valores sobre la tarjeta gráfica, CPU, velocidades, puertos USB |
 | `%ProgramData%\Microsoft\Windows Defender\Support` | Contiene pruebas históricas de WD (Windows Defender). Los nombres de los archivos serán- MPLog-\*.log, MPDetection-\*.log, MPDeviceControl-\*.log | Fechas, versiones productos, servicios, notificaciones, CPU, ProcessImageName, EstimatedImpact, binarios, etc. |
 | `%ProgramData%\Microsoft\Windows Defender\Scans\Scans\History` | Cuando se detecta una amenaza, WD almacena un archivo binario "DetectionHistory" | Se pueden analizar estos archivos utilizando herramientas como DHParser |
 
-### ▶️ Logs de Linux
+### ▶️ Logs del sistema de Linux
+
+Estos ficheros de logs pueden variar, existir o no dependiendo del tipo de distribución del sistema Linux.
 
 | File Path | Info |
 |-----------|------|
-| `/var/log/syslog` | Los mensajes globales del sistema incluyendo trazas que generan algunos servicios durante el arranque, trazas que dejan los programas que se ejecutan por parte del demonio CROND, logs sobre procesos de autenticación llevados a cabo por los usuarios, etc. |
-| `/var/log/auth.log` (Debian y derivados) ; `/var/log/secure` (Red Hat y derivados) | Almacena los eventos relacionados con mecanismos de autorización, por ejemplo, cuando un usuario nicia sesión en el sistema. |
-| `/var/log/kern.log` | Este fichero almacena los logs producidos por el kernel. |
-| `/var/log/dpkg.log` | En sistemas basados en Debian se genera este fichero cuando se instala o desinstala software utilizando DPKG. Contiene las trazas y eventos producidos durante el proceso de instalación. |
-| `/var/log/btmp` | Este fichero incluye trazas sobre los intentos de autenticación fallido en el sistema. |
+| `/var/log/syslog` | Contiene la totalidad de logs capturados por rsyslogd. Los mensajes globales del sistema incluyendo registros que generan algunos servicios durante el arranque, registros que dejan los programas que se ejecutan por parte del demonio CROND, logs sobre procesos de autenticación llevados a cabo por los usuarios, etc. |
+| `/var/log/auth.log` (Debian y derivados) ; `/var/log/secure` (Red Hat y derivados) | Almacena los eventos relacionados con mecanismos de autenticación, por ejemplo, cuando un usuario inicia sesión en el sistema, cambios en contraseñas, relacionados con sudo. |
+| `var/log/debug` |	Registra datos de los programas que están actuando en modo depuración. De esta forma los programadores pueden obtener información si sus programas están funcionando adecuadamente. |
+| `/var/log/kern.log` | Este fichero almacena los logs producidos por el kernel. Puede ser útil para intentar detectar y solucionar problemas con la detección de hardware. |
+| `/var/log/dmesg` | Registra información relacionada con el hardware del equipo. Contiene información para concluir si el hardware funciona de forma adecuada. |
+| `/var/log/dpkg.log` | En sistemas basados en Debian se genera este fichero cuando se instala o desinstala software utilizando DPKG. Contiene los registros y eventos producidos durante el proceso de instalación. |
+| `/var/log/messages` | Contiene mensajes informativos y no críticos de la actividad del sistema operativo. Acostumbra a contener los errores que se registran en el arranque del sistema que no estén relacionados con el Kernel. Por lo tanto, si no se inicia un servicio, como por ejemplo el servidor de sonido, podemos buscar información dentro de este archivo. |
+| `/var/log/faillog` | Registra los intentos fallidos de autenticación de cada usuario. Dentro del archivo se almacena una lista de usuarios, los fallos totales de cada usuario, el número de fallo máximos que permitimos y la fecha y hora del último fallo. Si un usuario supera el número de fallos máximos establecidos se deshabilitará el usuario por el tiempo que nosotros fijemos. |
 | `/var/log/user.log` | Incluye información sobre los eventos producidos en las sesiones de los usuarios, dichos eventos incluyen errores, conexiones e interfaces de red que se encuentran activas. |
-| `/var/log/wtmp` | Contiene información sobre qué usuarios se encuentran autenticados y usando el sistema actualmente. |
-| `/var/log/cron` | Se trata de un fichero de logs en donde se guardan las trazas producidas por las tareas programadas ejecutadas por el demonio CROND. |
+| `/var/log/lastlog` | Ayuda a ver la fecha y la hora en que cada usuario se ha conectado por última vez. |
+| `/var/log/btmp` | Este fichero incluye registros sobre los intentos de autenticación fallido en el sistema. Almacena los intentos fallidos de logins en un equipo. Si alguien realizará un ataque de fuerza bruta a un servidor ssh, el fichero registraría la IP del atacante, el día y hora en que ha fallado el login, el nombre de usuario con que se ha intentado loguear, etc. Para visualizar este fichero usar utmpdump: "utmpdump /var/log/btmp"|
+| `/var/log/wtmp` | Contiene información sobre qué usuarios se encuentran autenticados y usando el sistema actualmente. Equivalente al comando "last"|
+| `/var/run/utmp` | Ver los usuarios que actualmente están logueados en un equipo. |
+| `/var/log/boot.log` | Información relacionada con el arranque del sistema. Podemos consultarlo para analizar si se levantan los servicios del sistema, si se levanta la red, si se montan las unidades de almacenamiento, para averiguar un problema que hace que nuestro equipo no inicie, etc. |
+| `/var/log/cron` | Se trata de un fichero de logs en donde se guardan los registros producidas por las tareas programadas ejecutadas por el demonio CROND. |
+| `/var/log/daemon.log`	| Registra la actividad de los demonios o programas que corren en segundo plano. Para ver si un demonio se levanto o está dando errores podemos consultar este log. Dentro de daemon.log encontraremos información sobre el demonio que inicia el gestor de inicio, el demonio que inicia la base de datos de MySQL, etc. |
+| `/var/log/apt/history.log` | Detalle de los paquetes instalados, desinstalados o actualizados mediante el gestor de paquetes apt. |
+| `/var/log/apt/term.log` | Contiene la totalidad de información mostrada en la terminal en el momento de instalar, actualizar o desinstalar un paquete con apt. |
+| `/var/log/mail.log` |	Información relacionada con el servidor de email que tengamos instalado en el equipo. En mi caso uso sendmail y registra la totalidad de sus acciones en mail.log. |
+| `/var/log/alternatives.log` | Registra todas las operaciones relacionadas con el sistema de alternativas. Por lo tanto, todas las acciones que realicemos usando el comando update-alternatives se registrarán en este log. El sistema de alternativas permite definir nuestro editor de texto predeterminado, el entorno de escritorio predeterminado, la versión de java que queremos usar por defecto, etc. |
+| `/var/log/Xorg.0.log` | Registra la totalidad de eventos relacionados con nuestra tarjeta gráfica desde que arrancamos el ordenador hasta que lo apagamos. Por lo tanto puede ayudar a detectar problemas con nuestra tarjeta gráfica. |
+
+### ▶️ Logs de aplicaciones de Linux
+
+| File Path | Info |
+|-----------|------|
+| `/var/log/nginx/access.log` `/var/log/nginx/error.log` | **"access.log":** Registra las solicitudes al servidor Nginx, incluyendo detalles sobre la solicitud, dirección IP y código de respuesta HTTP, user-agent del cliente y más. **"error.log":** Registra los errores en el servidor Nginx, como problemas de configuración, errores de conexión y otros fallos técnicos. |
+| `/var/log/mysqld.log` | Registra eventos y mensajes relacionados con el sistema de gestión de bases de datos MySQL. Contiene información sobre el inicio y apagado del servidor MySQL, consultas ejecutadas, errores y advertencias, así como cualquier actividad relevante en la base de datos. |
+| `/var/log/rkhunter.log` | Registra la totalidad de resultados obtenidos por rkhunter. |
+| `/var/log/samba/*.*` | Dentro de la ubicación "/var/log/samba" se encuentran distintos logs que registrarán los eventos que han ocurrido en nuestro servidor samba. Algunos de los registros que encontrarán son sobre creaciones de directorios, renombrado de archivos, ficheros creados y borrados, registros de conexiones y desconexiones al servidor, etc. |
+| `/var/log/cups/*.*` | **"error_log"**, **"page_log"** y **"access_log"** contienen información acerca las horas en que una IP se ha conectado al servidor, el usuario que se ha conectado al servidor, los errores y advertencias del servidor, la fecha en que se ha imprimido un determinado documento, el número de copias, etc. |
+| `/var/log/lighttpd/*.*` | **"access.log"** y **"error.log"** contienen información sobre las visitas y errores que se generan cuando un usuario visita una página web montada sobre un servidor lighttpd. |
+| `/var/log/apache2/access.log` o `/var/log/httpd/access_log` | Contiene información de los usuarios que han accedido al servidor web Apache. En este fichero se encuentran datos como las webs que se han visitado desde una determinada IP, la hora en que una IP nos ha visitado, etc. |
+| `/var/log/apache2/error.log` o `/var/log/httpd/error_log` | Registra la totalidad de errores cuando se procesan las solicitudes de los visitantes al servidor web Apache. |
+| `/var/log/prelink/` |	Contiene información sobre las modificaciones que la utilidad prelink realiza a los binarios y librerías compartidas. |
+| `/var/log/mysql/mysql.log` | Registra la totalidad de sentencias que los clientes envían al servidor. |
+| `/var/log/mysql/error.log` | Registra los errores o problemas detectados al iniciar, ejecutar o parar el servicio. Por lo tanto en el caso que MySQL o MariaDB no se inicien deberemos acceder a este fichero para obtener información del problema. |
+| `/var/log/mysql/mysql-slow.log` |	Encontraremos información acerca de las sentencias que han tardado más segundos que los especificados en la variable del sistema long_query_time. De esta forma podremos conocer la sentencias SQL que se ejecutan de forma lenta. |
+| `/var/log/fail2ban.log` | Registra el timestamp en el que una determinada IP ha sido bloqueada y desbloqueada al intentar acceder a un determinado servicio, normalmente SSH. |
+| `/var/log/openvpn.log` | La hora en la que una determinada IP se ha conectado al servidor OpenVPN. Aunque para registrar los intentos fallidos de autenticación también se podría hacer uso de fail2ban. |
+| `/var/log/openvpn-status.log` | Contiene información de los usuarios conectados al servidor OpenVPN. Ejemplos de la información que contiene es la IP de cada uno de los usuarios, la cuenta de usuario con que se ha conectado una determinada IP, la hora en que cada usuario ha iniciado la conexión, etc. |
+| `/var/log/letsencrypt/letsencrypt.log` | Contiene todo tipo de información acerca de los certificados de Let's Encrypt. Por ejemplo si se han producido errores en la renovación de los certificados. |
+
+### ▶️ Logs journalctl (systemd)
+**Systemd**: es un sistema moderno en Linux que reemplaza a SysV init, mejorando la eficiencia del inicio y administración de servicios. SysV representa tanto al sistema operativo Unix System V como a un estilo de inicio basado en scripts de inicialización tradicionales, "init.d" gestiona servicios en sistemas con este enfoque. Systemd introduce herramientas como "journalctl", permitiendo acceder y analizar eficientemente registros estructurados del sistema.
+
+**Journalctl**: es una herramienta en Linux que trabaja con el registro de systemd, brindando acceso a registros estructurados en el Journal de systemd. Facilita consultas y análisis avanzados de eventos del sistema mediante registros binarios estructurados, en contraste con los registros de texto plano tradicionales.
+
+- Configurar la hora del sistema para visualizar los registros en hora UTC o local systemd mostrará los resultados en hora local de manera predeterminada.
+```bash
+timedatectl list-timezones
+timedatectl set-timezone <zone>
+timedatectl status
+```
+
+- Filtrar por prioridad.
+```bash
+Journalctl -p <n>
+# 0: emerg
+# 1: alert
+# 2: crit
+# 3: err
+# 4: warning
+# 5: notice
+# 6: info
+# 7: debug
+```
+
+- Filtrar por fecha/hora y rangos.
+```bash
+journalctl --since "YYYY-MM-DD"
+journalctl --since "YYYY-MM-DD HH:MM:SS"
+journalctl --since "-5 day"
+journalctl --until "YYYY-MM-DD"
+journalctl --since "YYYY-MM-DD HH:MM:SS" --until "YYYY-MM-DD HH:MM:SS"
+```
+
+- Mostrar las 20 entradas más recientes.
+```bash
+journalctl -n 20
+```
+
+- Hacer un seguimiento de los registros a tiempo real (equivalente a tail -f).
+```bash
+journalctl -f # Equivalente a "journalctl" y después presionar "Shift+F".
+```
+
+- Mostrar la lista de todos los boots que existen en el sistema.
+```bash
+journalctl --list-boots
+```
+
+- Mostrar resgistros de kernel.
+```bash
+journalctl -k
+```
+
+- Mostrar los registros de la sesión de inicio anterior para rastrear eventos previos al reinicio del sistema.
+```bash
+journalctl -b -1
+```
+
+- Mostrar los servicios que son dependientes del systemd.
+```bash
+systemctl list-units -t service --all
+```
+
+- Filtrar por servicios.
+```bash
+journalctl -u sshd.service
+journalctl -u sshd.service -u dbus.service
+journalctl -u sshd.service --since today
+```
+
+- Cambiar el formato en los resultados de salida.
+```bash
+journalctl -b -u nginx -o json
+journalctl -b -u nginx -o json-pretty
+journalctl -b -u nginx -o short # Resultado similar a un estilo syslog.
+```
+
+- Filtrar por proceso, usuario, grupo o servicio.
+```bash
+journalctl _PID=<identificador>
+journalctl _UID=<identificador>
+journalctl _GID=<identificador>
+journalctl _COMM=<servicio>
+# Para filtrar resultados del día actual: --since today
+```
+
+- Mostrar registros de los discos.
+```bash
+journalctl /dev/sda
+```
+
+- Mostrar un resultado de salida estándar.
+```bash
+journalctl --no-pager
+```
+
+- Eliminar y guardar registros antiguos.
+```bash
+# Eliminar entradas antiguas hasta que el espacio total del diario ocupe lo solicitado.
+sudo journalctl --vacuum-size=1G
+
+# Guardar las entradas del último año.
+sudo journalctl --vacuum-time=1years
+```
+
+- Analizar eventos de inicio y apagado del sistema.
+```bash
+journalctl _SYSTEMD_UNIT=systemd-logind.service
+```
+
+- Mostrar eventos de modificación de archivos relacionados con su eliminación (rm).
+```bash
+journalctl /usr/bin/rm
+```
+
+- Buscar intentos de elevación de privilegios.
+```bash
+journalctl | grep "sudo"
+```
+
+- Mostrar eventos de modificación de archivos de registro.
+```bash
+journalctl /var/log/audit/audit.log
+journalctl /usr/bin/journalctl
+```
+
+- Buscar eventos de ejecución de programas en directorios temporales.
+```bash
+journalctl _COMM="mv" OR _COMM="cp" | grep "/tmp/"
+```
+
+- Analizar cambios en archivos de configuración de servicios.
+```bash
+journalctl /etc/nginx/nginx.conf
+```
+
+- Mostrar cambios en archivos de configuración.
+```bash
+journalctl /usr/bin/vi
+journalctl /usr/bin/vim
+journalctl /usr/bin/nano
+```
+
+- Filtrar por eventos de inicio de sesión fallidos en SSH.
+```bash
+journalctl _SYSTEMD_UNIT=sshd.service | grep "Failed password"
+```
+
+- Mostrar eventos de inicio de sesión de usuarios remotos.
+```bash
+journalctl _SYSTEMD_UNIT=sshd.service | grep "Accepted"
+```
+
+Buscar eventos de ejecución de comandos de shell.
+```bash
+journalctl _COMM="bash" OR _COMM="sh"
+```
+
+Mostrar eventos de montaje y desmontaje de dispositivos.
+```bash
+journalctl _COMM="mount" OR _COMM="umount"
+```
+
+Mostrar eventos de cambios de permisos en archivos.
+```bash
+journalctl _COMM="chmod" OR _COMM="chown"
+```
+
+- Mostrar eventos de inicio de sesión exitosos.
+```bash
+journalctl SYSLOG_FACILITY=4
+```
+
+- Mostrar cambios en cronjobs.
+```bash
+journalctl /usr/sbin/cron
+```
 
 ### ▶️ Artefactos de conexiones de clientes VPN
 
@@ -894,7 +1157,7 @@ Los siguientes comandos no se instalan por defecto, no obstante en caso de insta
 | chat | fastrm | named | newsrequeue | prunehistory | rpcrquotad |
 | comsat | filechan | namedreload | nnrpd | rarp | rshd |
 
-### ▶️ Bypass Windows Defender y AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)
+### ▶️ Deshabilitar Windows Defender para eludir la detección de AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)
 Una forma de poder eludir el sistema de protección por defecto de Windows es renombrar el fichero del proceso de ejecución del servicio de Windows Defender. De forma que al iniciar el sistema este no se pueda ejecutar al no encontrar correctamente el nombre de este fichero que levanta el proceso de servicio de Windows Defender. Esto permite a actores maliciosos poder ejecutar binarios maliciosos como por ejemplo Mimikatz u otros.
 
 **MsMpEng.exe** es el proceso principal de la aplicación antimalware Windows Defender. Windows Defender viene preinstalado en Windows 11 y Windows 10, ubicado en "*C:\Program Files\Windows Defender\MsMpEng.exe*"

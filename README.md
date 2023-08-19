@@ -8,8 +8,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 # Índice
 
-- [🔍 Análisis forense y artefactos](#---an-lisis-forense-y-artefactos)
-    + [▶️ Logs de eventos de Windows](#---logs-de-eventos-de-windows)
+- [🔍 Análisis forense y artefactos](#🔍-análisis-forense-y-artefactos)
+    + [▶️ Logs de eventos de Windows](#▶️-logs-de-eventos-de-windows)
     + [▶️ Logs de registros sobre instalaciones de Windows](#---logs-de-registros-sobre-instalaciones-de-windows)
     + [▶️ Logs del sistema de Linux](#---logs-del-sistema-de-linux)
     + [▶️ Logs de aplicaciones de Linux](#---logs-de-aplicaciones-de-linux)

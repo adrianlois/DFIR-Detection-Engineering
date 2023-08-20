@@ -8,7 +8,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 # Índice
 
-- [🔍 Análisis forense y artefactos](#%EF%B8%8F-anlisis-forense-y-artefactos)
+- [🔍 Análisis forense y artefactos](#-anlisis-forense-y-artefactos)
     - [▶️ Logs de eventos de Windows](#%EF%B8%8F-logs-de-eventos-de-windows)
     - [▶️ Logs de registros sobre instalaciones de Windows](#%EF%B8%8F-logs-de-registros-sobre-instalaciones-de-windows)
     - [▶️ Logs del sistema de Linux](#%EF%B8%8F-logs-del-sistema-de-linux)
@@ -36,7 +36,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Detectar malware Linux fileless (memfd)](#%EF%B8%8F-detectar-malware-linux-fileless-memfd)
     - [▶️ SANS - Posters & Cheat Sheets (DFIR)](#%EF%B8%8F-sans---posters--cheat-sheets-dfir)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#%EF%B8%8F-deteccin-de-tcnicas-de-evasin-en-sistemas-siem-soc-y-anti-forense)
-    - [▶️ Comando Windows: net y net1](#%EF%B8%8F-comando-windows-net-y-net1)
+    - [▶️ Comando Windows: net y net1](#-comando-windows-net-y-net1)
     - [▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#%EF%B8%8F-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
     - [▶️ WAF Bypass (SSRF): usar acortamiento IP local](#%EF%B8%8F-waf-bypass-ssrf-usar-acortamiento-ip-local)
     - [▶️ Post-Explotación - PrivEsc con scmanager](#%EF%B8%8F-post-explotacin---privesc-con-scmanager)

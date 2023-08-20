@@ -61,7 +61,9 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 # 🔍 Análisis forense y artefactos
 
-### ▶️ Logs de eventos de Windows
+## ▶️ Logs de eventos de Windows
+
+# ▶️ Logs de eventos de Windows
 
 | File Path | Info | Evidencias |
 |-----------|------|------------|

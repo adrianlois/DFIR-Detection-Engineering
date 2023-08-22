@@ -320,7 +320,7 @@ journalctl /usr/sbin/cron
 ### ▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR
 
 - Inicio de Sesión y Autenticación:
-```ps
+```bash
 540: Inicio de sesión de red exitoso.
 4624: Inicio de sesión exitoso.
 4625: Fallo en el inicio de sesión de una cuenta.

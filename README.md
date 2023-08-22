@@ -35,6 +35,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     + [▶️ Persistencia: suplantación de procesos del sistema](#%EF%B8%8F-persistencia-suplantación-de-procesos-del-sistema)
     + [▶️ Detectar malware Linux fileless (memfd)](#%EF%B8%8F-detectar-malware-linux-fileless-memfd)
     + [▶️ SANS - Posters & Cheat Sheets (DFIR)](#%EF%B8%8F-sans---posters--cheat-sheets-dfir)
+    + [▶️ Visualizar GPOs, control de accesos, usuarios, grupos y otros funciones de Active Directory y LDAP](#%EF%B8%8F-visualizar-gpos-control-de-accesos-usuarios-grupos-y-otros-funciones-de-active-directory-y-ldap)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
     + [▶️ Comando Windows: net y net1](#%EF%B8%8F-comando-windows-net-y-net1)
     + [▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#%EF%B8%8F-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
@@ -875,6 +876,10 @@ cat /proc/*/maps | grep "memfd"
 ### ▶️ SANS - Posters & Cheat Sheets (DFIR)
 
 - Referencia: https://www.sans.org/posters/?focus-area=digital-forensics
+
+### ▶️ Visualizar GPOs, control de accesos, usuarios, grupos y otros funciones de Active Directory y LDAP
+- Visualizar *Registry.pol* de GPOs: https://sdmsoftware.com/389932-gpo-freeware-downloads/registry-pol-viewer-utility
+- Consultar múltiples funciones de AD: https://nettools.net/download
 
 
 ---

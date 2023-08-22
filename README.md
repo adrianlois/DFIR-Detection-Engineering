@@ -402,7 +402,8 @@ journalctl /usr/sbin/cron
 5158: Una regla de firewall de Windows fue aplicada.
 ```
 
-- **Sysmon** (https://learn.microsoft.com/es-es/sysinternals/downloads/sysmon#events)
+- **Sysmon** 
+  + https://learn.microsoft.com/es-es/sysinternals/downloads/sysmon#events
 
 ```
 # Inicio de Sesión y Autenticación:

@@ -405,7 +405,7 @@ journalctl /usr/sbin/cron
 - **Sysmon** 
   + https://learn.microsoft.com/es-es/sysinternals/downloads/sysmon#events
 
-```cmd
+```bash
 # Inicio de Sesión y Autenticación:
 1: Creación de proceso. Puede indicar la ejecución de herramientas de autenticación o credenciales.
 

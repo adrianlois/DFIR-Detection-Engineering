@@ -378,11 +378,12 @@ journalctl /usr/sbin/cron
 ```
 
 - Otros:
+
+`4720`: Se creó una cuenta de usuario.  
+`4722`: Se habilitó una cuenta de usuario.  
+`4723`: Se cambió una cuenta de usuario.  
+`4725`: Se deshabilitó una cuenta de usuario.  
 ```
-4720: Se creó una cuenta de usuario.
-4722: Se habilitó una cuenta de usuario.
-4723: Se cambió una cuenta de usuario.
-4725: Se deshabilitó una cuenta de usuario.
 4727: Se creó un grupo global habilitado para seguridad.
 4728: Se agregó un miembro a un grupo global habilitado para seguridad.
 4732: Se agregó un miembro a un grupo local habilitado para seguridad.

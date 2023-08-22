@@ -402,6 +402,42 @@ journalctl /usr/sbin/cron
 5158: Una regla de firewall de Windows fue aplicada.
 ```
 
+- **Sysmon** (https://learn.microsoft.com/es-es/sysinternals/downloads/sysmon#events)
+
+```
+# Inicio de Sesión y Autenticación:
+1: Creación de proceso. Puede indicar la ejecución de herramientas de autenticación o credenciales.
+
+# Creación y Término de Procesos:
+1: Creación de proceso.
+5: Término de proceso. Puede ayudar a identificar la ejecución y finalización de herramientas maliciosas.
+
+# Cambios en el Registro:
+12: Cambio en una clave de registro. Puede indicar cambios maliciosos en la configuración del sistema.
+
+# Acceso a Archivos y Objetos:
+8: Creación de archivo. Puede indicar la creación de archivos maliciosos.
+11: Creación de archivo. Puede indicar la creación de archivos temporales o de configuración.
+17: Cambio en la propiedad de archivo. Puede indicar cambios maliciosos en archivos importantes.
+
+# Conexiones de Red:
+3: Conexión de red establecida. Puede ayudar a identificar conexiones a recursos externos.
+4: Conexión de red terminada. Puede indicar actividad de red sospechosa.
+
+# Carga de Módulos y Controladores:
+7: Carga de imagen en un proceso. Puede indicar la carga de módulos maliciosos.
+
+# Detección de Firmas de Malware:
+16: Detección de imagen. Puede indicar la detección de malware por parte de Sysmon.
+
+# Creación de Servicios y Controladores:
+17: Creación de servicio. Puede indicar la creación de servicios maliciosos.
+
+# Cambio de Rutas de Acceso de Archivos:
+18: Cambio de ruta de acceso de archivo. Puede indicar cambios en la ubicación de archivos sospechosos.
+```
+
+
 ### ▶️ Artefactos de conexiones de clientes VPN
 
 Revisar posibles artefactos de conexiones de clientes VPN realizadas desde un PC comprometido por un actor malicioso.

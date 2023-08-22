@@ -883,7 +883,7 @@ cat /proc/*/maps | grep "memfd"
 |-------------|------|------|
 | `Registry.pol Viewer Utility` (sdmsoftware) | Visualizar *Registry.pol* de GPOs | https://sdmsoftware.com/389932-gpo-freeware-downloads/registry-pol-viewer-utility |
 | `Nettools` | Consultar múltiples funciones de AD | https://nettools.net/download |
-| `Ping Castle` | Auditoría de seguridad general del estado de AD. Útil para analizar herencias o nuevas membresías a grupos privilegiados | https://nettools.net/download |
+| `Ping Castle` | Auditoría de seguridad general del estado de AD. Útil para analizar herencias o nuevas membresías a grupos privilegiados | https://pingcastle.com/download |
 
 
 ---

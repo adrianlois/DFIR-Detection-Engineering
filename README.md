@@ -14,6 +14,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     + [▶️ Logs del sistema de Linux](#%EF%B8%8F-logs-del-sistema-de-linux)
     + [▶️ Logs de aplicaciones de Linux](#%EF%B8%8F-logs-de-aplicaciones-de-linux)
     + [▶️ Logs journalctl (systemd)](#%EF%B8%8F-logs-journalctl-systemd)
+    + [▶️ ID de eventos de Windows relevantes en investigaciones DFIR](#%EF%B8%8F-id-de-eventos-de-windows-relevantes-en-investigaciones-dfir)
     + [▶️ Artefactos de conexiones de clientes VPN](#%EF%B8%8F-artefactos-de-conexiones-de-clientes-vpn)
     + [▶️ Persistencia en servicios](#%EF%B8%8F-persistencia-en-servicios)
     + [▶️ ¿Han eliminado el registro de eventos de Windows?](#%EF%B8%8F-han-eliminado-el-registro-de-eventos-de-windows)
@@ -314,6 +315,91 @@ journalctl SYSLOG_FACILITY=4
 - Mostrar cambios en cronjobs.
 ```bash
 journalctl /usr/sbin/cron
+```
+
+### ▶️ ID de eventos de Windows relevantes en investigaciones DFIR
+
+- Inicio de Sesión y Autenticación:
+```
+540: Inicio de sesión de red exitoso.
+4624: Inicio de sesión exitoso.
+4625: Fallo en el inicio de sesión de una cuenta.
+4648: Se intentó un inicio de sesión utilizando credenciales explícitas.
+4772: Se solicitó un ticket de autenticación Kerberos (TGT).
+4777: El controlador de dominio no pudo validar las credenciales de una cuenta.
+```
+
+- Cambios en Políticas y Configuración:
+```
+1102: El registro de auditoría fue borrado.
+4616: Se cambió la hora del sistema.
+4950: Cambió una configuración del Firewall de Windows.
+4954: Se modificaron las configuraciones de Directiva de grupo.
+4957: Cambio en políticas de cortafuegos de Windows.
+```
+
+- Acceso a Archivos y Objetos:
+```
+4663: Se realizó un acceso a un objeto con permisos especiales.
+4656: Un objeto fue abierto para acceso.
+4660: Se generó un evento de auditoría de acceso a objeto.
+```
+
+- Ejecución de Procesos y Programas:
+```
+4697: Se instaló un servicio en el sistema.
+4698: Se creó una tarea programada.
+4699: Se eliminó una tarea programada.
+4700: Se habilitó una tarea programada.
+4701: Se deshabilitó una tarea programada.
+4702: Se actualizó una tarea programada.
+4740: Se bloqueó una cuenta de usuario.
+4755: Se creó un grupo local habilitado para seguridad.
+4756: Se agregó un miembro a un grupo universal habilitado para seguridad.
+```
+
+- Eventos de Red y Conexiones:
+```
+5025: El servicio de Firewall de Windows se detuvo.
+5031: El Firewall de Windows bloqueó una aplicación que acepta conexiones entrantes.
+5152: La Plataforma de Filtrado de Windows bloqueó un paquete.
+5153: La Plataforma de Filtrado de Windows bloqueó una aplicación o servicio que escucha en un puerto.
+5155: La Plataforma de Filtrado de Windows bloqueó una aplicación o servicio que enlaza a un puerto.
+5156: Se estableció una conexión de red.
+5157: La Plataforma de Filtrado de Windows bloqueó una conexión.
+5447: Se cambió un filtro de la Plataforma de Filtrado de Windows.
+```
+
+- Eventos de Malware y Detección de Amenazas:
+```
+1: Se encontró una amenaza durante el análisis.
+3: Se encontró un objeto sospechoso durante el análisis.
+5008: Se detectó una amenaza mediante Windows Defender SmartScreen.
+```
+
+- Otros:
+```
+4720: Se creó una cuenta de usuario.
+4722: Se habilitó una cuenta de usuario.
+4723: Se cambió una cuenta de usuario.
+4725: Se deshabilitó una cuenta de usuario.
+4727: Se creó un grupo global habilitado para seguridad.
+4728: Se agregó un miembro a un grupo global habilitado para seguridad.
+4732: Se agregó un miembro a un grupo local habilitado para seguridad.
+4735: Se cambió un grupo local habilitado para seguridad.
+4737: Se cambió un grupo global habilitado para seguridad.
+4782: Se accedió al hash de contraseña de una cuenta.
+4946: Se agregó una regla a la lista de excepciones del Firewall de Windows.
+4947: Se realizó un cambio en la lista de excepciones del Firewall de Windows.
+4964: Se asignaron grupos especiales a un nuevo inicio de sesión.
+7035: Un servicio fue enviado un mensaje de control.
+7036: Un servicio básico entró en el estado en ejecución.
+4634: Cierre de sesión exitoso.
+4657: Cambio en la configuración de seguridad de la cuenta.
+4688: Se generó un nuevo proceso.
+4689: Se generó un nuevo proceso con privilegios elevados.
+7045: Un servicio fue instalado o configurado.
+5158: Una regla de firewall de Windows fue aplicada.
 ```
 
 ### ▶️ Artefactos de conexiones de clientes VPN

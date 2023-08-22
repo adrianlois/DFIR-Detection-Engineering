@@ -882,6 +882,7 @@ cat /proc/*/maps | grep "memfd"
 - Consultar múltiples funciones de AD: https://nettools.net/download
 - Auditoría de seguridad general del estado de AD (útil para analizar herencias o nuevas membresías a grupos privilegiados): https://www.pingcastle.com
 
+
 ---
 
 

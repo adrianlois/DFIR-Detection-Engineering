@@ -14,7 +14,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     + [▶️ Logs del sistema de Linux](#%EF%B8%8F-logs-del-sistema-de-linux)
     + [▶️ Logs de aplicaciones de Linux](#%EF%B8%8F-logs-de-aplicaciones-de-linux)
     + [▶️ Logs journalctl (systemd)](#%EF%B8%8F-logs-journalctl-systemd)
-    + [▶️ ID de eventos de Windows relevantes en investigaciones DFIR](#%EF%B8%8F-id-de-eventos-de-windows-relevantes-en-investigaciones-dfir)
+    + [▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR](#%EF%B8%8F-id-de-eventos-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
     + [▶️ Artefactos de conexiones de clientes VPN](#%EF%B8%8F-artefactos-de-conexiones-de-clientes-vpn)
     + [▶️ Persistencia en servicios](#%EF%B8%8F-persistencia-en-servicios)
     + [▶️ ¿Han eliminado el registro de eventos de Windows?](#%EF%B8%8F-han-eliminado-el-registro-de-eventos-de-windows)
@@ -317,7 +317,7 @@ journalctl SYSLOG_FACILITY=4
 journalctl /usr/sbin/cron
 ```
 
-### ▶️ ID de eventos de Windows relevantes en investigaciones DFIR
+### ▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR
 
 - Inicio de Sesión y Autenticación:
 ```
@@ -436,7 +436,6 @@ journalctl /usr/sbin/cron
 # Cambio de Rutas de Acceso de Archivos:
 18: Cambio de ruta de acceso de archivo. Puede indicar cambios en la ubicación de archivos sospechosos.
 ```
-
 
 ### ▶️ Artefactos de conexiones de clientes VPN
 

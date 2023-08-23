@@ -319,6 +319,9 @@ journalctl /usr/sbin/cron
 
 ### ▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR
 
+- Windows Event Log Analyst Reference (Applied Incident Response): 
+  + https://forwarddefense.com/media/attachments/2021/05/15/windows-event-log-analyst-reference.pdf
+
 - Inicio de Sesión y Autenticación:
 ```
 540: Inicio de sesión de red exitoso.

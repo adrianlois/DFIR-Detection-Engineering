@@ -370,14 +370,8 @@ journalctl /usr/sbin/cron
 5447: Se cambió un filtro de la Plataforma de Filtrado de Windows.
 ```
 
-- Eventos de Malware y Detección de Amenazas:
-```
-1: Se encontró una amenaza durante el análisis.
-3: Se encontró un objeto sospechoso durante el análisis.
-5008: Se detectó una amenaza mediante Windows Defender SmartScreen.
-```
-
 - Otros:
+  + https://learn.microsoft.com/es-es/defender-for-identity/configure-windows-event-collection
 ```
 4720: Se creó una cuenta de usuario.
 4722: Se habilitó una cuenta de usuario.
@@ -392,8 +386,6 @@ journalctl /usr/sbin/cron
 4946: Se agregó una regla a la lista de excepciones del Firewall de Windows.
 4947: Se realizó un cambio en la lista de excepciones del Firewall de Windows.
 4964: Se asignaron grupos especiales a un nuevo inicio de sesión.
-7035: Un servicio fue enviado un mensaje de control.
-7036: Un servicio básico entró en el estado en ejecución.
 4634: Cierre de sesión exitoso.
 4657: Cambio en la configuración de seguridad de la cuenta.
 4688: Se generó un nuevo proceso.
@@ -436,6 +428,71 @@ journalctl /usr/sbin/cron
 
 # Cambio de Rutas de Acceso de Archivos:
 18: Cambio de ruta de acceso de archivo. Puede indicar cambios en la ubicación de archivos sospechosos.
+```
+
+- Función PowerShell para agilizar de forma automatizada la recopilación de eventos relevantes en DFIR.
+```ps
+Function Get-EventsDFIR {
+    $eventIDs = @(
+        1, 3, 4, 5, 7, 8, 11, 12, 17, 18
+        4720, 4722, 4723, 4725, 4727, 4728,
+        4732, 4735, 4737, 4782, 4946, 4947,
+        4964, 4634, 4657, 4688, 4689, 7045,
+        5158, 5008, 5025, 5031, 5152, 5153,
+        5155, 5156, 5157, 5447, 4697, 4698,
+        4699, 4700, 4701, 4702, 4740, 4755,
+        4756, 4663, 4656, 4660, 1102, 4616,
+        4950, 4954, 4957, 4648, 4624, 4625,
+        540,  4772, 4777
+    )
+
+    $filterHashtable = @{
+        LogName = @(
+            'Security', 
+            'System', 
+            # 'Microsoft-Windows-Sysmon/Operational', 
+            'Windows PowerShell', 
+            'Microsoft-Windows-PowerShell/Operational', 
+            'PowerShellCore/Operational', 
+            'Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational', 
+            'Microsoft-Windows-Windows Defender/Operational'
+        )
+        ID = $eventIDs
+    }
+
+    $foundEvents = @()
+    $missingLognames = @()
+    $missingEvents = @()
+
+    foreach ($logname in $lognames) {
+        foreach ($eventID in $eventIDs) {
+            $filterHashtable = @{
+                LogName = $logname
+                ID = $eventID
+            }
+
+            $matchingEvent = Get-WinEvent -FilterHashtable $filterHashtable
+
+            if ($matchingEvent) {
+                $foundEvents += $matchingEvent
+            } else {
+                $missingLognames += $logname
+                $missingEvents += $eventID
+            }
+        }
+    }
+
+    if ($foundEvents.Count -gt 0) {
+        $eventExportCSV = "EventAnalysis-Export_" + (Get-Date -uformat "%d-%m-%Y_%H-%M-%S") + ".csv"
+        $foundEvents | Export-Csv -Path "$eventExportCSV" -Encoding UTF8 -NoTypeInformation
+    } 
+    if ($missingLognames.Count -gt 0) {
+        Write-Host "No se encontraron eventos en los siguientes registros: $($missingLognames -join ', ')."
+    }
+    if ($missingEvents.Count -gt 0) {
+        Write-Host "No se encontraron los siguientes eventos en los registros especificados: $($missingEvents -join ', ')."
+    }
+}
 ```
 
 ### ▶️ Artefactos de conexiones de clientes VPN

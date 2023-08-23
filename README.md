@@ -390,7 +390,7 @@ journalctl /usr/sbin/cron
 4947: Se realizó un cambio en la lista de excepciones del Firewall de Windows.
 4964: Se asignaron grupos especiales a un nuevo inicio de sesión.
 4634: Cierre de sesión exitoso.
-4657: Cambio en la configuración de seguridad de la cuenta.
+4657: Se modificó un valor de registro.
 4688: Se generó un nuevo proceso.
 4689: Se generó un nuevo proceso con privilegios elevados.
 7045: Un servicio fue instalado o configurado.

@@ -15,6 +15,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     + [▶️ Logs de aplicaciones de Linux](#%EF%B8%8F-logs-de-aplicaciones-de-linux)
     + [▶️ Logs journalctl (systemd)](#%EF%B8%8F-logs-journalctl-systemd)
     + [▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR](#%EF%B8%8F-id-de-eventos-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
+    + [▶️ Scripts para detectar actividades sospechosas en Windows](#%EF%B8%8F-scripts-para-detectar-actividades-sospechosas-en-windows)
+    + [▶️ Detectar peristencia de ejecutables en el registro de Windows](#%EF%B8%8F-detectar-peristencia-de-ejecutables-en-el-registro-de-windows)
     + [▶️ Artefactos de conexiones de clientes VPN](#%EF%B8%8F-artefactos-de-conexiones-de-clientes-vpn)
     + [▶️ Persistencia en servicios](#%EF%B8%8F-persistencia-en-servicios)
     + [▶️ ¿Han eliminado el registro de eventos de Windows?](#%EF%B8%8F-han-eliminado-el-registro-de-eventos-de-windows)
@@ -322,79 +324,174 @@ journalctl /usr/sbin/cron
 - Windows Event Log Analyst Reference (Applied Incident Response): 
   + https://forwarddefense.com/media/attachments/2021/05/15/windows-event-log-analyst-reference.pdf
 
+- Buscar Events ID: Windows Security Log Events Encyclopedia (Ultimate IT Security - @randyfsmith)
+  + https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx
+
 - Inicio de Sesión y Autenticación:
 ```
 540: Inicio de sesión de red exitoso.
-4624: Inicio de sesión exitoso.
+4624: Se inició sesión exitosamente en una cuenta.
 4625: Fallo en el inicio de sesión de una cuenta.
+4634: Cierre de sesión exitoso.
 4648: Se intentó un inicio de sesión utilizando credenciales explícitas.
-4772: Se solicitó un ticket de autenticación Kerberos (TGT).
+4740: Se bloqueó una cuenta de usuario.
+4767: Se desbloqueó una cuenta de usuario.
+4772: Error en una solicitud de ticket de autenticación Kerberos.
+4768: Se solicitó un ticket de autenticación Kerberos (TGT).
+4771: La autenticación previa de Kerberos falló.
 4777: El controlador de dominio no pudo validar las credenciales de una cuenta.
+4820: Se denegó un ticket de concesión de tickets (TGT) de Kerberos porque el dispositivo no cumple con las restricciones de control de acceso.
+4964: Se asignaron grupos especiales a un nuevo inicio de sesión.
 ```
+
+- Cuentas de usuario AD:
+```
+4720: Se creó una cuenta de usuario.
+4722: Se habilitó una cuenta de usuario.
+4723: Se cambió una cuenta de usuario.
+4724: Se intentó restablecer la contraseña de una cuenta.
+4725: Se deshabilitó una cuenta de usuario.
+4726: Se eliminó una cuenta de usuario.
+4738: Se cambió una cuenta de usuario.
+4781: Se cambió el nombre de una cuenta.
+4782: Se accedió al hash de contraseña de una cuenta.
+```
+
+- Grupos AD:
+```
+4731: Se creó un grupo local con seguridad habilitada.
+4727: Se creó un grupo global habilitado para seguridad.
+4754: Se creó un grupo universal habilitado para seguridad.
+4744: Se creó un grupo local con seguridad deshabilitada.
+4749: Se creó un grupo global con seguridad deshabilitada.
+4759: Se creó un grupo universal con seguridad deshabilitada.
+4735: Se cambió un grupo local habilitado para seguridad.
+4737: Se cambió un grupo global habilitado para seguridad.
+4755: Se cambió un grupo universal habilitado para seguridad.
+4745: Se cambió un grupo local con seguridad deshabilitada.
+4750: Se cambió un grupo global con seguridad deshabilitada.
+4760: Se cambió un grupo universal con seguridad deshabilitada.
+4734: Se eliminó un grupo local con seguridad habilitada.
+4730: Se eliminó un grupo global con seguridad habilitada.
+4758: Se eliminó un grupo universal con seguridad habilitada.
+4748: Se eliminó un grupo local con seguridad deshabilitada.
+4753: Se eliminó un grupo global con seguridad deshabilitada.
+4763: Se eliminó un grupo universal con seguridad deshabilitada.
+4732: Se agregó un miembro a un grupo local con seguridad habilitada.
+4728: Se agregó un miembro a un grupo global con seguridad habilitada.
+4756: Se agregó un miembro a un grupo universal con seguridad habilitada.
+4746: Se agregó un miembro a un grupo local con seguridad deshabilitada.
+4751: Se agregó un miembro a un grupo global con seguridad deshabilitada.
+4761: Se agregó un miembro a un grupo universal con seguridad deshabilitada.
+4733: Un miembro fue eliminado de un grupo local con seguridad habilitada.
+4729: Un miembro fue eliminado de un grupo global con seguridad habilitada.
+4757: Un miembro fue eliminado de un grupo universal con seguridad habilitada.
+4747: Un miembro fue eliminado de un grupo local con seguridad deshabilitada.
+4752: Un miembro fue eliminado de un grupo global con seguridad deshabilitada.
+4762: Un miembro fue eliminado de un grupo universal con seguridad .deshabilitada.
+```
+
+- Servicios de federación de Active Directory (AD FS):
+```
+1202: el Servicio de federación validó una nueva credencial.
+1203: el Servicio de federación no pudo validar una nueva credencial.
+4624: se ha iniciado sesión correctamente en una cuenta.
+4625: no se pudo iniciar sesión en una cuenta.
+```
+
+- Active Directory Certificate Services (AD CS):
+```
+4870: Servicios de certificados revoca un certificado.
+4882: Se cambiaron los permisos de seguridad para Servicios de certificados.
+4885: Se cambió el filtro de auditoría para Servicios de certificados.
+4887: Servicios de certificados aprobó una solicitud de certificado y emitió un certificado.
+4888: Servicios de certificado denegado una solicitud de certificado.
+4890: la configuración del administrador de certificados para Servicios de certificados ha cambiado.
+4896: se han eliminado una o varias filas de la base de datos de certificados.
+```
+
+- Otros eventos AD:
+1644: Búsqueda LDAP.
+4662: Se realizó una operación en un objeto.
+4741: Cuenta de equipo agregada.
+4743: Cuenta de equipo eliminada.
+4776: El controlador de dominio ha intentado validar las credenciales de una cuenta (NTLM).
+5136: Se modificó un objeto de servicio de directorio.
+8004: Autenticación NTLM.
 
 - Cambios en Políticas y Configuración:
 ```
-1102: El registro de auditoría fue borrado.
+1102: Se borró el registro de auditoría.
 4616: Se cambió la hora del sistema.
-4950: Cambió una configuración del Firewall de Windows.
-4954: Se modificaron las configuraciones de Directiva de grupo.
-4957: Cambio en políticas de cortafuegos de Windows.
+4950: Se cambió una configuración del Firewall de Windows.
+4954: La configuración de la política de grupo del Firewall de Windows ha cambiado. Se han aplicado las nuevas configuraciones.
+4956: El Firewall de Windows ha cambiado el perfil activo.
+4957: El Firewall de Windows no aplicó la siguiente regla.
 ```
 
 - Acceso a Archivos y Objetos:
 ```
-4663: Se realizó un acceso a un objeto con permisos especiales.
-4656: Un objeto fue abierto para acceso.
-4660: Se generó un evento de auditoría de acceso a objeto.
+4663: Se intentó acceder a un objeto.
+4656: Se solicitó un identificador para un objeto.
+4660: Se eliminó un objeto.
 ```
 
 - Ejecución de Procesos y Programas:
 ```
+4688: Se generó un nuevo proceso.
+4689: Se generó un nuevo proceso con privilegios elevados.
 4697: Se instaló un servicio en el sistema.
 4698: Se creó una tarea programada.
 4699: Se eliminó una tarea programada.
 4700: Se habilitó una tarea programada.
 4701: Se deshabilitó una tarea programada.
 4702: Se actualizó una tarea programada.
-4740: Se bloqueó una cuenta de usuario.
-4755: Se creó un grupo local habilitado para seguridad.
-4756: Se agregó un miembro a un grupo universal habilitado para seguridad.
+4657: Se modificó un valor de registro.
+7045: Un nuevo servicio fue instalado o configurado.
 ```
 
 - Eventos de Red y Conexiones:
 ```
-5025: El servicio de Firewall de Windows se detuvo.
-5031: El Firewall de Windows bloqueó una aplicación que acepta conexiones entrantes.
-5152: La Plataforma de Filtrado de Windows bloqueó un paquete.
-5153: La Plataforma de Filtrado de Windows bloqueó una aplicación o servicio que escucha en un puerto.
-5155: La Plataforma de Filtrado de Windows bloqueó una aplicación o servicio que enlaza a un puerto.
-5156: Se estableció una conexión de red.
-5157: La Plataforma de Filtrado de Windows bloqueó una conexión.
-5447: Se cambió un filtro de la Plataforma de Filtrado de Windows.
-```
-
-- Otros:
-  + https://learn.microsoft.com/es-es/defender-for-identity/configure-windows-event-collection
-```
-4720: Se creó una cuenta de usuario.
-4722: Se habilitó una cuenta de usuario.
-4723: Se cambió una cuenta de usuario.
-4725: Se deshabilitó una cuenta de usuario.  
-4727: Se creó un grupo global habilitado para seguridad.
-4728: Se agregó un miembro a un grupo global habilitado para seguridad.
-4732: Se agregó un miembro a un grupo local habilitado para seguridad.
-4735: Se cambió un grupo local habilitado para seguridad.
-4737: Se cambió un grupo global habilitado para seguridad.
-4782: Se accedió al hash de contraseña de una cuenta.
 4946: Se agregó una regla a la lista de excepciones del Firewall de Windows.
 4947: Se realizó un cambio en la lista de excepciones del Firewall de Windows.
-4964: Se asignaron grupos especiales a un nuevo inicio de sesión.
-4634: Cierre de sesión exitoso.
-4657: Se modificó un valor de registro.
-4688: Se generó un nuevo proceso.
-4689: Se generó un nuevo proceso con privilegios elevados.
-7045: Un servicio fue instalado o configurado.
+5025: El servicio de Firewall de Windows se detuvo.
+5031: El Firewall de Windows bloqueó una aplicación que acepta conexiones entrantes.
+5152: La plataforma de filtrado de Windows bloqueó un paquete.
+5153: Un filtro más restrictivo de la plataforma de filtrado de Windows ha bloqueado un paquete.
+5155: La plataforma de filtrado de Windows ha bloqueado una aplicación o servicio para que no escuche en un puerto las conexiones entrantes.
+5156: La plataforma de filtrado de Windows ha permitido una conexión.
+5157: La plataforma de filtrado de Windows ha bloqueado una conexión.
 5158: Una regla de firewall de Windows fue aplicada.
+5447: Se ha cambiado un filtro de la plataforma de filtrado de Windows.
+```
+
+- Códigos de error de inicio de sesión:
+```
+0xC0000064: El nombre de usuario no existe.
+0xC000006A: El nombre de usuario es correcto pero la contraseña es incorrecta.
+0xC0000234: El usuario está bloqueado.
+0xC0000072: La cuenta está desactivada.
+0xC000006F: El usuario intentó iniciar sesión fuera de sus restricciones de día de la semana u hora del día.
+0xC0000070: Restricción del puesto de trabajo.
+0xC00000193: Expiración de la cuenta.
+0xC0000071: Contraseña caducada.
+0xC0000133: Relojes entre el DC y el otro equipo demasiado desincronizados.
+0xC0000224: El usuario debe cambiar la contraseña en el siguiente inicio de sesión.
+0xC0000225: Evidentemente, se trata de un error de Windows y no de un riesgo.
+0xC000015b: Al usuario no se le ha concedido el tipo de solicitado (también conocido como derecho de inicio de sesión) en este equipo.
+```
+
+- Códigos de error de Kerberos:
+```
+0x6: Nombre de usuario incorrecto.
+0x7: Nueva cuenta de equipo.
+0x9: El administrador debe restablecer la contraseña.
+0xC: Restricción del puesto de trabajo.
+0x12: Cuenta desactivada, caducada, bloqueada, restricción de horas de inicio de sesión.
+0x17: La contraseña del usuario ha caducado.
+0x18: Contraseña incorrecta.
+0x20: Las cuentas del equipo se registran con frecuencia.
+0x25: El reloj de la estación de trabajo está demasiado desincronizado con el del DC.
 ```
 
 - **Sysmon** 
@@ -433,69 +530,157 @@ journalctl /usr/sbin/cron
 18: Cambio de ruta de acceso de archivo. Puede indicar cambios en la ubicación de archivos sospechosos.
 ```
 
-- Función PowerShell para agilizar de forma automatizada la recopilación de eventos relevantes en DFIR.
+### ▶️ Scripts para detectar actividades sospechosas en Windows
+
+- Inicios de sesión remotos.
+
+Analiza eventos de inicio de sesión exitosos para encontrar un inicio de sesión con tipos (3 o 10) que son los tipos de inicio de sesión remoto y RDP Desde allí podemos comenzar a investigar la IP que inició la conexión.
 ```ps
-Function Get-EventsDFIR {
-    $eventIDs = @(
-        1, 3, 4, 5, 7, 8, 11, 12, 17, 18
-        4720, 4722, 4723, 4725, 4727, 4728,
-        4732, 4735, 4737, 4782, 4946, 4947,
-        4964, 4634, 4657, 4688, 4689, 7045,
-        5158, 5008, 5025, 5031, 5152, 5153,
-        5155, 5156, 5157, 5447, 4697, 4698,
-        4699, 4700, 4701, 4702, 4740, 4755,
-        4756, 4663, 4656, 4660, 1102, 4616,
-        4950, 4954, 4957, 4648, 4624, 4625,
-        540,  4772, 4777
+Get-WinEvent -FilterHashtable @{Logname = "Security" ; ID = 4624 } | where {$_.Properties[8].Value -eq 3 -or $_.Properties[8].Value -eq 10}
+```
+
+- Fuerza Bruta.
+
+Para comprobar si BruteForcehay signos de ataque en los registros de eventos, podemos buscar varios login faildeventos con identificación 4625en el registro de seguridad.
+```ps
+function BruteForceDetect {
+    param (
+        [string]$logName = "Security",
+        [int]$eventID = 4625,
+        [int]$failedAttemptsThreshold = 5,
+        [int]$timeWindow = 60 # Ventana de tiempo en minutos para comprobar si hay intentos de inicio de sesión repetidos
     )
 
-    $filterHashtable = @{
-        LogName = @(
-            'Security', 
-            'System', 
-            # 'Microsoft-Windows-Sysmon/Operational', 
-            'Windows PowerShell', 
-            'Microsoft-Windows-PowerShell/Operational', 
-            'PowerShellCore/Operational', 
-            'Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational', 
-            'Microsoft-Windows-Windows Defender/Operational'
-        )
-        ID = $eventIDs
+    $startTime = (Get-Date).AddMinutes(-$timeWindow)
+    
+    # Definir tabla hash del filtro
+    $filterHash = @{
+        LogName = $logName
+        ID = $eventID
+        StartTime = $startTime
     }
 
-    $foundEvents = @()
-    $missingLognames = @()
-    $missingEvents = @()
+    $events = Get-WinEvent -FilterHashtable $filterHash
 
-    foreach ($logname in $lognames) {
-        foreach ($eventID in $eventIDs) {
-            $filterHashtable = @{
-                LogName = $logname
-                ID = $eventID
-            }
+    $failedAttempts = @{}
+    foreach ($event in $events) {
+        $userName = $event.Properties[5].Value
+        $sourceIPAddress = $event.Properties[19].Value
 
-            $matchingEvent = Get-WinEvent -FilterHashtable $filterHashtable
-
-            if ($matchingEvent) {
-                $foundEvents += $matchingEvent
+        if ($userName -and $sourceIPAddress) {
+            if ($failedAttempts.ContainsKey($userName)) {
+                $failedAttempts[$userName]++
             } else {
-                $missingLognames += $logname
-                $missingEvents += $eventID
+                $failedAttempts[$userName] = 1
             }
         }
     }
 
-    if ($foundEvents.Count -gt 0) {
-        $eventExportCSV = "EventAnalysis-Export_" + (Get-Date -uformat "%d-%m-%Y_%H-%M-%S") + ".csv"
-        $foundEvents | Export-Csv -Path "$eventExportCSV" -Encoding UTF8 -NoTypeInformation
-    } 
-    if ($missingLognames.Count -gt 0) {
-        Write-Host "No se encontraron eventos en los siguientes registros: $($missingLognames -join ', ')."
-    }
-    if ($missingEvents.Count -gt 0) {
-        Write-Host "No se encontraron los siguientes eventos en los registros especificados: $($missingEvents -join ', ')."
+    $failedAttempts.GetEnumerator() | Where-Object { $_.Value -ge $failedAttemptsThreshold } | Sort-Object Value -Descending
+
+    if ($bruteForceEvents.Count -gt 0) {
+        # Fuerza bruta detectada
+        Write-Host "Ataques de fuerza bruta detectados:"
+        foreach ($entry in $bruteForceEvents) {
+            Write-Host ("User: {0}, Intentos fallidos: {1}" -f $entry.Name, $entry.Value)
+        }
+    } else {
+        Write-Host "No se detectaron ataques de fuerza bruta dentro del período de tiempo especificado."
     }
 }
+```
+
+- Ataques binarios.
+
+Windows tiene algunas mitigaciones contra la explotación utilizando algunas técnicas conocidas, como return-oriented programming "ROP"podemos encontrar los registros de las vulnerabilidades detectadas en el Microsoft-Windows-Security-Mitigations/UserModeregistro.
+```ps
+Get-WinEvent -FilterHashTable @{LogName ='Microsoft-Windows-Security-Mitigations/UserMode'} | Format-List -Property Id, TimeCreated
+```
+
+- Phishing.
+
+Una de las formas más utilizadas de phishing es utilizar documentos de Office para lanzar otra carga útil oculta, por lo que supervisaré cualquier proceso generado por Word or Excelotros documentos de Office de la misma manera.
+```ps
+Get-SysmonEvents 1 | Where-Object { $_.Properties[20].Value -match "word|Excel" } | Format-List TimeCreated, @{label = "ParentImage" ; Expression = {$_.properties[20].value}}, @{label= "Image" ; Expression= {$_.properties[4].value}}
+```
+
+- Manipulación de servicios.
+
+Una forma de detectar servicios de manipulación mediante la línea de comandos es monitorear el uso de Sc.exeejecutables.
+```ps
+Get-SysmonEvents 1 | Where-Object { $_.Properties[4].Value -match "\\sc.exe" } | Format-List TimeCreated, @{label = "ParentImage" ; Expression = {$_.properties[20].value}}, @{label= "Image" ; Expression= {$_.properties[4].value}},@{label = "CommandLine" ; Expression = {$_.properties[10].value}}
+```
+
+### ▶️ Detectar peristencia de ejecutables en el registro de Windows
+
+Detectar persistencia en ramas del registro de Windows haciendo uso de comprobaciones de técnicas basadas en la matriz de MITRE ATT&CK.
+
+Esta herramienta también compara dos shoots del registro para obtener el cambio de estado entre ambos y desde una perspectiva de persistencia (análisis de comportamiento).
+- https://github.com/amr-git-dot/Corners
+
+`Ramas relevantes del registro de Windows usadas para persistencia`
+
+```bash
+# Mittre Technique: T1547.001
+HKCU:\Software\Microsoft\Windows\CurrentVersion\Run
+HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce
+HKLM:\Software\Microsoft\Windows\CurrentVersion\Run
+HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce
+HKLM:\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce
+HKCU:\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce
+HKLM:\Software\Microsoft\Windows\CurrentVersion\RunServices
+HKCU:\Software\Microsoft\Windows\CurrentVersion\RunServices
+
+# Mittre Technique: T1547.003
+HKLM:\System\CurrentControlSet\Services\W32Time\TimeProviders
+
+# Mittre Technique: T1547.010
+HKLM:\SYSTEM\CurrentControlSet\Control\Print\Monitors
+
+# Mittre Technique: T1547.012
+HKLM:\SYSTEM\ControlSet001\Control\Print\Environments\Windows x64\Print Processors\winprint
+HKLM:\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Print Processors\winprint
+HKLM:\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x86\Print Processors\winprint
+HKLM:\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows NT x86\Print Processors\winprint
+
+# Mittre Technique: T1546.011
+HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom
+
+# Mittre Technique: T1546.007
+HKLM:\SOFTWARE\Microsoft\Netsh
+```
+
+`Ramas y valores creados en el registro de Windows usadas para persistencia`
+```bash
+# Mittre Technique: T1547.004
+HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon - Userinit
+HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer - Run
+HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer - Run
+HKLM:\System\CurrentControlSet\Control\Session Manager - BootExecute
+
+# Mittre Technique: T1547.002
+HKLM:\SYSTEM\CurrentControlSet\Control\Lsa - Authentication Packages
+
+# Mittre Technique: T1547.004
+HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon - shell
+HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon - shell
+
+# Mittre Technique: T1547.005
+HKLM:\SYSTEM\CurrentControlSet\Control\Lsa - Security Packages
+HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig - Security Packages
+
+# Mittre Technique: T1037.001
+HKCU:\Environment - UserInitMprLogonScript
+
+# Mittre Technique: T1546.009
+HKLM:\System\CurrentControlSet\Control\Session Manager\ - AppCertDlls
+
+# Mittre Technique: T1546.010
+HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Windows - AppInit_DLLs
+HKLM:\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows - AppInit_DLLs
+
+# Mittre Technique: T1547.001
+HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders - Startup
 ```
 
 ### ▶️ Artefactos de conexiones de clientes VPN
@@ -901,12 +1086,30 @@ El registro "ad.trace" revela información como:
 
 ```
 %ProgramData%\AnyDesk\ad_svc.trace
+%ProgramData%\AnyDesk\connection_trace.txt
 %AppData%\Anydesk\ad.trace
 ```
 
 En el log "ad.trace" de la carpeta del usuario *AppData* buscamos por los criterios "files" y "app.prepare_task". Esto revelará desde qué carpeta se están copiando los archivos y también la cantidad de archivos copiados.
 
-En el mismo fichero buscamos por el término "External address" y esto revelará la dirección IP remota donde se conectó el actor malicioso.
+Otros criterios de búsqueda para idetenficar conexiones en los ficheros "ad.trace" y "ac_svc.trace".
+
+Encontrar en la traza una conexion de acceso saliente, control remoto a otro dispositivo.
+```
+"Connecting to"
+"Client-ID:"
+"Connection established." (Esta cadena asegura que se estableció la conexion).
+```
+
+Encontrar conexiones entrantes.
+```
+"Accept request from"
+"Client-ID:"
+"Accepting the connect request." (Esta cadena informa de que se aceptó la conexión).
+"Session stopped." (Fin de la conexion)
+```
+
+En el mismo fichero buscamos por el término "External address" y esto revelará la dirección IP remota donde se conectó el actor malicioso. "Files" indicará actividad en el intercambio de ficheros.
 
 `Team Viewer`
 

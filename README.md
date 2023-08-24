@@ -620,7 +620,7 @@ Detectar persistencia en ramas del registro de Windows haciendo uso de comprobac
 Esta herramienta también compara dos shoots del registro para obtener el cambio de estado entre ambos y desde una perspectiva de persistencia (análisis de comportamiento).
 - https://github.com/amr-git-dot/Corners
 
-`Ramas relevantes del registro de Windows usadas para persistencia`
+**`Ramas relevantes del registro de Windows usadas para persistencia`**
 
 ```bash
 # Mittre Technique: T1547.001
@@ -652,7 +652,7 @@ HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom
 HKLM:\SOFTWARE\Microsoft\Netsh
 ```
 
-`Ramas y valores creados en el registro de Windows usadas para persistencia`
+**`Ramas y valores creados en el registro de Windows usadas para persistencia`**
 ```bash
 # Mittre Technique: T1547.004
 HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon - Userinit

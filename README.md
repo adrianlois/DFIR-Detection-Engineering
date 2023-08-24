@@ -615,7 +615,7 @@ Get-SysmonEvents 1 | Where-Object { $_.Properties[4].Value -match "\\sc.exe" } |
 
 ### ▶️ Detectar peristencia de ejecutables en el registro de Windows
 
-Detectar persistencia en ramas del registro de Windows haciendo uso de comprobaciones de técnicas basadas en la matriz de ***MITRE ATT&CK***.
+Detectar persistencia en ramas del registro de Windows haciendo uso de comprobaciones de técnicas basadas en la matriz de *MITRE ATT&CK*.
 
 Esta herramienta también compara dos shoots del registro para obtener el cambio de estado entre ambos y desde una perspectiva de persistencia (análisis de comportamiento).
 - https://github.com/amr-git-dot/Corners

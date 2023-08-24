@@ -411,6 +411,7 @@ journalctl /usr/sbin/cron
 ```
 
 - Otros eventos AD:
+```
 1644: Búsqueda LDAP.
 4662: Se realizó una operación en un objeto.
 4741: Cuenta de equipo agregada.
@@ -418,6 +419,7 @@ journalctl /usr/sbin/cron
 4776: El controlador de dominio ha intentado validar las credenciales de una cuenta (NTLM).
 5136: Se modificó un objeto de servicio de directorio.
 8004: Autenticación NTLM.
+```
 
 - Cambios en Políticas y Configuración:
 ```

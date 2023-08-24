@@ -388,7 +388,7 @@ journalctl /usr/sbin/cron
 4757: Un miembro fue eliminado de un grupo universal con seguridad habilitada.
 4747: Un miembro fue eliminado de un grupo local con seguridad deshabilitada.
 4752: Un miembro fue eliminado de un grupo global con seguridad deshabilitada.
-4762: Un miembro fue eliminado de un grupo universal con seguridad .deshabilitada.
+4762: Un miembro fue eliminado de un grupo universal con seguridad deshabilitada.
 ```
 
 - Servicios de federación de Active Directory (AD FS):

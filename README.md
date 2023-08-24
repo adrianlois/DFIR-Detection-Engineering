@@ -16,7 +16,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     + [▶️ Logs journalctl (systemd)](#%EF%B8%8F-logs-journalctl-systemd)
     + [▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR](#%EF%B8%8F-id-de-eventos-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
     + [▶️ Scripts para detectar actividades sospechosas en Windows](#%EF%B8%8F-scripts-para-detectar-actividades-sospechosas-en-windows)
-    + [▶️ Detectar peristencia de ejecutables en el registro de Windows](#%EF%B8%8F-detectar-peristencia-de-ejecutables-en-el-registro-de-windows)
+    + [▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT&CK*)](#%EF%B8%8F-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
     + [▶️ Artefactos de conexiones de clientes VPN](#%EF%B8%8F-artefactos-de-conexiones-de-clientes-vpn)
     + [▶️ Persistencia en servicios](#%EF%B8%8F-persistencia-en-servicios)
     + [▶️ ¿Han eliminado el registro de eventos de Windows?](#%EF%B8%8F-han-eliminado-el-registro-de-eventos-de-windows)
@@ -613,7 +613,7 @@ Una forma de detectar servicios de manipulación mediante la línea de comandos 
 Get-SysmonEvents 1 | Where-Object { $_.Properties[4].Value -match "\\sc.exe" } | Format-List TimeCreated, @{label = "ParentImage" ; Expression = {$_.properties[20].value}}, @{label= "Image" ; Expression= {$_.properties[4].value}},@{label = "CommandLine" ; Expression = {$_.properties[10].value}}
 ```
 
-### ▶️ Detectar peristencia de ejecutables en el registro de Windows
+### ▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT&CK*)
 
 Detectar persistencia en ramas del registro de Windows haciendo uso de comprobaciones de técnicas basadas en la matriz de *MITRE ATT&CK*.
 

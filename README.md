@@ -424,11 +424,8 @@ journalctl /usr/sbin/cron
 - Cambios en Políticas y Configuración:
 ```
 1102: Se borró el registro de auditoría.
+4657: Se modificó un valor de registro.
 4616: Se cambió la hora del sistema.
-4950: Se cambió una configuración del Firewall de Windows.
-4954: La configuración de la política de grupo del Firewall de Windows ha cambiado. Se han aplicado las nuevas configuraciones.
-4956: El Firewall de Windows ha cambiado el perfil activo.
-4957: El Firewall de Windows no aplicó la siguiente regla.
 ```
 
 - Acceso a Archivos y Objetos:
@@ -438,32 +435,35 @@ journalctl /usr/sbin/cron
 4660: Se eliminó un objeto.
 ```
 
-- Ejecución de Procesos y Programas:
+- Eventos de Procesos, Servicios y Tareas programadas:
 ```
 4688: Se generó un nuevo proceso.
 4689: Se generó un nuevo proceso con privilegios elevados.
 4697: Se instaló un servicio en el sistema.
+7045: Un nuevo servicio fue instalado o configurado.
 4698: Se creó una tarea programada.
 4699: Se eliminó una tarea programada.
 4700: Se habilitó una tarea programada.
 4701: Se deshabilitó una tarea programada.
 4702: Se actualizó una tarea programada.
-4657: Se modificó un valor de registro.
-7045: Un nuevo servicio fue instalado o configurado.
 ```
 
 - Eventos de Red y Conexiones:
 ```
 4946: Se agregó una regla a la lista de excepciones del Firewall de Windows.
 4947: Se realizó un cambio en la lista de excepciones del Firewall de Windows.
+4950: Se cambió una configuración del Firewall de Windows.
+4954: La configuración de la política de grupo del Firewall de Windows ha cambiado. Se han aplicado las nuevas configuraciones.
+4956: El Firewall de Windows ha cambiado el perfil activo.
+4957: El Firewall de Windows no aplicó la siguiente regla.
 5025: El servicio de Firewall de Windows se detuvo.
 5031: El Firewall de Windows bloqueó una aplicación que acepta conexiones entrantes.
+5158: Una regla de firewall de Windows fue aplicada.
 5152: La plataforma de filtrado de Windows bloqueó un paquete.
 5153: Un filtro más restrictivo de la plataforma de filtrado de Windows ha bloqueado un paquete.
 5155: La plataforma de filtrado de Windows ha bloqueado una aplicación o servicio para que no escuche en un puerto las conexiones entrantes.
 5156: La plataforma de filtrado de Windows ha permitido una conexión.
 5157: La plataforma de filtrado de Windows ha bloqueado una conexión.
-5158: Una regla de firewall de Windows fue aplicada.
 5447: Se ha cambiado un filtro de la plataforma de filtrado de Windows.
 ```
 
@@ -620,7 +620,7 @@ Detectar persistencia en ramas del registro de Windows haciendo uso de comprobac
 Esta herramienta también compara dos shoots del registro para obtener el cambio de estado entre ambos y desde una perspectiva de persistencia (análisis de comportamiento).
 - https://github.com/amr-git-dot/Corners
 
-**`Ramas relevantes del registro de Windows usadas para persistencia`**
+`Ramas relevantes del registro de Windows usadas para persistencia`
 
 ```bash
 # Mittre Technique: T1547.001
@@ -652,7 +652,8 @@ HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom
 HKLM:\SOFTWARE\Microsoft\Netsh
 ```
 
-**`Ramas y valores creados en el registro de Windows usadas para persistencia`**
+`Ramas y valores creados en el registro de Windows usadas para persistencia`
+
 ```bash
 # Mittre Technique: T1547.004
 HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon - Userinit

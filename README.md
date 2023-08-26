@@ -333,6 +333,7 @@ journalctl /usr/sbin/cron
 4624: Se inició sesión exitosamente en una cuenta.
 4625: Fallo en el inicio de sesión de una cuenta.
 4634: Cierre de sesión exitoso.
+4647: Cierre de sesión iniciado por el usuario.
 4648: Se intentó un inicio de sesión utilizando credenciales explícitas.
 4740: Se bloqueó una cuenta de usuario.
 4767: Se desbloqueó una cuenta de usuario.
@@ -418,6 +419,7 @@ journalctl /usr/sbin/cron
 4743: Cuenta de equipo eliminada.
 4776: El controlador de dominio ha intentado validar las credenciales de una cuenta (NTLM).
 5136: Se modificó un objeto de servicio de directorio.
+5137: Se creó un objeto de servicio de directorio.
 8004: Autenticación NTLM.
 ```
 
@@ -432,7 +434,9 @@ journalctl /usr/sbin/cron
 ```
 4663: Se intentó acceder a un objeto.
 4656: Se solicitó un identificador para un objeto.
+4659: Se solicitó un identificador de un objeto con la intención de eliminarlo.
 4660: Se eliminó un objeto.
+4670: Se cambiaron los permisos sobre un objeto.
 ```
 
 - Eventos de Procesos, Servicios y Tareas programadas:

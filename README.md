@@ -341,6 +341,7 @@ journalctl /usr/sbin/cron
 4768: Se solicitó un ticket de autenticación Kerberos (TGT).
 4771: La autenticación previa de Kerberos falló.
 4777: El controlador de dominio no pudo validar las credenciales de una cuenta.
+4778: Se volvió a conectar una sesión a una estación Windows.
 4820: Se denegó un ticket de concesión de tickets (TGT) de Kerberos porque el dispositivo no cumple con las restricciones de control de acceso.
 4964: Se asignaron grupos especiales a un nuevo inicio de sesión.
 ```
@@ -394,10 +395,10 @@ journalctl /usr/sbin/cron
 
 - Servicios de federación de Active Directory (AD FS):
 ```
-1202: el Servicio de federación validó una nueva credencial.
-1203: el Servicio de federación no pudo validar una nueva credencial.
-4624: se ha iniciado sesión correctamente en una cuenta.
-4625: no se pudo iniciar sesión en una cuenta.
+1202: El Servicio de federación validó una nueva credencial.
+1203: El Servicio de federación no pudo validar una nueva credencial.
+4624: Se ha iniciado sesión correctamente en una cuenta.
+4625: No se pudo iniciar sesión en una cuenta.
 ```
 
 - Active Directory Certificate Services (AD CS):
@@ -445,6 +446,8 @@ journalctl /usr/sbin/cron
 4689: Se generó un nuevo proceso con privilegios elevados.
 4697: Se instaló un servicio en el sistema.
 7045: Un nuevo servicio fue instalado o configurado.
+7040: Cambio del tipo de inicio de servicio (deshabilitado, manual, automático).
+7036: Iniciar o detener un servicio.
 4698: Se creó una tarea programada.
 4699: Se eliminó una tarea programada.
 4700: Se habilitó una tarea programada.

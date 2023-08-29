@@ -39,6 +39,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     + [▶️ Detectar malware Linux fileless (memfd)](#%EF%B8%8F-detectar-malware-linux-fileless-memfd)
     + [▶️ SANS - Posters & Cheat Sheets (DFIR)](#%EF%B8%8F-sans---posters--cheat-sheets-dfir)
     + [▶️ Herramientas para consultar y auditar: GPOs, control de accesos, usuarios, grupos y otros funciones de Active Directory y LDAP](#%EF%B8%8F-herramientas-para-consultar-y-auditar-gpos-control-de-accesos-usuarios-grupos-y-otros-funciones-de-active-directory-y-ldap)
+    + [▶️ Análisis de phishing mails (extensión .eml)](#%EF%B8%8F-análisis-de-phishing-mails-extensión-eml)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
     + [▶️ Comando Windows: net y net1](#%EF%B8%8F-comando-windows-net-y-net1)
     + [▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#%EF%B8%8F-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
@@ -1248,16 +1249,14 @@ Comprobar las reglas de entrada y salida en Windows Firewall **"wf.msc"**. Un ac
 Detección de 2 procesos con el mismo PID pero diferentes direcciones de memoria, podría indicar un proceso de inyección malicioso. 
 
 Algunos ejemplos en procesos conocidos.
-```
-Process: explorer.exe | Pid: 547  | Address: 0xa20000
-Process: explorer.exe | Pid: 547  | Address: 0x5d1000
-
-Process: svchost.exe  | Pid: 1447 | Address: 0x6d0000
-Process: svchost.exe  | Pid: 1447 | Address: 0x210000
-
-Process: rundll32.exe | Pid: 5287 | Address: 0xa90000
-Process: rundll32.exe | Pid: 5287 | Address: 0x6a1000
-```
+| Process      | PID  | Address  |
+|--------------|------|----------|
+| explorer.exe | 547  | 0xa20000 |
+| explorer.exe | 547  | 0x5d1000 |
+| svchost.exe  | 1447 | 0x6d0000 |
+| svchost.exe  | 1447 | 0x210000 |
+| rundll32.exe | 5287 | 0xa90000 |
+| rundll32.exe | 5287 | 0x6a1000 |
 
 ### ▶️ Detectar malware Linux fileless (memfd)
 
@@ -1278,6 +1277,10 @@ cat /proc/*/maps | grep "memfd"
 | `Registry.pol Viewer Utility` (sdmsoftware) | Visualizar *Registry.pol* de GPOs | https://sdmsoftware.com/389932-gpo-freeware-downloads/registry-pol-viewer-utility |
 | `Nettools` | Consultar múltiples funciones de AD | https://nettools.net/download |
 | `Ping Castle` | Auditoría de seguridad general del estado de AD. Útil para analizar herencias o nuevas membresías a grupos privilegiados | https://pingcastle.com/download |
+
+### ▶️ Análisis de phishing mails (extensión .eml) 
+
+- SysTools EML Viewer Tool: https://www.systoolsgroup.com/eml-viewer.html
 
 
 ---

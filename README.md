@@ -33,6 +33,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Análisis Forense de logs en AnyDesk, Team Viewer y LogMeIn](#️-análisis-forense-de-logs-en-anydesk-team-viewer-y-logmein)
     - [▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-zoneidentifier)
     - [▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#️-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
+    - [▶️ Caché almacenada de conexiones establecidas vía RDP](#️-caché-almacenada-de-conexiones-establecidas-vía-rdp)
     - [▶️ Artefactos forense - MS Word](#️-artefactos-forense---ms-word)
     - [▶️ Analizar malware en fichero XLSX (MS Excel)](#️-analizar-malware-en-fichero-xlsx-ms-excel)
     - [▶️ Asignación de IPs en equipos](#️-asignación-de-ips-en-equipos)
@@ -1224,6 +1225,21 @@ Remove-Item (Get-PSReadlineOption).HistorySavePath
 Deshabilitar completamente el almacenamiento del historial de comandos de PowerShell.
 ```
 Set-PSReadlineOption -HistorySaveStyle SaveNothing
+```
+
+### ▶️ Caché almacenada de conexiones establecidas vía RDP
+
+Si el equipo afectado a sido comprometido y a través de este se hizo un uso como "equipo puente" en movimientos laterales, etc. Puede resultar útil comprobar la caché almacenada de conexiones establecidas vía RDP hacia otros hosts ya sea de la misma red o de un RDP externo con el objetivo por ejemplo de exfiltrar información hacia un stage controlado por el actor malicioso.
+
+En la siguiente rama de registro podemos encontrar las conexiones remotas RDP (Remote Desktop Protocol) realizadas desde la máquina afectada. Se creará un nueva clave por cada conexión RDP.
+```
+HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Servers
+HKEY_USERS\<SID_USER>\SOFTWARE\Microsoft\Terminal Server Client\Servers 
+```
+
+Situado en la misma ruta, se puede ver la clave "Default". Esta clave nos indica el orden de prioridad que se mostrará la lista de conexiones al desplegar la barra de la ventana de "Conexión a Escritorio remoto" que se abre al ejecutar el binario de mstsc.exe.
+```
+HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default
 ```
 
 ### ▶️ Artefactos forense - MS Word

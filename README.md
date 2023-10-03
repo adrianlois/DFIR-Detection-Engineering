@@ -33,7 +33,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Análisis Forense de logs en AnyDesk, Team Viewer y LogMeIn](#️-análisis-forense-de-logs-en-anydesk-team-viewer-y-logmein)
     - [▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-zoneidentifier)
     - [▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#️-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
-    - [▶️ Caché almacenada de conexiones establecidas vía RDP](#️-caché-almacenada-de-conexiones-establecidas-vía-rdp)
+    - [▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP](#️-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
     - [▶️ Artefactos forense - MS Word](#️-artefactos-forense---ms-word)
     - [▶️ Analizar malware en fichero XLSX (MS Excel)](#️-analizar-malware-en-fichero-xlsx-ms-excel)
     - [▶️ Asignación de IPs en equipos](#️-asignación-de-ips-en-equipos)
@@ -1227,7 +1227,7 @@ Deshabilitar completamente el almacenamiento del historial de comandos de PowerS
 Set-PSReadlineOption -HistorySaveStyle SaveNothing
 ```
 
-### ▶️ Caché almacenada de conexiones establecidas vía RDP
+### ▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP
 
 Si el equipo afectado a sido comprometido y a través de este se hizo un uso como "equipo puente" en movimientos laterales, etc. Puede resultar útil comprobar la caché almacenada de conexiones establecidas vía RDP hacia otros hosts ya sea de la misma red o de un RDP externo con el objetivo por ejemplo de exfiltrar información hacia un stage controlado por el actor malicioso.
 

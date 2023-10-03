@@ -1165,13 +1165,18 @@ notepad <FileName>:Zone.Identifier
 
 ### ▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell
 
-El historial de comandos en PowerShell no está integrada en el marco de administración de Windows, sino que se basa en el módulo **PSReadLine**. El módulo PSReadLine en Windows se encuentra en la carpeta `C:\Program Files\WindowsPowerShell\Modules\PSReadline` y se importa automáticamente cuando inicia la consola PowerShell.
+El historial de comandos en PowerShell o PowerShell Core no está integrado en el marco de administración de Windows, sino que se basa en el módulo **PSReadLine**. El módulo PSReadLine en Windows se encuentra en la carpeta `C:\Program Files\WindowsPowerShell\Modules\PSReadline` y se importa automáticamente cuando inicia la consola PowerShell.
 
 Esto puede ser útil en una investigación forense cuando un posible actor malicioso actuó sobre la cuenta del usuario o hizo al usuario ejecutar ciertas acciones bajo PowerShell.
 
-Por defecto PSReadline almacena un historial de 4096 comandos en un archivo de texto sin formato en el perfil de cada usuario ubicado en el siguiente path. 
+Por defecto PSReadline almacena un historial de 4096 comandos en un archivo de texto sin formato en el perfil de cada usuario **ConsoleHost_history.txt** ubicado en el siguiente path. 
 ```
 %USERPROFILE%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+```
+
+En el caso de que se usara una consola bajo VSC Visual Studio Code, encontraremos en el mismo path el fichero **Visual Studio Code Host_history.txt**.
+```
+%USERPROFILE%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\Visual Studio Code Host_history.txt
 ```
 
 Si tenemos acceso al propio contexto del usuario en su equipo podemos usar también la búsqueda inversa de forma repetida `CTRL+R` para poder ver el historial. `CTR+S` sería para una búsqueda directa.

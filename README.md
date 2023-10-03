@@ -32,6 +32,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Artefactos en dispositivos USB (Windows, Linux y MacOS)](#️-artefactos-en-dispositivos-usb-windows-linux-y-macos)
     - [▶️ Análisis Forense de logs en AnyDesk, Team Viewer y LogMeIn](#️-análisis-forense-de-logs-en-anydesk-team-viewer-y-logmein)
     - [▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-zoneidentifier)
+    - [▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#️-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
     - [▶️ Artefactos forense - MS Word](#️-artefactos-forense---ms-word)
     - [▶️ Analizar malware en fichero XLSX (MS Excel)](#️-analizar-malware-en-fichero-xlsx-ms-excel)
     - [▶️ Asignación de IPs en equipos](#️-asignación-de-ips-en-equipos)
@@ -1160,6 +1161,64 @@ Get-Content -Path .\<FileName> -Stream Zone.Identifier -Encoding oem
 CMD
 ```
 notepad <FileName>:Zone.Identifier
+```
+
+### ▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell
+
+El historial de comandos en PowerShell no está integrada en el marco de administración de Windows, sino que se basa en el módulo **PSReadLine**. El módulo PSReadLine en Windows se encuentra en la carpeta `C:\Program Files\WindowsPowerShell\Modules\PSReadline` y se importa automáticamente cuando inicia la consola PowerShell.
+
+Esto puede ser útil en una investigación forense cuando un posible actor malicioso actuó sobre la cuenta del usuario o hizo al usuario ejecutar ciertas acciones bajo PowerShell.
+
+Por defecto PSReadline almacena un historial de 4096 comandos en un archivo de texto sin formato en el perfil de cada usuario ubicado en el siguiente path. 
+```
+%USERPROFILE%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+```
+
+Si tenemos acceso al propio contexto del usuario en su equipo podemos usar también la búsqueda inversa de forma repetida `CTRL+R` para poder ver el historial. `CTR+S` sería para una búsqueda directa.
+
+Comprobar si el módulo está instalado.
+```
+Get-Module | Where-Object {$_.name -like "*PSReadline*"}
+```
+
+Ver el historial de comandos directamente en un output de sesión PowerShell.
+```
+Get-Content (Get-PSReadlineOption).HistorySavePath
+```
+
+Mostrar más opciones de configuración del módulo de PSReadline.
+```
+Get-PSReadlineOption | Select-Object HistoryNoDuplicates, MaximumHistoryCount, HistorySearchCursorMovesToEnd, HistorySearchCaseSensitive, HistorySavePath, HistorySaveStyle
+```
+
+Mostrar directamente el path donde está ubicado el fichero *ConsoleHost_history.txt*.
+```
+(Get-PSReadlineOption).HistorySavePath
+```
+
+Aumentar la cantidad de comandos de PowerShell almacenados en el registro.
+```
+Set-PSReadlineOption -MaximumHistoryCount 10000
+```
+
+En el caso de haber establecido algún tipo de secreto, password o token. Es posible eliminar solo el comando anterior del historial.  
+```
+Clear-History -Count 1 -Newest
+```
+
+Eliminar todos los comandos del historial que hagan match con un patrón específico.
+```
+Clear-History -CommandLine *set-ad*
+```
+
+Para eliminar completamente el historial de comandos de PowerShell, se debe eliminar el archivo ConsoleHost_history.txt en el que escribe el módulo PSReadline o directamente ejecutar lo siguiente en consola.
+```
+Remove-Item (Get-PSReadlineOption).HistorySavePath
+```
+
+Deshabilitar completamente el almacenamiento del historial de comandos de PowerShell.
+```
+Set-PSReadlineOption -HistorySaveStyle SaveNothing
 ```
 
 ### ▶️ Artefactos forense - MS Word

@@ -6,9 +6,8 @@
 
 Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y detección de técnicas utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.
 
-# Índice
+<h1 align="center"> Índice </h1>
 
-- [Índice](#índice)
 - [🔍 Análisis forense y artefactos](#-análisis-forense-y-artefactos)
   - [✅ Windows](#-windows)
     - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)

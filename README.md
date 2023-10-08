@@ -11,7 +11,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 - [🔍 Análisis Forense, Artefactos y Respuesta Incidentes](#-análisis-forense-artefactos-y-respuesta-incidentes)
   - [✅ Gestión de Respuesta a Incidentes (DFIR)](#-gestión-de-respuesta-a-incidentes-dfir)
     - [▶️ Preguntas - Respuesta a Incidentes](#️-preguntas---respuesta-a-incidentes)
-    - [▶️  Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?](#️--diagrama-de-preguntas-de-respuesta-a-incidentes---análisis-inicial-qué-ha-pasado)
+    - [▶️ Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?](#️-diagrama-de-preguntas-de-respuesta-a-incidentes---análisis-inicial-qué-ha-pasado)
+    - [▶️ Ciclo de vida - Respuesta a Incidentes](#️-ciclo-de-vida---respuesta-a-incidentes)
   - [✅ Windows](#-windows)
     - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)
     - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
@@ -163,11 +164,62 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   </tr>
 </table>
 
-### ▶️  Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?
+### ▶️ Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?
 
 [![](https://mermaid.ink/img/pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8?type=png)](https://mermaid.live/edit#pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8)
 
-- Referencia: https://www.incibe.es/sites/default/files/contenidos/JuegoRol/juegorol_cuestionarioinicialrespuestaincidentes.pdf
+### ▶️ Ciclo de vida - Respuesta a Incidentes
+
+[![](https://mermaid.ink/img/pako:eNpNkMFKBDEMhl-l5FRh9gXmIOzOzIKgIOtNegltxi3OpCWmiCz7VD6CL2at7OotfN9PSP4T-BQIepiX9O6PKGruD4639lEoo6CPX598U4HZbG7Nzt4FYo1z9Feza2awQ2IlvtCh0dFOIhj-pcfGJ3sgXzL97Z8a3_9wzFHLcjX7ZrbQwUqyYgz12JNjYxzokVZy0NcxoLw6cHyuOSyanj7YQ69SqIOSAyqNEV8EV-hnXN4qpRA1ycPv962EDjLyc0qXzPkb-NVh3g?type=png)](https://mermaid.live/edit#pako:eNpNkMFKBDEMhl-l5FRh9gXmIOzOzIKgIOtNegltxi3OpCWmiCz7VD6CL2at7OotfN9PSP4T-BQIepiX9O6PKGruD4639lEoo6CPX598U4HZbG7Nzt4FYo1z9Feza2awQ2IlvtCh0dFOIhj-pcfGJ3sgXzL97Z8a3_9wzFHLcjX7ZrbQwUqyYgz12JNjYxzokVZy0NcxoLw6cHyuOSyanj7YQ69SqIOSAyqNEV8EV-hnXN4qpRA1ycPv962EDjLyc0qXzPkb-NVh3g)
+
+<table>
+  <tr>
+    <td><strong>Preparación</strong></td>
+    <td>Reúne las herramientas necesarias y aprende su funcionamiento, familiarizándote con ellas.</td>
+    <td>
+      - Antimalware y comprobadores de integridad de ficheros/dispositivos.<br>
+      - Escáneres de vulnerabilidades, análisis de logs, detectores de intrusiones y otras herramientas de auditoría.<br>
+      - Recuperación de backups.<br>
+      - Herramientas de análisis forense (las traerá el perito forense).
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Identificación</strong></td>
+    <td>Detecta el incidente, determina su alcance y forma de solución e involucra a los responsables del negocio, las operaciones y la comunicación.</td>
+    <td>
+      - Contacta con el soporte técnico, con el CIRST o CERT, o con un perito forense si fuera necesario.<br>
+      - Contacta con la policía si fuera necesario.<br>
+      - Contacta con el asesor legal si fuera necesario.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Contención</strong></td>
+    <td>Impide que el incidente se extienda a otros recursos, minimizando su impacto.</td>
+    <td>
+      - Separa el/los equipos de la red cableada o wifi.<br>
+      - Deshabilita cuentas de usuario comprometidas.<br>
+      - Cambia las contraseñas de las cuentas de usuario comprometidas.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Erradicación</strong></td>
+    <td>Elimina si fuera necesario los elementos comprometidos antes de iniciar la recuperación.</td>
+    <td>
+      - Reinstala los sistemas afectados.<br>
+      - Restaura desde un backup.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Recapitulación</strong></td>
+    <td>Documenta los detalles del incidente, archiva los datos recogidos y establece un debate constructivo sobre las lecciones aprendidas.</td>
+    <td>
+      - Informa a los empleados del incidente y dales instrucciones para evitarlo en el futuro.<br>
+      - Informa a los medios y a los clientes si fuera necesario.
+    </td>
+  </tr>
+</table>
+
+- Referencia - Cuestionario inicial de respuesta a incidentes (INCIBE): https://www.incibe.es/sites/default/files/contenidos/JuegoRol/juegorol_cuestionarioinicialrespuestaincidentes.pdf
 
 ## ✅ Windows
 

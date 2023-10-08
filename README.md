@@ -9,7 +9,9 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 <h1> Índice </h1>
 
 - [🔍 Análisis Forense, Artefactos y Respuesta Incidentes](#-análisis-forense-artefactos-y-respuesta-incidentes)
-  - [✅ Preguntas Respuesta Incidentes (DFIR)](#-preguntas-respuesta-incidentes-dfir)
+  - [✅ Gestión de Respuesta a Incidentes (DFIR)](#-gestión-de-respuesta-a-incidentes-dfir)
+    - [▶️ Preguntas - Respuesta a Incidentes](#️-preguntas---respuesta-a-incidentes)
+    - [▶️  Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?](#️--diagrama-de-preguntas-de-respuesta-a-incidentes---análisis-inicial-qué-ha-pasado)
   - [✅ Windows](#-windows)
     - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)
     - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
@@ -86,7 +88,9 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 # 🔍 Análisis Forense, Artefactos y Respuesta Incidentes
 
-## ✅ Preguntas Respuesta Incidentes (DFIR)
+## ✅ Gestión de Respuesta a Incidentes (DFIR)
+
+### ▶️ Preguntas - Respuesta a Incidentes
 
 <table>
   <tr>
@@ -158,6 +162,66 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     </td>
   </tr>
 </table>
+
+### ▶️  Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?
+
+```mermaid
+flowchart LR
+    A(¿Qué ha pasado?)
+    
+    A --> B1(¿A quién afecta?)
+    B1 --> B1A(Usuarios / 
+            clientes / 
+            colaboradores)
+    B1A --> B1B(¿Qué decirles y 
+                cómo?)
+    B1B --> B1C(Estrategia de 
+                comunicación)
+    B1 --> B2(Sólo 
+                internamente)
+    
+    A --> C1(¿Tiene repercusiones 
+            legales o 
+            contractuales?)
+    C1 --> C1A(Consultar con 
+                soporte legal)
+    C1A --> C1B(Pérdida de datos 
+                personales)
+    C1 --> C2(¿Es un delito
+                que podamos 
+                denunciar?)
+    C2 --> C2A(Honor, Propiedad 
+                intelectual, intrusión, 
+                extorsión, etc.)
+    C2 --> C2B(¿Tendremos que
+              guardar evidencias para hacer la
+              denuncia?)
+    C2B --> C3A(¿Sabemos dónde 
+                se denuncia?)
+    C2B --> C3B(Análisis forense - 
+                contactar con un 
+                perito forense)
+
+    A --> D1(Los servicios y 
+            sistemas afectados)
+    D1 --> D2A(Están bajo 
+                nuestro control)
+    D2A --> D3B(¿Sabemos a quién 
+                pedir ayuda y 
+                soporte?)
+    D2A --> D3C(¿Tenemos recursos 
+                para contener el 
+                incidente?)
+    D3C --> D4A(Sí, nuestro 
+                responsable de IT 
+                se hace cargo)
+    D3C --> D4B(No, contactamos al 
+                soporte externo)
+    D1 --> D2B(Los tenemos 
+                externalizados)
+    D2B --> D3A(Contactamos con 
+                el proveedor)
+```
 
 ## ✅ Windows
 

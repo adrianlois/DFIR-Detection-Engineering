@@ -8,7 +8,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 <h1> Índice </h1>
 
-- [🔍 Análisis forense y artefactos](#-análisis-forense-y-artefactos)
+- [🔍 Análisis Forense, Artefactos y Respuesta Incidentes](#-análisis-forense-artefactos-y-respuesta-incidentes)
+  - [✅ Preguntas Respuesta Incidentes (DFIR)](#-preguntas-respuesta-incidentes-dfir)
   - [✅ Windows](#-windows)
     - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)
     - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
@@ -83,7 +84,80 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 ---
 
-# 🔍 Análisis forense y artefactos
+# 🔍 Análisis Forense, Artefactos y Respuesta Incidentes
+
+## ✅ Preguntas Respuesta Incidentes (DFIR)
+
+<table>
+  <tr>
+    <td><strong>Quién</strong></td>
+    <td>
+      - Se beneficia de esto?<br>
+      - Esto es perjudicial para?<br>
+      - Toma decisiones al respecto?<br>
+      - Se ve directamente más afectado?<br>
+      - Ha oído hablar también de esto?<br>
+      - Sería la mejor persona para consultar?<br>
+      - Serán las personas clave en esto?<br>
+      - Merece reconocimiento por esto?
+    </td>
+    <td><strong>Qué</strong></td>
+    <td>
+      - Son las fortalezas/debilidades?<br>
+      - Es otra perspectiva?<br>
+      - Es otra alternativa?<br>
+      - Sería un contraargumento?<br>
+      - Es el mejor/peor de los casos?<br>
+      - Es lo más/menos importante?<br>
+      - Podemos hacer para lograr un cambio positivo?<br>
+      - Se interpone en el camino de nuestra acción?
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Dónde</strong></td>
+    <td>
+      - Veríamos esto en el mundo real?<br>
+      - Existen conceptos/situaciones similares?<br>
+      - Existe la mayor necesidad de esto?<br>
+      - En el mundo sería esto un problema?<br>
+      - Es esto aceptable/inaceptable?<br>
+      - Esto beneficiaría a nuestra sociedad?<br>
+      - Esto causaría un problema?<br>
+      - Es el mejor momento para tomar acción?
+    </td>
+    <td><strong>Cuándo</strong></td>
+    <td>
+      - Es esto un problema/desafío?<br>
+      - Es relevante para mí/otros?<br>
+      - Es este el mejor/peor escenario?<br>
+      - La gente está influenciada por esto?<br>
+      - Es esto similar a?<br>
+      - Esto altera las cosas?<br>
+      - Sabemos la verdad sobre esto?<br>
+      - Abordaremos esto con seguridad?
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Por qué</strong></td>
+    <td>
+      - Podemos obtener más información?<br>
+      - Cuáles son las áreas de mejora?<br>
+      - Sabremos que hemos tenido éxito?<br>
+      - Podemos esperar que esto cambie?<br>
+      - Debemos pedir ayuda con esto?
+    </td>
+    <td><strong>Cómo</strong></td>
+    <td>
+      - La gente debería saber acerca de esto?<br>
+      - Ha sido así durante tanto tiempo?<br>
+      - Hemos permitido que esto suceda?<br>
+      - Esto nos beneficia a nosotros/otros?<br>
+      - Esto nos hace daño a nosotros/otros?<br>
+      - Vemos esto en el futuro?<br>
+      - Podemos cambiar esto para nuestro bien?
+    </td>
+  </tr>
+</table>
 
 ## ✅ Windows
 

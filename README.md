@@ -202,7 +202,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     </td>
   </tr>
   <tr>
-    <td><strong>Erradicación</strong></td>
+    <td><strong>Erradicación y Recuperación</strong></td>
     <td>Elimina si fuera necesario los elementos comprometidos antes de iniciar la recuperación.</td>
     <td>
       - Reinstala los sistemas afectados.<br>

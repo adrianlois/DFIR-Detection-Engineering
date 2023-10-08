@@ -165,63 +165,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 ### ▶️  Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?
 
-```mermaid
-flowchart LR
-    A(¿Qué ha pasado?)
-    
-    A --> B1(¿A quién afecta?)
-    B1 --> B1A(Usuarios / 
-            clientes / 
-            colaboradores)
-    B1A --> B1B(¿Qué decirles y 
-                cómo?)
-    B1B --> B1C(Estrategia de 
-                comunicación)
-    B1 --> B2(Sólo 
-                internamente)
-    
-    A --> C1(¿Tiene repercusiones 
-            legales o 
-            contractuales?)
-    C1 --> C1A(Consultar con 
-                soporte legal)
-    C1A --> C1B(Pérdida de datos 
-                personales)
-    C1 --> C2(¿Es un delito
-                que podamos 
-                denunciar?)
-    C2 --> C2A(Honor, Propiedad 
-                intelectual, intrusión, 
-                extorsión, etc.)
-    C2 --> C2B(¿Tendremos que
-              guardar evidencias para hacer la
-              denuncia?)
-    C2B --> C3A(¿Sabemos dónde 
-                se denuncia?)
-    C2B --> C3B(Análisis forense - 
-                contactar con un 
-                perito forense)
-
-    A --> D1(Los servicios y 
-            sistemas afectados)
-    D1 --> D2A(Están bajo 
-                nuestro control)
-    D2A --> D3B(¿Sabemos a quién 
-                pedir ayuda y 
-                soporte?)
-    D2A --> D3C(¿Tenemos recursos 
-                para contener el 
-                incidente?)
-    D3C --> D4A(Sí, nuestro 
-                responsable de IT 
-                se hace cargo)
-    D3C --> D4B(No, contactamos al 
-                soporte externo)
-    D1 --> D2B(Los tenemos 
-                externalizados)
-    D2B --> D3A(Contactamos con 
-                el proveedor)
-```
+[![](https://mermaid.ink/img/pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8?type=png)](https://mermaid.live/edit#pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8)
 
 ## ✅ Windows
 

@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="dfir-logo.png" alt="DFIR & Detection Engineering" width="480">
+  <img src="DFIR-logo.png" alt="DFIR & Detection Engineering" width="480">
   <br>
   Digital Forensics Incident Response & Detection Engineering
 </h1>

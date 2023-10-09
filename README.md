@@ -1726,7 +1726,7 @@ HKCU\Software\TigerVNC\WinVNC4
 
 ### ▶️ Sesiones almacenadas con PuTTY y MobaXterm (SSH, RDP FTP y otras)
 
-Claves de registro de Windows donde se pueden encontrar sesiones guardas y previamente establecidas de conexiones SSH, RDP, FTP, etc. usando **MobaXterm** y **PuTTY**. Se trata de valores de cadena tipo REG_SZ donde se almacena información como los usuarios, IPs y la password cifrada en caso de ser guardada a través de estos clientes de conexión.
+Claves de registro de Windows donde se pueden encontrar sesiones guardas y previamente establecidas de conexiones SSH, RDP, FTP, etc. usando *MobaXterm* y *PuTTY*. Se trata de valores de cadena tipo REG_SZ donde se almacena información como los usuarios, IPs y la password cifrada en caso de ser guardada a través de estos clientes de conexión.
 
 `MobaXterm`
 ```

@@ -26,6 +26,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Análisis y artefactos de ShellBags](#️-análisis-y-artefactos-de-shellbags)
     - [▶️ Thumbcache Viewer](#️-thumbcache-viewer)
     - [▶️ Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#️-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
+    - [▶️ Sesiones de conexión remota almacenadas con PuTTY y MobaXterm (SSH, RDP FTP y otras)](#️-sesiones-de-conexión-remota-almacenadas-con-putty-y-mobaxterm-ssh-rdp-ftp-y-otras)
     - [▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-zoneidentifier)
     - [▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#️-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
     - [▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP](#️-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
@@ -68,7 +69,6 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Uso de *type* para descargar o subir ficheros](#️-uso-de-type-para-descargar-o-subir-ficheros)
     - [▶️ Bloquear conexiones USB: Rubber Ducky y Cactus WHID](#️-bloquear-conexiones-usb-rubber-ducky-y-cactus-whid)
     - [▶️ Claves de registro de Windows donde se almacenan las contraseñas](#️-claves-de-registro-de-windows-donde-se-almacenan-las-contraseñas)
-    - [▶️ Sesiones de conexión remota almacenadas con PuTTY y MobaXterm (SSH, RDP FTP y otras)](#️-sesiones-de-conexión-remota-almacenadas-con-putty-y-mobaxterm-ssh-rdp-ftp-y-otras)
     - [▶️ WDigest Authentication: Habilitado / Deshabilitado](#️-wdigest-authentication-habilitado--deshabilitado)
     - [▶️ Detectar si un sistema es una máquina virtual con PowerShell o WMIC](#️-detectar-si-un-sistema-es-una-máquina-virtual-con-powershell-o-wmic)
     - [▶️ Técnicas de ofuscación en la ejecucación de comandos en Windows](#️-técnicas-de-ofuscación-en-la-ejecucación-de-comandos-en-windows)
@@ -774,6 +774,20 @@ SOFTWARE\LogMeIn\Toolkit\DesktopSharing
 SOFTWARE\LogMeIn\V5 LogMeIn\Toolkit\Filesharing
 SOFTWARE\LogMeIn\V5
 SOFTWARE\LogMeIn Ignition
+```
+
+### ▶️ Sesiones de conexión remota almacenadas con PuTTY y MobaXterm (SSH, RDP FTP y otras)
+
+Claves de registro de Windows donde se pueden encontrar sesiones guardas y previamente establecidas de conexiones SSH, RDP, FTP, etc. usando *MobaXterm* y *PuTTY*. Se trata de valores de cadena tipo REG_SZ donde se almacena información como los usuarios, IPs y la password cifrada en caso de ser guardada en estos clientes usados para establecer conexiones remotas.
+
+`MobaXterm`
+```
+HKCU\Software\Mobatek\MobaXterm
+```
+
+`PuTTY`
+```
+HKCU\Software\SimonTatham\PuTTY\Sessions
 ```
 
 ### ▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)
@@ -1722,20 +1736,6 @@ HKCU\Software\PremiumSoft\NavicatSQLite\Servers
 HKCU\Software\PremiumSoft\NavicatMARIADB\Servers
 HKCU\Software\PremiumSoft\NavicatOra\Servers
 HKCU\Software\TigerVNC\WinVNC4
-```
-
-### ▶️ Sesiones de conexión remota almacenadas con PuTTY y MobaXterm (SSH, RDP FTP y otras)
-
-Claves de registro de Windows donde se pueden encontrar sesiones guardas y previamente establecidas de conexiones SSH, RDP, FTP, etc. usando *MobaXterm* y *PuTTY*. Se trata de valores de cadena tipo REG_SZ donde se almacena información como los usuarios, IPs y la password cifrada en caso de ser guardada en estos clientes usados para establecer conexiones remotas.
-
-`MobaXterm`
-```
-HKCU\Software\Mobatek\MobaXterm
-```
-
-`PuTTY`
-```
-HKCU\Software\SimonTatham\PuTTY\Sessions
 ```
 
 ### ▶️ WDigest Authentication: Habilitado / Deshabilitado

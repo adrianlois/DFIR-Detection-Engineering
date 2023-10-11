@@ -3,7 +3,7 @@
 <div align="center">
   <img src="DFIR-logo.png" alt="DFIR & Detection Engineering" width="485">
 </div>
-
+<br>
 Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y detección de técnicas utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.
 
 <h1> Índice </h1>

@@ -6,7 +6,7 @@
 <br>
 Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense y detección de técnicas utilizadas por actores maliciosos para la evasión de sistemas de protección y monitorización.
 
-<h1> Índice </h1>
+<h1>Índice</h1>
 
 - [🔍 Análisis Forense, Artefactos y Respuesta Incidentes](#-análisis-forense-artefactos-y-respuesta-incidentes)
   - [✅ Gestión de Respuesta a Incidentes (DFIR)](#-gestión-de-respuesta-a-incidentes-dfir)

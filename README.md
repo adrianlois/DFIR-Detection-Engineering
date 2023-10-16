@@ -13,6 +13,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?](#️-diagrama-de-preguntas-de-respuesta-a-incidentes---análisis-inicial-qué-ha-pasado)
     - [▶️ Ciclo de vida - Respuesta a Incidentes](#️-ciclo-de-vida---respuesta-a-incidentes)
     - [▶️ Preguntas - Respuesta a Incidentes](#️-preguntas---respuesta-a-incidentes)
+    - [▶️ Preguntas - Análisis Forense Digital](#️-preguntas---análisis-forense-digital)
     - [▶️ Metodología - Análisis Forense Digital](#️-metodología---análisis-forense-digital)
   - [✅ Windows](#-windows)
     - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)
@@ -152,15 +153,6 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 ### ▶️ Preguntas - Respuesta a Incidentes
 
- - ¿Dónde se encuentra físicamente la información?.
- - Qué dispositivos de almacenamiento copiar.
- - ¿Se debe apagar un dispositivo para realizar la adquisición?.
- - Orden para realizar las copias, teniendo en cuenta la volatilidad de los datos implicados.
- - ¿Es necesario buscar y copiar dispositivos ocultos, no visibles o remotos?.
- - ¿Se han empleado técnicas anti forenses para ocultar información?.
- - Necesidad de soporte de un especialista forense.
- - Necesidad de un fedatario.
-
 **`Quién, Qué, Dónde, Cuándo, Por qué y Cómo`**
 
 <table>
@@ -233,6 +225,17 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     </td>
   </tr>
 </table>
+
+### ▶️ Preguntas - Análisis Forense Digital
+
+ - ¿Dónde se encuentra físicamente la información?.
+ - Qué dispositivos de almacenamiento copiar.
+ - ¿Se debe apagar un dispositivo para realizar la adquisición?.
+ - Orden para realizar las copias, teniendo en cuenta la volatilidad de los datos implicados.
+ - ¿Es necesario buscar y copiar dispositivos ocultos, no visibles o remotos?.
+ - ¿Se han empleado técnicas anti forenses para ocultar información?.
+ - Necesidad de soporte de un especialista forense.
+ - Necesidad de un fedatario.
 
 ### ▶️ Metodología - Análisis Forense Digital
 

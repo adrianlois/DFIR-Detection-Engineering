@@ -9,10 +9,11 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 <h1>Índice</h1>
 
 - [🔍 Análisis Forense, Artefactos y Respuesta Incidentes](#-análisis-forense-artefactos-y-respuesta-incidentes)
-  - [✅ Gestión de Respuesta a Incidentes (DFIR)](#-gestión-de-respuesta-a-incidentes-dfir)
-    - [▶️ Preguntas - Respuesta a Incidentes](#️-preguntas---respuesta-a-incidentes)
+  - [✅ Gestión de Respuesta a Incidentes y Análisis Forense Digital (DFIR)](#-gestión-de-respuesta-a-incidentes-y-análisis-forense-digital-dfir)
     - [▶️ Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?](#️-diagrama-de-preguntas-de-respuesta-a-incidentes---análisis-inicial-qué-ha-pasado)
     - [▶️ Ciclo de vida - Respuesta a Incidentes](#️-ciclo-de-vida---respuesta-a-incidentes)
+    - [▶️ Preguntas - Respuesta a Incidentes](#️-preguntas---respuesta-a-incidentes)
+    - [▶️ Metodología - Análisis Forense Digital](#️-metodología---análisis-forense-digital)
   - [✅ Windows](#-windows)
     - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)
     - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
@@ -90,9 +91,77 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 # 🔍 Análisis Forense, Artefactos y Respuesta Incidentes
 
-## ✅ Gestión de Respuesta a Incidentes (DFIR)
+## ✅ Gestión de Respuesta a Incidentes y Análisis Forense Digital (DFIR)
+
+### ▶️ Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?
+
+[![](https://mermaid.ink/img/pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8?type=png)](https://mermaid.live/edit#pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8)
+
+### ▶️ Ciclo de vida - Respuesta a Incidentes
+
+[![](https://mermaid.ink/img/pako:eNpNkMFKBDEMhl-l5FRh9gXmIOzOzIKgIOtNegltxi3OpCWmiCz7VD6CL2at7OotfN9PSP4T-BQIepiX9O6PKGruD4639lEoo6CPX598U4HZbG7Nzt4FYo1z9Feza2awQ2IlvtCh0dFOIhj-pcfGJ3sgXzL97Z8a3_9wzFHLcjX7ZrbQwUqyYgz12JNjYxzokVZy0NcxoLw6cHyuOSyanj7YQ69SqIOSAyqNEV8EV-hnXN4qpRA1ycPv962EDjLyc0qXzPkb-NVh3g?type=png)](https://mermaid.live/edit#pako:eNpNkMFKBDEMhl-l5FRh9gXmIOzOzIKgIOtNegltxi3OpCWmiCz7VD6CL2at7OotfN9PSP4T-BQIepiX9O6PKGruD4639lEoo6CPX598U4HZbG7Nzt4FYo1z9Feza2awQ2IlvtCh0dFOIhj-pcfGJ3sgXzL97Z8a3_9wzFHLcjX7ZrbQwUqyYgz12JNjYxzokVZy0NcxoLw6cHyuOSyanj7YQ69SqIOSAyqNEV8EV-hnXN4qpRA1ycPv962EDjLyc0qXzPkb-NVh3g)
+
+<table>
+  <tr>
+    <td><strong>Preparación</strong></td>
+    <td>Reúne las herramientas necesarias y aprende su funcionamiento, familiarizándote con ellas.</td>
+    <td>
+      - Antimalware y comprobadores de integridad de ficheros/dispositivos.<br>
+      - Escáneres de vulnerabilidades, análisis de logs, detectores de intrusiones y otras herramientas de auditoría.<br>
+      - Recuperación de backups.<br>
+      - Herramientas de análisis forense (las traerá el perito forense).
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Identificación</strong></td>
+    <td>Detecta el incidente, determina su alcance y forma de solución e involucra a los responsables del negocio, las operaciones y la comunicación.</td>
+    <td>
+      - Contacta con el soporte técnico, con el CIRST o CERT, o con un perito forense si fuera necesario.<br>
+      - Contacta con la policía si fuera necesario.<br>
+      - Contacta con el asesor legal si fuera necesario.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Contención</strong></td>
+    <td>Impide que el incidente se extienda a otros recursos, minimizando su impacto.</td>
+    <td>
+      - Separa el/los equipos de la red cableada o wifi.<br>
+      - Deshabilita cuentas de usuario comprometidas.<br>
+      - Cambia las contraseñas de las cuentas de usuario comprometidas.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Erradicación y Recuperación</strong></td>
+    <td>Elimina si fuera necesario los elementos comprometidos antes de iniciar la recuperación.</td>
+    <td>
+      - Reinstala los sistemas afectados.<br>
+      - Restaura desde un backup.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Recapitulación</strong></td>
+    <td>Documenta los detalles del incidente, archiva los datos recogidos y establece un debate constructivo sobre las lecciones aprendidas.</td>
+    <td>
+      - Informa a los empleados del incidente y dales instrucciones para evitarlo en el futuro.<br>
+      - Informa a los medios y a los clientes si fuera necesario.
+    </td>
+  </tr>
+</table>
+
+- Referencia - Cuestionario inicial de respuesta a incidentes (INCIBE): https://www.incibe.es/sites/default/files/contenidos/JuegoRol/juegorol_cuestionarioinicialrespuestaincidentes.pdf
 
 ### ▶️ Preguntas - Respuesta a Incidentes
+
+ - ¿Dónde se encuentra físicamente la información?.
+ - Qué dispositivos de almacenamiento copiar.
+ - ¿Se debe apagar un dispositivo para realizar la adquisición?.
+ - Orden para realizar las copias, teniendo en cuenta la volatilidad de los datos implicados.
+ - ¿Es necesario buscar y copiar dispositivos ocultos, no visibles o remotos?.
+ - ¿Se han empleado técnicas anti forenses para ocultar información?.
+ - Necesidad de soporte de un especialista forense.
+ - Necesidad de un fedatario.
+
+**`Quién, Qué, Dónde, Cuándo, Por qué y Cómo`**
 
 <table>
   <tr>
@@ -165,62 +234,45 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   </tr>
 </table>
 
-### ▶️ Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?
+### ▶️ Metodología - Análisis Forense Digital
 
-[![](https://mermaid.ink/img/pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8?type=png)](https://mermaid.live/edit#pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8)
+Resumen de operativa de las cinco fases de un Análisis Forense en la adquisición de evidencias digitales.
 
-### ▶️ Ciclo de vida - Respuesta a Incidentes
+[![](https://mermaid.ink/img/pako:eNo9z0EKwjAQBdCrhFlVaC_QhdAadwqiO8lmSEYbbBJNE0Wkh_EMHsGLGVLsbnjzGea_QDpFUMOpdw_ZoQ9ssxe2KRp1i3rQUn8_dpGAVdWStcXO00D-jn9vs6-Kxn7ffcoPyVbZeMGdjIZsmMM8L9bTkdmhBEPeoFbpjZewjAkIHRkSUKdRob8IEHZMOYzBHZ5WQh18pBLiVWEgrvHs0UB9wn5ISkoH57dTr1yvhCvao3P_zPgDlLtVig?type=png)](https://mermaid.live/edit#pako:eNo9z0EKwjAQBdCrhFlVaC_QhdAadwqiO8lmSEYbbBJNE0Wkh_EMHsGLGVLsbnjzGea_QDpFUMOpdw_ZoQ9ssxe2KRp1i3rQUn8_dpGAVdWStcXO00D-jn9vs6-Kxn7ffcoPyVbZeMGdjIZsmMM8L9bTkdmhBEPeoFbpjZewjAkIHRkSUKdRob8IEHZMOYzBHZ5WQh18pBLiVWEgrvHs0UB9wn5ISkoH57dTr1yvhCvao3P_zPgDlLtVig)
 
-[![](https://mermaid.ink/img/pako:eNpNkMFKBDEMhl-l5FRh9gXmIOzOzIKgIOtNegltxi3OpCWmiCz7VD6CL2at7OotfN9PSP4T-BQIepiX9O6PKGruD4639lEoo6CPX598U4HZbG7Nzt4FYo1z9Feza2awQ2IlvtCh0dFOIhj-pcfGJ3sgXzL97Z8a3_9wzFHLcjX7ZrbQwUqyYgz12JNjYxzokVZy0NcxoLw6cHyuOSyanj7YQ69SqIOSAyqNEV8EV-hnXN4qpRA1ycPv962EDjLyc0qXzPkb-NVh3g?type=png)](https://mermaid.live/edit#pako:eNpNkMFKBDEMhl-l5FRh9gXmIOzOzIKgIOtNegltxi3OpCWmiCz7VD6CL2at7OotfN9PSP4T-BQIepiX9O6PKGruD4639lEoo6CPX598U4HZbG7Nzt4FYo1z9Feza2awQ2IlvtCh0dFOIhj-pcfGJ3sgXzL97Z8a3_9wzFHLcjX7ZrbQwUqyYgz12JNjYxzokVZy0NcxoLw6cHyuOSyanj7YQ69SqIOSAyqNEV8EV-hnXN4qpRA1ycPv962EDjLyc0qXzPkb-NVh3g)
+`1. Adquisición` 
 
-<table>
-  <tr>
-    <td><strong>Preparación</strong></td>
-    <td>Reúne las herramientas necesarias y aprende su funcionamiento, familiarizándote con ellas.</td>
-    <td>
-      - Antimalware y comprobadores de integridad de ficheros/dispositivos.<br>
-      - Escáneres de vulnerabilidades, análisis de logs, detectores de intrusiones y otras herramientas de auditoría.<br>
-      - Recuperación de backups.<br>
-      - Herramientas de análisis forense (las traerá el perito forense).
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Identificación</strong></td>
-    <td>Detecta el incidente, determina su alcance y forma de solución e involucra a los responsables del negocio, las operaciones y la comunicación.</td>
-    <td>
-      - Contacta con el soporte técnico, con el CIRST o CERT, o con un perito forense si fuera necesario.<br>
-      - Contacta con la policía si fuera necesario.<br>
-      - Contacta con el asesor legal si fuera necesario.
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Contención</strong></td>
-    <td>Impide que el incidente se extienda a otros recursos, minimizando su impacto.</td>
-    <td>
-      - Separa el/los equipos de la red cableada o wifi.<br>
-      - Deshabilita cuentas de usuario comprometidas.<br>
-      - Cambia las contraseñas de las cuentas de usuario comprometidas.
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Erradicación y Recuperación</strong></td>
-    <td>Elimina si fuera necesario los elementos comprometidos antes de iniciar la recuperación.</td>
-    <td>
-      - Reinstala los sistemas afectados.<br>
-      - Restaura desde un backup.
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Recapitulación</strong></td>
-    <td>Documenta los detalles del incidente, archiva los datos recogidos y establece un debate constructivo sobre las lecciones aprendidas.</td>
-    <td>
-      - Informa a los empleados del incidente y dales instrucciones para evitarlo en el futuro.<br>
-      - Informa a los medios y a los clientes si fuera necesario.
-    </td>
-  </tr>
-</table>
+Donde se realiza una copia de la información susceptible de poder ser presentada como prueba en un proceso. Estas evidencias deben ser recogidas sin alterar los originales, utilizando dispositivos o procedimiento de sólo lectura que garanticen que no se sobrescribe el medio de almacenamiento de origen. Se debe respetar la volatilidad de las muestras y priorizar su recogida. Y se deben etiquetar y almacenar todos los dispositivos originales de forma segura.
 
-- Referencia - Cuestionario inicial de respuesta a incidentes (INCIBE): https://www.incibe.es/sites/default/files/contenidos/JuegoRol/juegorol_cuestionarioinicialrespuestaincidentes.pdf
+`2. Preservación` 
+
+En esta fase se garantiza la perdurabilidad en el tiempo y la cadena de custodia de la información recogida.
+
+`3. Análisis`
+
+Se emplean técnicas que, junto con la experiencia y la inteligencia del analista, ayudarán a resolver el qué, el cómo y el quién del caso analizado.
+
+`4. Documentación`
+
+Fase en la que se asegura que todo el proceso (información y procedimientos aplicados) queda correctamente documentado y fechado.
+
+`5. Presentación`
+
+Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las conclusiones de todo el análisis.
+
+**`Principios que deben asegurarse en la gestión de evidencias digitales según ENISA.`**
+
+- **Integridad de los datos**: No se debe modificar ningún dato que deba usarse en la resolución de un caso por un juzgado. La persona encargada de la escena del crimen o de la recolección es la responsable de que eso no ocurra. Además, si el dispositivo recogido está encendido, la adquisición debe hacerse de forma que se modifique lo mínimo posible.
+
+- **Registro**: Se debe crear y actualizar un registro con todas las acciones realizadas sobre las evidencias recogidas, desde su adquisición hasta cualquier consulta posterior.
+
+- **Soporte de especialistas**: En cualquier momento durante la adquisición debe ser posible la intervención de un especialista debidamente formado en técnicas forenses digitales. Dicho especialista debe tener el suficiente conocimiento técnico y legal, así como la experiencia y autorización necesarias.
+
+- **Formación**: Cualquier persona que maneje evidencias digitales debe tener una formación básica técnica y legal.
+
+- **Legalidad**: Se debe asegurar la legalidad correspondiente a lo largo de todo el proceso.
+
+- Referencia - Electronic evidence - A basic guide for First Responders - ENISA: https://www.enisa.europa.eu/publications/electronic-evidence-a-basic-guide-for-first-responders/at_download/fullReport.
 
 ## ✅ Windows
 

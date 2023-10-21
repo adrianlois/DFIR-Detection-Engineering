@@ -1462,6 +1462,20 @@ http.cookie contains 'sessionid'
 frame.len > 1000
 ```
 
+- Filtrar por aquellos paquetes que contengan el término especificado
+```
+tcp contains 'TERMINO'
+```
+
+- Filtrar todos los paquetes que no utilicen el protocolo ARP, ICMP, DNS, SSDP o UDP.
+```
+!(arp or icmp or dns or ssdp or udp)
+```
+
+- Filtrar todos los paquetes cuyo puerto TCP origen o destino sea 22 o 443.
+```
+(tcp.port in {22 443})
+```
 - Filtros DNS.
 ```
 # Paquetes DNS que tengan un nombre de dominio que contenga "domain.com"
@@ -1549,9 +1563,14 @@ udp contains 22:34:46
 tcp.flags.syn == 1
 ```
 
-- Mostrar todos los flags SYNACK TCP.
+- Mostrar todos los flags SYN+ACK TCP.
 ```
 tcp.flags.syn == 1 && tcp.flags.ack == 1
+```
+
+- Mostrar todos los flags RST TCP.
+```
+tcp.flags.rst == 1
 ```
 
 - Mostrar paquetes con reconocimientos duplicados en TCP.

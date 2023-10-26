@@ -47,7 +47,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Logs del sistema de Linux](#️-logs-del-sistema-de-linux)
     - [▶️ Logs de aplicaciones de Linux](#️-logs-de-aplicaciones-de-linux)
     - [▶️ Logs journalctl (systemd)](#️-logs-journalctl-systemd)
-    - [▶️ Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)](#️-obtener-archivos-con-pid-de-procesos-maliciosos-conexiones-ssh-linux)
+    - [▶️ Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución](#️-copiar-un-binario-malicioso-ya-eliminado-a-través-de-su-proceso-todavía-en-ejecución)
+    - [▶️ Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)](#️-identificar-y-obtener-archivos-con-pid-de-procesos-maliciosos-conexiones-ssh-linux)
     - [▶️ Historiales de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#️-historiales-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
     - [▶️ Voldado de todos los directorios y ficheros de Linux](#️-voldado-de-todos-los-directorios-y-ficheros-de-linux)
     - [▶️ Volcado de Memoria RAM en Linux con LiME (Linux Memory Extractor)](#️-volcado-de-memoria-ram-en-linux-con-lime-linux-memory-extractor)
@@ -1343,7 +1344,15 @@ journalctl SYSLOG_FACILITY=4
 journalctl /usr/sbin/cron
 ```
 
-### ▶️ Obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
+### ▶️ Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución 
+
+Aunque se elimne el binario del proceso del malware, todavía está en el espacio del kernel. Por lo tanto, se puede usar el comando *scp* para copiar directamente un binario de proceso sospechoso de Linux.
+
+```bash
+scp /proc/<PID>/exe user@ip:/recovered_binary
+```
+
+### ▶️ Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
 
 Se conectaron al sistema a través de SSH e iniciaron procesos maliciosos. Incluso, si eliminaron el historial de comandos.
 

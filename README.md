@@ -1027,7 +1027,7 @@ Como técnica anti forense esta metadata se puede eliminar desde Excel "inspecci
 
 ### ▶️ Análisis de malware en ficheros MS Office (oletools)
 
-[**oletools**](https://github.com/decalage2/oletools): es un kit de herramientas python para analizar archivos Microsoft OLE2 (también llamados Structured Storage, Compound File Binary Format o Compound Document File Format), como documentos ofimáticos de Microsoft Office, mensajes de Outlook, Word, Power Point, Excel, etc. Principalmente para análisis de malware, forense y depuración. Se basa en el analizador sintáctico [olefile](https://www.decalage.info/olefile). 
+[**oletools**](https://github.com/decalage2/oletools) es un kit de herramientas python para analizar archivos Microsoft OLE2 (también llamados Structured Storage, Compound File Binary Format o Compound Document File Format), como documentos ofimáticos de Microsoft Office, mensajes de Outlook, Word, Power Point, Excel, etc. Principalmente para análisis de malware, forense y depuración. Se basa en el analizador sintáctico [olefile](https://www.decalage.info/olefile). 
 
 > Con el argumento *-s <STREAM_NRO>* podemos ubicarnos sobre alguno de estos streams y con el argumento *-v* podemos ver el código de la macro. Podemos encontrar algunas cosas sospechosas en un archivo. Por ejemplo, las palabras claves *Create* o *CreateObject*, entre otras.
 

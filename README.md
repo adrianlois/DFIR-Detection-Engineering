@@ -33,7 +33,12 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#️-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
     - [▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP](#️-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
     - [▶️ Artefactos forense - MS Word](#️-artefactos-forense---ms-word)
-    - [▶️ Analizar malware en fichero XLSX (MS Excel)](#️-analizar-malware-en-fichero-xlsx-ms-excel)
+    - [▶️ Análisis de malware en ficheros XLSX (MS Excel)](#️-análisis-de-malware-en-ficheros-xlsx-ms-excel)
+    - [▶️ Análisis de malware en ficheros MS Office (oletools)](#️-análisis-de-malware-en-ficheros-ms-office-oletools)
+    - [▶️ Herramientas de análisis en ficheros MS Office y otros (detectar malware o phising)](#️-herramientas-de-análisis-en-ficheros-ms-office-y-otros-detectar-malware-o-phising)
+    - [▶️ Herramientes de análisis PDF (detectar malware o phising)](#️-herramientes-de-análisis-pdf-detectar-malware-o-phising)
+    - [▶️ Encontrar Shellcodes en ficheros y otros comandos de análisis](#️-encontrar-shellcodes-en-ficheros-y-otros-comandos-de-análisis)
+    - [▶️ Detectar URL maliciosas en el documento](#️-detectar-url-maliciosas-en-el-documento)
     - [▶️ Asignación de IPs en equipos](#️-asignación-de-ips-en-equipos)
     - [▶️ Windows Firewall (wf.msc): Reglas residuales de software desintalado](#️-windows-firewall-wfmsc-reglas-residuales-de-software-desintalado)
     - [▶️ Persistencia: suplantación de procesos del sistema](#️-persistencia-suplantación-de-procesos-del-sistema)
@@ -1014,11 +1019,118 @@ Los archivos adjuntos tipo Word abiertos en directamente a través de en Outlook
 %LocalAppdata%\Microsoft\Windows\INetCache\Content.Outlook\<Folder>\
 ```
 
-### ▶️ Analizar malware en fichero XLSX (MS Excel)
+### ▶️ Análisis de malware en ficheros XLSX (MS Excel)
 
-Descomprimir el fichero .xlsx, dentro de la carpeta "XL" abrir editando el archivo llamado "workbook.xml", buscar el término **"absPath"**. Contiene la última ubicación de guardado del archivo donde veríamos al autor (C:\\<\user>\\..\\file.xlsx).
+Con 7Zip podemos descomprimir el fichero .xlsx, dentro de la carpeta "XL" abrir editando el archivo llamado "workbook.xml", buscar el término **"absPath"**. Contiene la última ubicación de guardado del archivo donde veríamos al autor (C:\\<\user>\\..\\file.xlsx).
 
-Como técnica anti forense esta metadata se puede eliminar desde Excel "inspeccionando el documento" y borrando las "propiedades de documento e información personal". 
+Como técnica anti forense esta metadata se puede eliminar desde Excel "inspeccionando el documento" y borrando las "propiedades de documento e información personal".
+
+### ▶️ Análisis de malware en ficheros MS Office (oletools)
+
+[**oletools**](https://github.com/decalage2/oletools): es un kit de herramientas python para analizar archivos Microsoft OLE2 (también llamados Structured Storage, Compound File Binary Format o Compound Document File Format), como documentos ofimáticos de Microsoft Office, mensajes de Outlook, Word, Power Point, Excel, etc. Principalmente para análisis de malware, forense y depuración. Se basa en el analizador sintáctico [olefile](https://www.decalage.info/olefile). 
+
+> Con el argumento *-s <STREAM_NRO>* podemos ubicarnos sobre alguno de estos streams y con el argumento *-v* podemos ver el código de la macro. Podemos encontrar algunas cosas sospechosas en un archivo. Por ejemplo, las palabras claves *Create* o *CreateObject*, entre otras.
+
+- oletools: https://github.com/decalage2/oletools
+- oletools Wiki: https://github.com/decalage2/oletools/wiki
+- Más info oletools: http://www.decalage.info/python/oletools
+
+| Herramienta | Descripción |
+|-------------|-------------|
+| [**oledump**](https://github.com/DidierStevens/DidierStevensSuite/blob/master/oledump.py) | Analiza archivos OLE (Object Linking and Embedding, Compound File Binary Format). Estos archivos contienen flujos de datos. |
+| [**olevba**](https://github.com/decalage2/oletools/wiki/olevba) | Dispone de la capacidad de extraer y analizar las macros VBA de los ficheros de MS Office (OLE y OpenXML). |
+| [**pcodedmp**](https://github.com/bontchev/pcodedmp) | Desensamblador de p-code de VBA |
+| [**oleid**](https://github.com/decalage2/oletools/wiki/oleid) | Permite analizar ficheros OLE para detectar características que normalmente se encuentran en ficheros maliciosos. |
+| [**MacroRaptor**](https://github.com/decalage2/oletools/wiki/olevba) | Sirve para detectar las Macros VBA maliciosas. |
+| [**msodde**](https://github.com/decalage2/oletools/wiki/msodde) | proporciona la capacidad de detectar enlaces DDE/DDEAUTO de los ficheros de MS Office, RTF y CSV. |
+| [**pyxswf**](https://github.com/decalage2/oletools/wiki/pyxswf) | Detecta, analiza y extrae los objetos Flash (SWF) que pueden estar embebidos en ficheros con formato de MS Office y RTF. |
+| [**oleobj**](https://github.com/decalage2/oletools/wiki/oleobj) | Extrae los ficheros embebidos de los ficheros OLE. |
+| [**rtfobj**](https://github.com/decalage2/oletools/wiki/rtfobj) | Lo mismo que el anterior pero con ficheros RTF. |
+| [**olebrowse**](https://github.com/decalage2/oletools/wiki/olebrowse) | Proporciona una interfaz gráfica simple para navegar por los ficheros OLE. Este permite visualizar y extraer partes concretas del fichero. |
+| [**olemeta**](https://github.com/decalage2/oletools/wiki/olemeta) | Consigue los metadatos de los ficheros OLE. |
+| [**oletimes**](https://github.com/decalage2/oletools/wiki/oletimes) | Extrae las marcas de tiempo del fichero como la fecha de creación, la fecha de modificación, etc. |
+| [**oledir**](https://github.com/decalage2/oletools/wiki/oledir) | Muestra todas las entradas de directorio de un archivo OLE. |
+| [**olemap**](https://github.com/decalage2/oletools/wiki/olemap) | Pinta una tabla con todos los sectores, y sus atributos, del fichero OLE. |
+
+### ▶️ Herramientas de análisis en ficheros MS Office y otros (detectar malware o phising)
+
+| Herramienta | Descripción |
+|-------------|-------------|
+| [**Suite de DidierStevensSuite**](https://github.com/DidierStevens/DidierStevensSuite) | Suite de [Didier Stevens](https://www.sans.org/profiles/didier-stevens). |
+| [**Exiftool**](https://exiftool.org/) | Analizar los metadatos de diversos formatos de archivos. |
+| [**Munpack**](https://linux.die.net/man/1/munpack) | Descomprime mensajes en formato MIME o split-uuencode. |
+| [**msoffice-crypt**](https://github.com/herumi/msoffice) | Cifra/descifra ficheros MS Office. |
+| [**OfficeMalScanner**](http://www.reconstructer.org/code.html) | herramienta forense de Ms Office para escanear en busca de rastros maliciosos, como shellcode heurístico, archivos PE o flujos OLE incrustados. |
+| [**Hachoir-subfile**](https://hachoir.readthedocs.io/en/latest/subfile.html) | Herramienta basada en hachoir-parser para buscar subarchivos en cualquier flujo binario. |
+| [**xxxswfpy**](https://hooked-on-mnemonics.blogspot.com/2011/12/xxxswfpy.html) | Escanear, comprimir, descomprimir y analizar archivos Flash SWF. |
+
+### ▶️ Herramientes de análisis PDF (detectar malware o phising)
+
+| Herramienta | Descripción |
+|-------------|-------------|
+| [**PDF Stream Dumper**](http://sandsprite.com/blogs/index.php?uid=7&pid=57) | GUI de Windows para el análisis de PDF muy popular entre la comunidad de especialistas en ciberseguridad. |
+| [**PDF-parser**](https://didierstevens.com/files/software/pdf-parser_V0_6_8.zip) | Extraer elementos individuales de un archivo PDF, como encabezados, enlaces y más, para su análisis detallado. |
+| [**PDFID**](https://didierstevens.com/files/software/pdfid_v0_2_2.zip) | Enumera todos los objetos del archivo PDF analizado. |
+| [**PEEPDF**](https://github.com/jesparza/peepdf) | Es un marco de análisis bastante poderoso que incluye búsqueda de shellcode, Javascript y más. |
+| [**PDFxray**](https://github.com/9b/pdfxray_public) | Tiene la mayoría de las utilidades necesarias en forma de scripts de Python separados, pero requiere muchas dependencias. |
+
+`¿Qué debemos buscar al analizar un documento PDF?`
+
+Palabras clave: PDF Keywords
+
+- **/OpenAction y /AA**: ya que pueden ejecutar scripts automáticamente.
+- **/JavaScript y /JS**: respectivamente ejecutan js.
+- **/GoTo**: ya que esta acción cambia la página visible del archivo, puede abrir y redirigir automáticamente a otros archivos PDF.
+- **/Launch**: es capaz de iniciar un programa o abrir un documento.
+- **/SubmitForm y /GoToR**: pueden enviar datos por URL.
+- **/RichMedia**: se puede utilizar para incrustar flash.
+- **/ObjStm**: puede ocultar objetos.
+- **/URI**: accede a un recurso por su URL, quizás para phishing.
+- **/XObject**: puede incrustar una imagen para realizar phishing.
+- Cuidado con la ofuscación con códigos hexadecimales como */JavaScript* vs. */J#61vaScript*. https://blog.didierstevens.com/2008/04/29/pdf-let-me-count-the-ways.
+
+`Comandos útiles análisis ficheros PDF`
+
+- Mostrar palabras clave riesgosas presentes en el archivo archivo.pdf.
+```
+pdfid.py file.pdf -n
+```
+
+- Mostrar estadísticas sobre palabras clave. Agregue "-O" para incluir secuencias de objetos.
+```
+pdf-parser.py file.pdf -a:
+```
+
+- Mostrar el contenido del ID del objeto. Agregue "-d" para volcar la secuencia del objeto..
+```
+pdf-parser.py file.pdf -o id
+```
+
+- Mostrar objetos que hacen referencia al ID del objeto.
+```
+pdf-parser.py file.pdf -r id
+```
+
+- Descifrar infile.pdf usando la contraseña para crear outfile.pdf.
+```
+qpdf --password=pass --decrypt infile.pdf outfile.pdf
+```
+
+### ▶️ Encontrar Shellcodes en ficheros y otros comandos de análisis
+
+| Herramienta | Descripción | Ejemplo uso |
+|-------------|-------------|-------------|
+| [xorsearch](https://blog.didierstevens.com/2014/09/29/update-xorsearch-with-shellcode-detector/) | Localiza los patrones de shellcode dentro del archivo binario file.bin. | xorsearch -W -d 3 file.bin |
+| [scdbgc](http://sandsprite.com/blogs/index.php?uid=7&pid=152) | Emula la ejecución de shellcode en file.bin. Con el parámetro "/off" se especifica el desplazamiento. | scdbgc /f file.bin |
+| [runsc32](https://github.com/edygert/runsc) | Ejecuta shellcode en file.bin para observar el comportamiento en un laboratorio aislado. | runsc32 -f file.bin-n |
+| [base64dump.py](https://blog.didierstevens.com/2017/07/02/update-base64dump-py-version-0-0-7/) | Enumera las cadenas codificadas en Base64 presentes en el archivo file.txt. | base64dump.py file.txt |
+| [numbers-to-string.py](https://videos.didierstevens.com/2016/10/11/maldoc-numbers-to-string-py/) | Convierte números que representan caracteres en un archivo en una cadena. | numbers-to-string.py file |
+
+### ▶️ Detectar URL maliciosas en el documento
+
+Para buscar la existencia de estas URL, abrimos el documento con la herramienta 7zip y vamos a ir extrayendo los archivos que contiene. Partimos por extraer archivos como "**document.xml.res**" o "**webSettings.xml.res**" buscando tags o atributos como: **sourceFileName**, **attachedTemplate**, **Target**, **TargetMode**.
+
+También buscamos alguna URL que sea distinta a las oficiales de Microsoft. Ejemplo de URL oficiales pueden ser http://schemas.openxmlformats.org/, http://schemas.microsoft.com/
 
 ### ▶️ Asignación de IPs en equipos
 

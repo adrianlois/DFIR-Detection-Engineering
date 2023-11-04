@@ -532,14 +532,14 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 
 ### ▶️ Scripts para detectar actividades sospechosas en Windows
 
-- Inicios de sesión remotos.
+`Inicios de sesión remotos`
 
 Analiza eventos de inicio de sesión exitosos para encontrar un inicio de sesión con tipos (3 o 10) que son los tipos de inicio de sesión remoto y RDP Desde allí podemos comenzar a investigar la IP que inició la conexión.
 ```ps
 Get-WinEvent -FilterHashtable @{Logname = "Security" ; ID = 4624 } | where {$_.Properties[8].Value -eq 3 -or $_.Properties[8].Value -eq 10}
 ```
 
-- Fuerza Bruta.
+`Fuerza Bruta`
 
 Para comprobar si BruteForcehay signos de ataque en los registros de eventos, podemos buscar varios login faildeventos con identificación 4625en el registro de seguridad.
 ```ps
@@ -590,21 +590,21 @@ function BruteForceDetect {
 }
 ```
 
-- Ataques binarios.
+`Ataques binarios`
 
 Windows tiene algunas mitigaciones contra la explotación utilizando algunas técnicas conocidas, como return-oriented programming "ROP"podemos encontrar los registros de las vulnerabilidades detectadas en el Microsoft-Windows-Security-Mitigations/UserModeregistro.
 ```ps
 Get-WinEvent -FilterHashTable @{LogName ='Microsoft-Windows-Security-Mitigations/UserMode'} | Format-List -Property Id, TimeCreated
 ```
 
-- Phishing.
+`Phishing`
 
 Una de las formas más utilizadas de phishing es utilizar documentos de Office para lanzar otra carga útil oculta, por lo que supervisaré cualquier proceso generado por Word or Excelotros documentos de Office de la misma manera.
 ```ps
 Get-SysmonEvents 1 | Where-Object { $_.Properties[20].Value -match "word|Excel" } | Format-List TimeCreated, @{label = "ParentImage" ; Expression = {$_.properties[20].value}}, @{label= "Image" ; Expression= {$_.properties[4].value}}
 ```
 
-- Manipulación de servicios.
+`Manipulación de servicios`
 
 Una forma de detectar servicios de manipulación mediante la línea de comandos es monitorear el uso de Sc.exeejecutables.
 ```ps
@@ -1039,7 +1039,7 @@ Como técnica anti forense esta metadata se puede eliminar desde Excel "inspecci
 |-------------|-------------|
 | [**oledump**](https://github.com/DidierStevens/DidierStevensSuite/blob/master/oledump.py) | Analiza archivos OLE (Object Linking and Embedding, Compound File Binary Format). Estos archivos contienen flujos de datos. |
 | [**olevba**](https://github.com/decalage2/oletools/wiki/olevba) | Dispone de la capacidad de extraer y analizar las macros VBA de los ficheros de MS Office (OLE y OpenXML). |
-| [**pcodedmp**](https://github.com/bontchev/pcodedmp) | Desensamblador de p-code de VBA |
+| [**pcodedmp**](https://github.com/bontchev/pcodedmp) | Desensamblador de p-code de VBA. |
 | [**oleid**](https://github.com/decalage2/oletools/wiki/oleid) | Permite analizar ficheros OLE para detectar características que normalmente se encuentran en ficheros maliciosos. |
 | [**MacroRaptor**](https://github.com/decalage2/oletools/wiki/olevba) | Sirve para detectar las Macros VBA maliciosas. |
 | [**msodde**](https://github.com/decalage2/oletools/wiki/msodde) | proporciona la capacidad de detectar enlaces DDE/DDEAUTO de los ficheros de MS Office, RTF y CSV. |
@@ -1091,27 +1091,27 @@ Palabras clave: PDF Keywords
 
 `Comandos útiles análisis ficheros PDF`
 
-- Mostrar palabras clave riesgosas presentes en el archivo archivo.pdf.
+Mostrar palabras clave riesgosas presentes en el archivo archivo.pdf.
 ```
 pdfid.py file.pdf -n
 ```
 
-- Mostrar estadísticas sobre palabras clave. Agregue "-O" para incluir secuencias de objetos.
+Mostrar estadísticas sobre palabras clave. Agregue "-O" para incluir secuencias de objetos.
 ```
 pdf-parser.py file.pdf -a:
 ```
 
-- Mostrar el contenido del ID del objeto. Agregue "-d" para volcar la secuencia del objeto..
+Mostrar el contenido del ID del objeto. Agregue "-d" para volcar la secuencia del objeto..
 ```
 pdf-parser.py file.pdf -o id
 ```
 
-- Mostrar objetos que hacen referencia al ID del objeto.
+Mostrar objetos que hacen referencia al ID del objeto.
 ```
 pdf-parser.py file.pdf -r id
 ```
 
-- Descifrar infile.pdf usando la contraseña para crear outfile.pdf.
+Descifrar infile.pdf usando la contraseña para crear outfile.pdf.
 ```
 qpdf --password=pass --decrypt infile.pdf outfile.pdf
 ```
@@ -1282,14 +1282,14 @@ Estos ficheros de logs pueden variar, existir o no dependiendo del tipo de distr
 
 **Journalctl**: es una herramienta en Linux que trabaja con el registro de systemd, brindando acceso a registros estructurados en el Journal de systemd. Facilita consultas y análisis avanzados de eventos del sistema mediante registros binarios estructurados, en contraste con los registros de texto plano tradicionales.
 
-- Configurar la hora del sistema para visualizar los registros en hora UTC o local systemd mostrará los resultados en hora local de manera predeterminada.
+Configurar la hora del sistema para visualizar los registros en hora UTC o local systemd mostrará los resultados en hora local de manera predeterminada.
 ```bash
 timedatectl list-timezones
 timedatectl set-timezone <zone>
 timedatectl status
 ```
 
-- Filtrar por prioridad.
+Filtrar por prioridad.
 ```bash
 Journalctl -p <n>
 # 0: emerg
@@ -1302,7 +1302,7 @@ Journalctl -p <n>
 # 7: debug
 ```
 
-- Filtrar por fecha/hora y rangos.
+Filtrar por fecha/hora y rangos.
 ```bash
 journalctl --since "YYYY-MM-DD"
 journalctl --since "YYYY-MM-DD HH:MM:SS"
@@ -1311,51 +1311,51 @@ journalctl --until "YYYY-MM-DD"
 journalctl --since "YYYY-MM-DD HH:MM:SS" --until "YYYY-MM-DD HH:MM:SS"
 ```
 
-- Mostrar las 20 entradas más recientes.
+Mostrar las 20 entradas más recientes.
 ```bash
 journalctl -n 20
 ```
 
-- Hacer un seguimiento de los registros a tiempo real (equivalente a tail -f).
+Hacer un seguimiento de los registros a tiempo real (equivalente a tail -f).
 ```bash
 journalctl -f # Equivalente a "journalctl" y después presionar "Shift+F".
 ```
 
-- Mostrar la lista de todos los boots que existen en el sistema.
+Mostrar la lista de todos los boots que existen en el sistema.
 ```bash
 journalctl --list-boots
 ```
 
-- Mostrar resgistros de kernel.
+Mostrar resgistros de kernel.
 ```bash
 journalctl -k
 ```
 
-- Mostrar los registros de la sesión de inicio anterior para rastrear eventos previos al reinicio del sistema.
+Mostrar los registros de la sesión de inicio anterior para rastrear eventos previos al reinicio del sistema.
 ```bash
 journalctl -b -1
 ```
 
-- Mostrar los servicios que son dependientes del systemd.
+Mostrar los servicios que son dependientes del systemd.
 ```bash
 systemctl list-units -t service --all
 ```
 
-- Filtrar por servicios.
+Filtrar por servicios.
 ```bash
 journalctl -u sshd.service
 journalctl -u sshd.service -u dbus.service
 journalctl -u sshd.service --since today
 ```
 
-- Cambiar el formato en los resultados de salida.
+Cambiar el formato en los resultados de salida.
 ```bash
 journalctl -b -u nginx -o json
 journalctl -b -u nginx -o json-pretty
 journalctl -b -u nginx -o short # Resultado similar a un estilo syslog.
 ```
 
-- Filtrar por proceso, usuario, grupo o servicio.
+Filtrar por proceso, usuario, grupo o servicio.
 ```bash
 journalctl _PID=<identificador>
 journalctl _UID=<identificador>
@@ -1364,17 +1364,17 @@ journalctl _COMM=<servicio>
 # Para filtrar resultados del día actual: --since today
 ```
 
-- Mostrar registros de los discos.
+Mostrar registros de los discos.
 ```bash
 journalctl /dev/sda
 ```
 
-- Mostrar un resultado de salida estándar.
+Mostrar un resultado de salida estándar.
 ```bash
 journalctl --no-pager
 ```
 
-- Eliminar y guardar registros antiguos.
+Eliminar y guardar registros antiguos.
 ```bash
 # Eliminar entradas antiguas hasta que el espacio total del diario ocupe lo solicitado.
 sudo journalctl --vacuum-size=1G
@@ -1383,50 +1383,50 @@ sudo journalctl --vacuum-size=1G
 sudo journalctl --vacuum-time=1years
 ```
 
-- Analizar eventos de inicio y apagado del sistema.
+Analizar eventos de inicio y apagado del sistema.
 ```bash
 journalctl _SYSTEMD_UNIT=systemd-logind.service
 ```
 
-- Mostrar eventos de modificación de archivos relacionados con su eliminación (rm).
+Mostrar eventos de modificación de archivos relacionados con su eliminación (rm).
 ```bash
 journalctl /usr/bin/rm
 ```
 
-- Buscar intentos de elevación de privilegios.
+Buscar intentos de elevación de privilegios.
 ```bash
 journalctl | grep "sudo"
 ```
 
-- Mostrar eventos de modificación de archivos de registro.
+Mostrar eventos de modificación de archivos de registro.
 ```bash
 journalctl /var/log/audit/audit.log
 journalctl /usr/bin/journalctl
 ```
 
-- Buscar eventos de ejecución de programas en directorios temporales.
+Buscar eventos de ejecución de programas en directorios temporales.
 ```bash
 journalctl _COMM="mv" OR _COMM="cp" | grep "/tmp/"
 ```
 
-- Analizar cambios en archivos de configuración de servicios.
+Analizar cambios en archivos de configuración de servicios.
 ```bash
 journalctl /etc/nginx/nginx.conf
 ```
 
-- Mostrar cambios en archivos de configuración.
+Mostrar cambios en archivos de configuración.
 ```bash
 journalctl /usr/bin/vi
 journalctl /usr/bin/vim
 journalctl /usr/bin/nano
 ```
 
-- Filtrar por eventos de inicio de sesión fallidos en SSH.
+Filtrar por eventos de inicio de sesión fallidos en SSH.
 ```bash
 journalctl _SYSTEMD_UNIT=sshd.service | grep "Failed password"
 ```
 
-- Mostrar eventos de inicio de sesión de usuarios remotos.
+Mostrar eventos de inicio de sesión de usuarios remotos.
 ```bash
 journalctl _SYSTEMD_UNIT=sshd.service | grep "Accepted"
 ```
@@ -1446,12 +1446,12 @@ Mostrar eventos de cambios de permisos en archivos.
 journalctl _COMM="chmod" OR _COMM="chown"
 ```
 
-- Mostrar eventos de inicio de sesión exitosos.
+Mostrar eventos de inicio de sesión exitosos.
 ```bash
 journalctl SYSLOG_FACILITY=4
 ```
 
-- Mostrar cambios en cronjobs.
+Mostrar cambios en cronjobs.
 ```bash
 journalctl /usr/sbin/cron
 ```
@@ -1518,45 +1518,45 @@ cat /proc/*/maps | grep "memfd"
 - Referencia Wireshark: https://www.wireshark.org/docs/dfref
 - Brim Zed (herramienta que simplifica el análisis de datos superestructurados .pcapng): https://www.brimdata.io/download
 
-- Filtrar por dirección IP. Donde "x.x.x.x" es la dirección IP que desea filtrar.
+Filtrar por dirección IP. Donde "x.x.x.x" es la dirección IP que desea filtrar.
 ```
 ip.addr == x.x.x.x
 ```
 
-- Filtrar por rango de direcciones IP. Donde "x.x.x.x" e "y.y.y.y" son las direcciones IP inicial y final del rango.
+Filtrar por rango de direcciones IP. Donde "x.x.x.x" e "y.y.y.y" son las direcciones IP inicial y final del rango.
 ```
 ip.addr >= x.x.x.x and ip.addr <= y.y.y.y
 ```
 
-- Filtrar por interfaz de red. Mostrar sólo los paquetes capturados en la interfaz eth0.
+Filtrar por interfaz de red. Mostrar sólo los paquetes capturados en la interfaz eth0.
 ```
 interface == eth0
 ```
 
-- Filtrar por puerto. Donde "80" y "53" son los números de puerto que desees filtrar.
+Filtrar por puerto. Donde "80" y "53" son los números de puerto que desees filtrar.
 ```
 tcp.port == 80
 udp.port == 53
 ```
 
-- Filtrar por longitud del paquete. Mostrar sólo los paquetes de más de 100 bytes.
+Filtrar por longitud del paquete. Mostrar sólo los paquetes de más de 100 bytes.
 ```
 frame.len > 100
 ```
 
-- Filtrar por dirección MAC de origen o destino. Donde "xx:xx:xx:xx:xx:xx" es la dirección MAC origen y destino que desees filtrar.
+Filtrar por dirección MAC de origen o destino. Donde "xx:xx:xx:xx:xx:xx" es la dirección MAC origen y destino que desees filtrar.
 ```
 eth.src == xx:xx:xx:xx:xx:xx
 eth.dst == xx:xx:xx:xx:xx:xx
 ```
 
-- Filtrar por método HTTP. Mostrar sólo los paquetes con método GET. Puede sustituir GET por otros métodos HTTP como POST, PUT, DELETE, etc.
+Filtrar por método HTTP. Mostrar sólo los paquetes con método GET. Puede sustituir GET por otros métodos HTTP como POST, PUT, DELETE, etc.
 ```
 http.request.method == GET
 http.request.method == POST && frame contains "login"
 ```
 
-- Filtrar por códigos de estado HTTP.
+Filtrar por códigos de estado HTTP.
 ```
 # Respuestas Ok.
 http.response.code == 200
@@ -1568,36 +1568,36 @@ http.response.code == 301 or http.response.code == 302
 http.response.code == 404
 ```
 
-- Filtrar por URI HTTP. Mostrar sólo los paquetes que tienen un URI que contiene "domain.com". Puede sustituir "domain.com" por cualquier otra cadena URI.
+Filtrar por URI HTTP. Mostrar sólo los paquetes que tienen un URI que contiene "domain.com". Puede sustituir "domain.com" por cualquier otra cadena URI.
 ```
 http.request.uri contains 'domain.com'
 ```
 
-- Filtrar por cookie HTTP. Mostrar sólo los paquetes que contienen una cookie con el nombre "sessionid".
+Filtrar por cookie HTTP. Mostrar sólo los paquetes que contienen una cookie con el nombre "sessionid".
 ```
 http.cookie contains 'sessionid'
 ```
 
-- Filtrar por tamaño de paquete. Mostrar sólo los paquetes de más de 1000 bytes.
+Filtrar por tamaño de paquete. Mostrar sólo los paquetes de más de 1000 bytes.
 ```
 frame.len > 1000
 ```
 
-- Filtrar por aquellos paquetes que contengan el término especificado
+Filtrar por aquellos paquetes que contengan el término especificado
 ```
 tcp contains 'TERMINO'
 ```
 
-- Filtrar todos los paquetes que no utilicen el protocolo ARP, ICMP, DNS, SSDP o UDP.
+Filtrar todos los paquetes que no utilicen el protocolo ARP, ICMP, DNS, SSDP o UDP.
 ```
 !(arp or icmp or dns or ssdp or udp)
 ```
 
-- Filtrar todos los paquetes cuyo puerto TCP origen o destino sea 22 o 443.
+Filtrar todos los paquetes cuyo puerto TCP origen o destino sea 22 o 443.
 ```
 (tcp.port in {22 443})
 ```
-- Filtros DNS.
+Filtros DNS.
 ```
 # Paquetes DNS que tengan un nombre de dominio que contenga "domain.com"
 dns.qry.name contains 'domain.com'
@@ -1628,7 +1628,7 @@ dns.flags.rcode == 3
 dns.flags.rcode != 0 or (dns.flags.response eq 1 and dns.qry.type eq 28 and !dns.aaaa)
 ```
 
-- Filtros TLS.
+Filtros TLS.
 ```
 # TLS handshake.
 tls.record.content_type == 22
@@ -1656,7 +1656,7 @@ tls.handshake.extensions_server_name contains "badsite.com"
 tcp.flags eq 0x012 && tcp.time_delta gt 0.0001
 ```
 
-- Filtros GeoIP
+Filtros GeoIP.
 ```
 # Excluir el tráfico procedente de Estados Unidos.
 ip and not ip.geoip.country == "United States" 
@@ -1674,27 +1674,27 @@ ip.geoip.dst_country_iso == "IE"
 not ip.geoip.country == "United States"
 ```
 
-- Establecer un filtro para los valores HEX de 0x22 0x34 0x46 en cualquier offset.
+Establecer un filtro para los valores HEX de 0x22 0x34 0x46 en cualquier offset.
 ```
 udp contains 22:34:46
 ```
 
-- Filtrar por flags TCP. Mostrar sólo los paquetes con la bandera SYN activada. Puede sustituir SYN por cualquier otro indicador TCP, como ACK, RST, FIN, URG o PSH.
+Filtrar por flags TCP. Mostrar sólo los paquetes con la bandera SYN activada. Puede sustituir SYN por cualquier otro indicador TCP, como ACK, RST, FIN, URG o PSH.
 ```
 tcp.flags.syn == 1
 ```
 
-- Mostrar todos los flags SYN+ACK TCP.
+Mostrar todos los flags SYN+ACK TCP.
 ```
 tcp.flags.syn == 1 && tcp.flags.ack == 1
 ```
 
-- Mostrar todos los flags RST TCP.
+Mostrar todos los flags RST TCP.
 ```
 tcp.flags.rst == 1
 ```
 
-- Mostrar paquetes con reconocimientos duplicados en TCP.
+Mostrar paquetes con reconocimientos duplicados en TCP.
 ```
 tcp.analysis.duplicate_ack
 ```
@@ -1793,12 +1793,12 @@ Volume Shadow Copies
 
 `Linux`
 
-- Distribuciones basadas en Debian
+Distribuciones basadas en Debian.
 ```
 /var/log/syslog
 ```
 
-- Distribuciones basadas en Red Hat
+Distribuciones basadas en Red Hat.
 
 Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero "/etc/usb_modeswitch.conf".
 ```
@@ -2095,7 +2095,6 @@ export HISTFILESIZE=0
 ### ▶️ Auditoría en el uso privilegiado de los siguientes comandos en Linux
 
 Los siguientes comandos privilegiados deberían auditarse:
-
 |   |   |   |   |   |   |
 |:-:|:-:|:-:|:-:|:-:|:-:|
 | agetty | cvsbug | fdisk | ipcs | mkswap | quotacheck |

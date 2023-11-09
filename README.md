@@ -26,6 +26,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ ¿Han eliminado el registro de eventos de Windows?](#️-han-eliminado-el-registro-de-eventos-de-windows)
     - [▶️ Volatility: clipboard](#️-volatility-clipboard)
     - [▶️ Análisis y artefactos de ShellBags](#️-análisis-y-artefactos-de-shellbags)
+    - [▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#️-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
+    - [▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#️-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
     - [▶️ Thumbcache Viewer](#️-thumbcache-viewer)
     - [▶️ Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#️-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
     - [▶️ Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#️-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
@@ -771,6 +773,44 @@ Descripción de valores relevantes:
 **Herramienta para explorar y análizar Shellbags tanto de forma online como offline**
 
 -  **ShellBags Explorer** (GUI) o **SBECmd** (CLI): https://ericzimmerman.github.io/#!index.md
+
+### ▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente
+
+*cRecentFiles*: Historial de ubicaciones donde se encuentras los ficheros abiertos recientemente, "cX" donde X será un número asignado.
+```
+Equipo\HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
+Equipo\HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
+```
+
+*cRecentFolders*: Historial de carpetas donde se encuentran los ficheros abiertos recientemente, "cX" donde X será un número asignado.
+```
+Equipo\HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
+Equipo\HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
+```
+
+*SessionManagement*: Historial de PDFs abiertos en la última sesión de Adobe Acrobat.
+```
+HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev\cWin0\cTab0\cPathInfo
+HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev\cWin0\cTab0\cPathInfo
+```
+
+### ▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente 
+
+Cuando escribimos nuevas rutas o ficheros a través de la barra de direcciones de un Explorador de Windows o en una vetana "Ejecutar" (Win+R). Por defecto estos se quedan almacenados con la intención de agilizar la experiencia de usuario. Estos artefactos pueden ser útiles en una recabación de información para una investigación forense con el fin de conocer los sitios, direcciones o ficheros que el usuario visitó con una salida exitosa.
+
+Con la sesión de usuario iniciada HKCU, si se analiza el registro en modo offline será necesario encontrar el SID del usuario que queremos analizar. 
+
+`Vetana "Ejecutar"`
+```
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
+HKEY_USERS\<SID-USER>\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
+```
+
+`Barra de direcciones del Explorador de Windows "Explorer.exe"`
+```
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
+HKEY_USERS\<SID-USER>\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
+```
 
 ### ▶️ Thumbcache Viewer
 

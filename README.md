@@ -56,7 +56,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Logs journalctl (systemd)](#️-logs-journalctl-systemd)
     - [▶️ Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución](#️-copiar-un-binario-malicioso-ya-eliminado-a-través-de-su-proceso-todavía-en-ejecución)
     - [▶️ Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)](#️-identificar-y-obtener-archivos-con-pid-de-procesos-maliciosos-conexiones-ssh-linux)
-    - [▶️ Historiales de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#️-historiales-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
+    - [▶️ Historial de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#️-historial-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
     - [▶️ Voldado de todos los directorios y ficheros de Linux](#️-voldado-de-todos-los-directorios-y-ficheros-de-linux)
     - [▶️ Volcado de Memoria RAM en Linux con LiME (Linux Memory Extractor)](#️-volcado-de-memoria-ram-en-linux-con-lime-linux-memory-extractor)
     - [▶️ Comprobar si un usuario ejecutó el comando "sudo"](#️-comprobar-si-un-usuario-ejecutó-el-comando-sudo)
@@ -89,7 +89,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   - [✅ Linux](#-linux-1)
     - [▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#️-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
     - [▶️ Comando history](#️-comando-history)
-    - [▶️ Deshabilitar el uso del historial en la Shell](#️-deshabilitar-el-uso-del-historial-en-la-shell)
+    - [▶️ Deshabilitar el uso del historial de comandos en la Shell](#️-deshabilitar-el-uso-del-historial-de-comandos-en-la-shell)
+    - [▶️ Eliminar el historial de comandos de la Shell (.bash\_history \& .zsh\_history)](#️-eliminar-el-historial-de-comandos-de-la-shell-bash_history--zsh_history)
     - [▶️ Auditoría en el uso privilegiado de los siguientes comandos en Linux](#️-auditoría-en-el-uso-privilegiado-de-los-siguientes-comandos-en-linux)
   - [✅ Redes](#-redes-1)
     - [▶️ WAF Bypass (SSRF): usar acortamiento IP local](#️-waf-bypass-ssrf-usar-acortamiento-ip-local)
@@ -1514,10 +1515,11 @@ Esta es una forma de obtener archivos con PID de procesos maliciosos (similar a 
 grep -l SSH_C /proc/*/environ
 ```
 
-### ▶️ Historiales de comandos de la Shell de Linux (.bash_history & .zsh_history)
+### ▶️ Historial de comandos de la Shell de Linux (.bash_history & .zsh_history)
 
+Realizar un backup del historial de comandos ejecutados por cualquier usuario del sistema que usen bash_history o zsh_history. 
 ```bash
-for i in $home; do cat "/home/${i}/.bash_history" 2> /dev/null > "$pathFiles/${i}_bash_history" | cat "/home/${i}/.zsh_history" 2> /dev/null > "$pathFiles/${i}_zsh_history"; done;
+for i in /home/*; do [ -d "$i" ] && { [ -s "$i"/.bash_history ] || [ -s "$i"/.zsh_history ]; } && { [ -f "$i"/.bash_history ] && cat "$i"/.bash_history || true; [ -f "$i"/.zsh_history ] && cat "$i"/.zsh_history || true; } > "$(basename "$i")_historial_backup.txt"; done
 ```
 
 ### ▶️ Voldado de todos los directorios y ficheros de Linux 
@@ -2037,7 +2039,7 @@ md <nombre_carpeta>.::$index_allocation
 md <nombre_carpeta>.:$I30:$index_allocation
 ```
 
-De esta forma aparecerá el nombre del cirectorio seguido de un punto, pero cuando se intente acceder a el ya sea de forma gráfica con doble clic o vía consola con "cd" se mostrará un mensaje de error indicando que la "ubicación no está disponible o no es correcta para ese equipo". Una manera de solucionar esto sería acceder vía "cd" en consola e indicando: "*nombre carpeta.+flujo vacío+tipo de flujo*". (Esto no está soportado en Powershell)
+De esta forma aparecerá el nombre del cirectorio seguido de un punto, pero cuando se intente acceder a el ya sea de forma gráfica con doble clic o vía consola con "cd" se mostrará un mensaje de error indicando que la "ubicación no está disponible o no es correcta para ese equipo". Una manera de solucionar esto sería acceder vía "cd" en consola e indicando: "*nombre carpeta.+flujo vacío+tipo de flujo*". (Esto no está soportado en Powershell).
 
 ```
 cd <nombre_carpeta>.::$index_allocation
@@ -2124,12 +2126,36 @@ $ history
     3  history
 ```
 
-### ▶️ Deshabilitar el uso del historial en la Shell
+### ▶️ Deshabilitar el uso del historial de comandos en la Shell
 
 Un actor malicioso puede ejecutar estos comandos para no guardar o registrar en el archivo .bash_history el historial de acciones en la shell como técnica anti forense y evitar ser detectados.
 ```bash
 export HISTFILE=/dev/null
 export HISTFILESIZE=0
+```
+
+### ▶️ Eliminar el historial de comandos de la Shell (.bash_history & .zsh_history)
+
+Limpiar todo el historial del usuario actual.
+```bash
+history -cw
+```
+
+Limpiar el historial del usuario actual y salir sin dejar rastro.
+```bash
+history -cw && exit
+```
+
+Limpiar manualmente el historial, eliminando manualmente su contenido.
+```bash
+nano /home/user/.bash_history
+nano /home/user/.zsh_history
+```
+
+Limpiar manualmente el historial, vaciando su contenido.
+```bash
+cat /home/user/.bash_history 2> /dev/null > /home/user/.bash_history
+cat /home/user/.zsh_history 2> /dev/null > /home/user/.zsh_history
 ```
 
 ### ▶️ Auditoría en el uso privilegiado de los siguientes comandos en Linux

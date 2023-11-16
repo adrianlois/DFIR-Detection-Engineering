@@ -39,7 +39,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Análisis de malware en ficheros MS Office (oletools)](#️-análisis-de-malware-en-ficheros-ms-office-oletools)
     - [▶️ Herramientas de análisis en ficheros MS Office y otros (detectar malware o phising)](#️-herramientas-de-análisis-en-ficheros-ms-office-y-otros-detectar-malware-o-phising)
     - [▶️ Herramientes de análisis PDF (detectar malware o phising)](#️-herramientes-de-análisis-pdf-detectar-malware-o-phising)
-    - [▶️ Encontrar Shellcodes en ficheros y otros comandos de análisis](#️-encontrar-shellcodes-en-ficheros-y-otros-comandos-de-análisis)
+    - [▶️ Identificar Shellcodes en ficheros y otros comandos de análisis](#️-identificar-shellcodes-en-ficheros-y-otros-comandos-de-análisis)
     - [▶️ Detectar URL maliciosas en el documento](#️-detectar-url-maliciosas-en-el-documento)
     - [▶️ Asignación de IPs en equipos](#️-asignación-de-ips-en-equipos)
     - [▶️ Windows Firewall (wf.msc): Reglas residuales de software desintalado](#️-windows-firewall-wfmsc-reglas-residuales-de-software-desintalado)
@@ -56,7 +56,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Logs journalctl (systemd)](#️-logs-journalctl-systemd)
     - [▶️ Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución](#️-copiar-un-binario-malicioso-ya-eliminado-a-través-de-su-proceso-todavía-en-ejecución)
     - [▶️ Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)](#️-identificar-y-obtener-archivos-con-pid-de-procesos-maliciosos-conexiones-ssh-linux)
-    - [▶️ Historiales de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#️-historiales-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
+    - [▶️ Historial de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#️-historial-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
     - [▶️ Voldado de todos los directorios y ficheros de Linux](#️-voldado-de-todos-los-directorios-y-ficheros-de-linux)
     - [▶️ Volcado de Memoria RAM en Linux con LiME (Linux Memory Extractor)](#️-volcado-de-memoria-ram-en-linux-con-lime-linux-memory-extractor)
     - [▶️ Comprobar si un usuario ejecutó el comando "sudo"](#️-comprobar-si-un-usuario-ejecutó-el-comando-sudo)
@@ -89,7 +89,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   - [✅ Linux](#-linux-1)
     - [▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#️-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
     - [▶️ Detectar la ejecución de comandos de forma oculta en history](#️-detectar-la-ejecución-de-comandos-de-forma-oculta-en-history)
-    - [▶️ Deshabilitar el uso del historial en la Shell](#️-deshabilitar-el-uso-del-historial-en-la-shell)
+    - [▶️ Deshabilitar el uso del historial de la Shell](#️-deshabilitar-el-uso-del-historial-de-la-shell)
     - [▶️ Eliminar el historial de comandos de la Shell (.bash\_history \& .zsh\_history)](#️-eliminar-el-historial-de-comandos-de-la-shell-bash_history--zsh_history)
     - [▶️ Auditoría en el uso privilegiado de los siguientes comandos en Linux](#️-auditoría-en-el-uso-privilegiado-de-los-siguientes-comandos-en-linux)
   - [✅ Redes](#-redes-1)
@@ -1157,7 +1157,7 @@ Descifrar infile.pdf usando la contraseña para crear outfile.pdf.
 qpdf --password=pass --decrypt infile.pdf outfile.pdf
 ```
 
-### ▶️ Encontrar Shellcodes en ficheros y otros comandos de análisis
+### ▶️ Identificar Shellcodes en ficheros y otros comandos de análisis
 
 | Herramienta | Descripción | Ejemplo uso |
 |-------------|-------------|-------------|
@@ -1515,11 +1515,11 @@ Esta es una forma de obtener archivos con PID de procesos maliciosos (similar a 
 grep -l SSH_C /proc/*/environ
 ```
 
-### ▶️ Historiales de comandos de la Shell de Linux (.bash_history & .zsh_history)
+### ▶️ Historial de comandos de la Shell de Linux (.bash_history & .zsh_history)
 
-Realizar un backup del historial de comandos ejecutados por cualquier usuario del sistema que usen bash_history o zsh_history.
+Realizar un backup del historial de comandos ejecutados por cualquier usuario del sistema que usen *bash_history* o *zsh_history*.
 ```bash
-for i in /home/*; do [ -d "$i" ] && { [ -s "$i"/.bash_history ] || [ -s "$i"/.zsh_history ]; } && { [ -f "$i"/.bash_history ] && cat "$i"/.bash_history || true; [ -f "$i"/.zsh_history ] && cat "$i"/.zsh_history || true; } > "$(basename "$i")_historial_backup.txt"; done
+for i in /home/*; do [ -d "$i" ] && { [ -s "$i"/.bash_history ] || [ -s "$i"/.zsh_history ]; } && { [ -f "$i"/.bash_history ] && cat "$i"/.bash_history || true; [ -f "$i"/.zsh_history ] && cat "$i"/.zsh_history || true; } > "$(basename "$i")_history_backup.txt"; done
 ```
 
 ### ▶️ Voldado de todos los directorios y ficheros de Linux 
@@ -2125,7 +2125,7 @@ $ history
     3  history
 ```
 
-### ▶️ Deshabilitar el uso del historial en la Shell
+### ▶️ Deshabilitar el uso del historial de la Shell
 
 Un actor malicioso puede ejecutar estos comandos para no guardar o registrar en el archivo .bash_history el historial de acciones en la shell como técnica anti forense y evitar ser detectados.
 ```bash

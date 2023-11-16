@@ -26,14 +26,14 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ ¿Han eliminado el registro de eventos de Windows?](#️-han-eliminado-el-registro-de-eventos-de-windows)
     - [▶️ Volatility: clipboard](#️-volatility-clipboard)
     - [▶️ Análisis y artefactos de ShellBags](#️-análisis-y-artefactos-de-shellbags)
+    - [▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#️-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
+    - [▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#️-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
     - [▶️ Thumbcache Viewer](#️-thumbcache-viewer)
     - [▶️ Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#️-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
     - [▶️ Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#️-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
     - [▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-zoneidentifier)
     - [▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#️-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
-    - [▶️ Caché de historial almacenado de conexiones establecidas a otros hosts vía RDP (mstsc.exe)](#️-caché-de-historial-almacenado-de-conexiones-establecidas-a-otros-hosts-vía-rdp-mstscexe)
-    - [▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#️-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
-    - [▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#️-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
+    - [▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP](#️-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
     - [▶️ Artefactos forense - MS Word](#️-artefactos-forense---ms-word)
     - [▶️ Análisis de malware en ficheros XLSX (MS Excel)](#️-análisis-de-malware-en-ficheros-xlsx-ms-excel)
     - [▶️ Análisis de malware en ficheros MS Office (oletools)](#️-análisis-de-malware-en-ficheros-ms-office-oletools)
@@ -56,7 +56,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Logs journalctl (systemd)](#️-logs-journalctl-systemd)
     - [▶️ Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución](#️-copiar-un-binario-malicioso-ya-eliminado-a-través-de-su-proceso-todavía-en-ejecución)
     - [▶️ Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)](#️-identificar-y-obtener-archivos-con-pid-de-procesos-maliciosos-conexiones-ssh-linux)
-    - [▶️ Historial de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#️-historial-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
+    - [▶️ Historiales de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#️-historiales-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
     - [▶️ Voldado de todos los directorios y ficheros de Linux](#️-voldado-de-todos-los-directorios-y-ficheros-de-linux)
     - [▶️ Volcado de Memoria RAM en Linux con LiME (Linux Memory Extractor)](#️-volcado-de-memoria-ram-en-linux-con-lime-linux-memory-extractor)
     - [▶️ Comprobar si un usuario ejecutó el comando "sudo"](#️-comprobar-si-un-usuario-ejecutó-el-comando-sudo)
@@ -81,7 +81,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Claves de registro de Windows donde se almacenan las contraseñas](#️-claves-de-registro-de-windows-donde-se-almacenan-las-contraseñas)
     - [▶️ WDigest Authentication: Habilitado / Deshabilitado](#️-wdigest-authentication-habilitado--deshabilitado)
     - [▶️ Detectar si un sistema es una máquina virtual con PowerShell o WMIC](#️-detectar-si-un-sistema-es-una-máquina-virtual-con-powershell-o-wmic)
-    - [▶️ Técnicas de ofuscación en la ejecucación de comandos en Windows](#️-técnicas-de-ofuscación-en-la-ejecucación-de-comandos-en-windows)
+    - [▶️ Técnicas de ofuscación en la ejecución de comandos en Windows](#️-técnicas-de-ofuscación-en-la-ejecución-de-comandos-en-windows)
     - [▶️ Detectar acciones de AutoRun al abrir una Command Prompt (cmd)](#️-detectar-acciones-de-autorun-al-abrir-una-command-prompt-cmd)
     - [▶️ Extensiones ejecutables alternativas a .exe](#️-extensiones-ejecutables-alternativas-a-exe)
     - [▶️ Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (flujo NTFS en directorios $INDEX\_ALLOCATION)](#️-detectar-malware-que-se-está-ejecutando-desde-una-carpeta-que-no-permite-su-acceso-por-error-de-ubicación-flujo-ntfs-en-directorios-index_allocation)
@@ -89,7 +89,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   - [✅ Linux](#-linux-1)
     - [▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#️-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
     - [▶️ Detectar la ejecución de comandos de forma oculta en history](#️-detectar-la-ejecución-de-comandos-de-forma-oculta-en-history)
-    - [▶️ Deshabilitar el uso del historial de comandos en la Shell](#️-deshabilitar-el-uso-del-historial-de-comandos-en-la-shell)
+    - [▶️ Deshabilitar el uso del historial en la Shell](#️-deshabilitar-el-uso-del-historial-en-la-shell)
     - [▶️ Eliminar el historial de comandos de la Shell (.bash\_history \& .zsh\_history)](#️-eliminar-el-historial-de-comandos-de-la-shell-bash_history--zsh_history)
     - [▶️ Auditoría en el uso privilegiado de los siguientes comandos en Linux](#️-auditoría-en-el-uso-privilegiado-de-los-siguientes-comandos-en-linux)
   - [✅ Redes](#-redes-1)
@@ -775,6 +775,44 @@ Descripción de valores relevantes:
 
 -  **ShellBags Explorer** (GUI) o **SBECmd** (CLI): https://ericzimmerman.github.io/#!index.md
 
+### ▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente
+
+*cRecentFiles*: Historial de ubicaciones donde se encuentras los ficheros abiertos recientemente, "cX" donde X será un número asignado.
+```
+Equipo\HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
+Equipo\HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
+```
+
+*cRecentFolders*: Historial de carpetas donde se encuentran los ficheros abiertos recientemente, "cX" donde X será un número asignado.
+```
+Equipo\HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
+Equipo\HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
+```
+
+*SessionManagement*: Historial de PDFs abiertos en la última sesión de Adobe Acrobat.
+```
+HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev\cWin0\cTab0\cPathInfo
+HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev\cWin0\cTab0\cPathInfo
+```
+
+### ▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente 
+
+Cuando escribimos nuevas rutas o ficheros a través de la barra de direcciones de un Explorador de Windows o en una vetana "Ejecutar" (Win+R). Por defecto estos se quedan almacenados con la intención de agilizar la experiencia de usuario. Estos artefactos pueden ser útiles en una recabación de información para una investigación forense con el fin de conocer los sitios, direcciones o ficheros que el usuario visitó con una salida exitosa.
+
+Con la sesión de usuario iniciada HKCU, si se analiza el registro en modo offline será necesario encontrar el SID del usuario que queremos analizar. 
+
+`Vetana "Ejecutar"`
+```
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
+HKEY_USERS\<SID-USER>\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
+```
+
+`Barra de direcciones del Explorador de Windows "Explorer.exe"`
+```
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
+HKEY_USERS\<SID-USER>\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
+```
+
 ### ▶️ Thumbcache Viewer
 
 Visualizar ficheros *"thumbcache_\*.db"*.
@@ -937,7 +975,7 @@ Deshabilitar completamente el almacenamiento del historial de comandos de PowerS
 Set-PSReadlineOption -HistorySaveStyle SaveNothing
 ```
 
-### ▶️ Caché de historial almacenado de conexiones establecidas a otros hosts vía RDP (mstsc.exe)
+### ▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP
 
 Si el equipo afectado a sido comprometido y a través de este se hizo un uso como "equipo puente" en movimientos laterales, etc. Puede resultar útil comprobar la caché almacenada de conexiones establecidas vía RDP hacia otros hosts ya sea de la misma red o de un RDP externo con el objetivo por ejemplo de exfiltrar información hacia un stage controlado por el actor malicioso.
 
@@ -950,44 +988,6 @@ HKEY_USERS\<SID_USER>\SOFTWARE\Microsoft\Terminal Server Client\Servers
 Situado en la misma ruta, se puede ver la clave "Default". Esta clave nos indica el orden de prioridad que se mostrará la lista de conexiones al desplegar la barra de la ventana de "Conexión a Escritorio remoto" que se abre al ejecutar el binario de mstsc.exe.
 ```
 HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default
-```
-
-### ▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente 
-
-Cuando escribimos nuevas rutas o ficheros a través de la barra de direcciones de un Explorador de Windows o en una vetana "Ejecutar" (Win+R). Por defecto estos se quedan almacenados con la intención de agilizar la experiencia de usuario. Estos artefactos pueden ser útiles en una recabación de información para una investigación forense con el fin de conocer los sitios, direcciones o ficheros que el usuario visitó con una salida exitosa.
-
-Con la sesión de usuario iniciada HKCU, si se analiza el registro en modo offline será necesario encontrar el SID del usuario que queremos analizar. 
-
-`Vetana "Ejecutar"`
-```
-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
-HKEY_USERS\<SID-USER>\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
-```
-
-`Barra de direcciones del Explorador de Windows "Explorer.exe"`
-```
-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
-HKEY_USERS\<SID-USER>\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
-```
-
-### ▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente
-
-*cRecentFiles*: Historial de ubicaciones donde se encuentras los ficheros abiertos recientemente, "cX" donde X será un número asignado.
-```
-Equipo\HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
-Equipo\HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
-```
-
-*cRecentFolders*: Historial de carpetas donde se encuentran los ficheros abiertos recientemente, "cX" donde X será un número asignado.
-```
-Equipo\HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
-Equipo\HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
-```
-
-*SessionManagement*: Historial de PDFs abiertos en la última sesión de Adobe Acrobat.
-```
-HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev\cWin0\cTab0\cPathInfo
-HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev\cWin0\cTab0\cPathInfo
 ```
 
 ### ▶️ Artefactos forense - MS Word
@@ -1515,9 +1515,9 @@ Esta es una forma de obtener archivos con PID de procesos maliciosos (similar a 
 grep -l SSH_C /proc/*/environ
 ```
 
-### ▶️ Historial de comandos de la Shell de Linux (.bash_history & .zsh_history)
+### ▶️ Historiales de comandos de la Shell de Linux (.bash_history & .zsh_history)
 
-Realizar un backup del historial de comandos ejecutados por cualquier usuario del sistema que usen bash_history o zsh_history. 
+Realizar un backup del historial de comandos ejecutados por cualquier usuario del sistema que usen bash_history o zsh_history.
 ```bash
 for i in /home/*; do [ -d "$i" ] && { [ -s "$i"/.bash_history ] || [ -s "$i"/.zsh_history ]; } && { [ -f "$i"/.bash_history ] && cat "$i"/.bash_history || true; [ -f "$i"/.zsh_history ] && cat "$i"/.zsh_history || true; } > "$(basename "$i")_historial_backup.txt"; done
 ```
@@ -2008,7 +2008,7 @@ BIOSVersion     SMBIOSBIOSVersion
 ...
 ```
 
-### ▶️ Técnicas de ofuscación en la ejecucación de comandos en Windows
+### ▶️ Técnicas de ofuscación en la ejecución de comandos en Windows
 
 - https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
 
@@ -2038,7 +2038,7 @@ md <nombre_carpeta>.::$index_allocation
 md <nombre_carpeta>.:$I30:$index_allocation
 ```
 
-De esta forma aparecerá el nombre del cirectorio seguido de un punto, pero cuando se intente acceder a el ya sea de forma gráfica con doble clic o vía consola con "cd" se mostrará un mensaje de error indicando que la "ubicación no está disponible o no es correcta para ese equipo". Una manera de solucionar esto sería acceder vía "cd" en consola e indicando: "*nombre carpeta.+flujo vacío+tipo de flujo*". (Esto no está soportado en Powershell).
+De esta forma aparecerá el nombre del cirectorio seguido de un punto, pero cuando se intente acceder a el ya sea de forma gráfica con doble clic o vía consola con "cd" se mostrará un mensaje de error indicando que la "ubicación no está disponible o no es correcta para ese equipo". Una manera de solucionar esto sería acceder vía "cd" en consola e indicando: "*nombre carpeta.+flujo vacío+tipo de flujo*". (Esto no está soportado en Powershell)
 
 ```
 cd <nombre_carpeta>.::$index_allocation
@@ -2104,7 +2104,7 @@ debugfs: cat /etc/passwd
 
 - Referencia: https://gtfobins.github.io
 
-### ▶️ Detectar la ejecución de comandos de forma oculta en history 
+### ▶️ Detectar la ejecución de comandos de forma oculta en history
 
 Las líneas de historial con el sufijo * (asterisco) significa que ha sido modificado. Por ejemplo, usando la tecla hacia arriba (↑), se edita y luego se vuelve a presionar hacia arriba para cambiar a otro comando histórico sin presionar Enter. Cuando se vuelva a ejecutar history se verá que un comando del histórico a sido modificado pero no se sabrá cual fue el comando inicial ejecutado.
 
@@ -2125,7 +2125,7 @@ $ history
     3  history
 ```
 
-### ▶️ Deshabilitar el uso del historial de comandos en la Shell
+### ▶️ Deshabilitar el uso del historial en la Shell
 
 Un actor malicioso puede ejecutar estos comandos para no guardar o registrar en el archivo .bash_history el historial de acciones en la shell como técnica anti forense y evitar ser detectados.
 ```bash

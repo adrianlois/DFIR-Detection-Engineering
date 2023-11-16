@@ -88,7 +88,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Deshabilitar Windows Defender para eludir la detección de AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)](#️-deshabilitar-windows-defender-para-eludir-la-detección-de-amsi-en-la-ejecución-de-binarios-maliciosos-renombrar-msmpengexe-a-través-del-registro-controlset00x)
   - [✅ Linux](#-linux-1)
     - [▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#️-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
-    - [▶️ Comando history](#️-comando-history)
+    - [▶️ Detectar la ejecucación de comandos de forma oculta en history](#️-detectar-la-ejecucación-de-comandos-de-forma-oculta-en-history)
     - [▶️ Deshabilitar el uso del historial de comandos en la Shell](#️-deshabilitar-el-uso-del-historial-de-comandos-en-la-shell)
     - [▶️ Eliminar el historial de comandos de la Shell (.bash\_history \& .zsh\_history)](#️-eliminar-el-historial-de-comandos-de-la-shell-bash_history--zsh_history)
     - [▶️ Auditoría en el uso privilegiado de los siguientes comandos en Linux](#️-auditoría-en-el-uso-privilegiado-de-los-siguientes-comandos-en-linux)
@@ -2012,7 +2012,6 @@ BIOSVersion     SMBIOSBIOSVersion
 
 - https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
 
-
 ### ▶️ Detectar acciones de AutoRun al abrir una Command Prompt (cmd)
 
 Un atacante creó un valor *"AutoRun"* en la siguiente clave de registro, aquí pudo agregar un comando malicioso como sus datos de valor. Ahora, cada vez que se inicie una consola cmd este comando se ejecutará automáticamente.
@@ -2105,7 +2104,7 @@ debugfs: cat /etc/passwd
 
 - Referencia: https://gtfobins.github.io
 
-### ▶️ Comando history
+### ▶️ Detectar la ejecucación de comandos de forma oculta en history 
 
 Las líneas de historial con el sufijo * (asterisco) significa que ha sido modificado. Por ejemplo, usando la tecla hacia arriba (↑), se edita y luego se vuelve a presionar hacia arriba para cambiar a otro comando histórico sin presionar Enter. Cuando se vuelva a ejecutar history se verá que un comando del histórico a sido modificado pero no se sabrá cual fue el comando inicial ejecutado.
 

@@ -29,6 +29,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#️-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
     - [▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#️-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
     - [▶️ Thumbcache Viewer](#️-thumbcache-viewer)
+    - [▶️ Historial de pestañas sin cerrar de Notepad.exe (Win11)](#️-historial-de-pestañas-sin-cerrar-de-notepadexe-win11)
     - [▶️ Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#️-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
     - [▶️ Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#️-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
     - [▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-zoneidentifier)
@@ -819,6 +820,14 @@ Visualizar ficheros *"thumbcache_\*.db"*.
 
 - https://thumbcacheviewer.github.io
 
+### ▶️ Historial de pestañas sin cerrar de Notepad.exe (Win11)
+
+Historial de pestañas sin cerrar de Notepad.exe en Windows 11.
+
+```
+"%localappdata%\Packages\Microsoft.WindowsNotepad_8wekyb3d8bbwe\LocalState\TabState"
+```
+
 ### ▶️ Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn 
 
 `AnyDesk`
@@ -1276,15 +1285,24 @@ Estos ficheros de logs pueden variar, existir o no dependiendo del tipo de distr
 | File Path | Info |
 |-----------|------|
 | `/var/log/syslog` | Contiene la totalidad de logs capturados por rsyslogd. Los mensajes globales del sistema incluyendo registros que generan algunos servicios durante el arranque, registros que dejan los programas que se ejecutan por parte del demonio CROND, logs sobre procesos de autenticación llevados a cabo por los usuarios, etc. |
+| `/etc/passwd` | Contiene información sobre cuentas de usuario. |
+| `/etc/shadow` | Contiene información sobre hashes de contraseñas de las cuentas de usuario. |
+| `/etc/group` | Contiene información sobre grupos y miembros de grupos. |
 | `/var/log/auth.log` (Debian y derivados) ; `/var/log/secure` (Red Hat y derivados) | Almacena los eventos relacionados con mecanismos de autenticación, por ejemplo, cuando un usuario inicia sesión en el sistema, cambios en contraseñas, relacionados con sudo. |
+| `/var/log/audit/audit.log` | Los sistemas que utilizan auditd, este registro contiene eventos de seguridad detallados. |
 | `var/log/debug` |	Registra datos de los programas que están actuando en modo depuración. De esta forma los programadores pueden obtener información si sus programas están funcionando adecuadamente. |
 | `/var/log/kern.log` | Este fichero almacena los logs producidos por el kernel. Puede ser útil para intentar detectar y solucionar problemas con la detección de hardware. |
+| `/proc/...` | Contiene información información del kernel, hardware, procesos en tiempo real y en general de características y estado del sistema. |
 | `/var/log/dmesg` | Registra información relacionada con el hardware del equipo. Contiene información para concluir si el hardware funciona de forma adecuada. |
 | `/var/log/dpkg.log` | En sistemas basados en Debian se genera este fichero cuando se instala o desinstala software utilizando DPKG. Contiene los registros y eventos producidos durante el proceso de instalación. |
 | `/var/log/messages` | Contiene mensajes informativos y no críticos de la actividad del sistema operativo. Acostumbra a contener los errores que se registran en el arranque del sistema que no estén relacionados con el Kernel. Por lo tanto, si no se inicia un servicio, como por ejemplo el servidor de sonido, podemos buscar información dentro de este archivo. |
 | `/var/log/faillog` | Registra los intentos fallidos de autenticación de cada usuario. Dentro del archivo se almacena una lista de usuarios, los fallos totales de cada usuario, el número de fallo máximos que permitimos y la fecha y hora del último fallo. Si un usuario supera el número de fallos máximos establecidos se deshabilitará el usuario por el tiempo que nosotros fijemos. |
+| `/var/spool/cron` | Archivos crontab para tareas programadas creadas por usuarios. |
+| `/etc/crontab` | Archivo crontab para el usuario root a nivel de general del sistema. |
+| `/etc/hosts` | investigue el archivo de hosts en busca de posibles manipulaciones de direcciones IP. |
 | `/var/log/user.log` | Incluye información sobre los eventos producidos en las sesiones de los usuarios, dichos eventos incluyen errores, conexiones e interfaces de red que se encuentran activas. |
 | `/var/log/lastlog` | Ayuda a ver la fecha y la hora en que cada usuario se ha conectado por última vez. |
+| `/tmp` o `/var/tmp` | Archivos temporales que puedan contener información relevante en un análisis DFIR. |
 | `/var/log/btmp` | Este fichero incluye registros sobre los intentos de autenticación fallido en el sistema. Almacena los intentos fallidos de logins en un equipo. Si alguien realizará un ataque de fuerza bruta a un servidor ssh, el fichero registraría la IP del atacante, el día y hora en que ha fallado el login, el nombre de usuario con que se ha intentado loguear, etc. Para visualizar este fichero usar utmpdump: "utmpdump /var/log/btmp"|
 | `/var/log/wtmp` | Contiene información sobre qué usuarios se encuentran autenticados y usando el sistema actualmente. Equivalente al comando "last"|
 | `/var/run/utmp` | Ver los usuarios que actualmente están logueados en un equipo. |

@@ -1297,8 +1297,8 @@ Estos ficheros de logs pueden variar, existir o no dependiendo del tipo de distr
 | `/var/log/dpkg.log` | En sistemas basados en Debian se genera este fichero cuando se instala o desinstala software utilizando DPKG. Contiene los registros y eventos producidos durante el proceso de instalación. |
 | `/var/log/messages` | Contiene mensajes informativos y no críticos de la actividad del sistema operativo. Acostumbra a contener los errores que se registran en el arranque del sistema que no estén relacionados con el Kernel. Por lo tanto, si no se inicia un servicio, como por ejemplo el servidor de sonido, podemos buscar información dentro de este archivo. |
 | `/var/log/faillog` | Registra los intentos fallidos de autenticación de cada usuario. Dentro del archivo se almacena una lista de usuarios, los fallos totales de cada usuario, el número de fallo máximos que permitimos y la fecha y hora del último fallo. Si un usuario supera el número de fallos máximos establecidos se deshabilitará el usuario por el tiempo que nosotros fijemos. |
-| `/var/spool/cron` | Archivos crontab para tareas programadas creadas por usuarios. |
-| `/etc/crontab` | Archivo crontab para el usuario root a nivel de general del sistema. |
+| `/var/spool/cron` | Archivos crontab para las tareas programadas creadas por todos los usuarios del sistema. |
+| `/etc/crontab` | Archivo crontab para el usuario root a nivel general del sistema. |
 | `/etc/hosts` | Analizar el archivo hosts en busca de posibles manipulaciones de direcciones IP y resolución de nombres. |
 | `/var/log/user.log` | Incluye información sobre los eventos producidos en las sesiones de los usuarios, dichos eventos incluyen errores, conexiones e interfaces de red que se encuentran activas. |
 | `/var/log/lastlog` | Ayuda a ver la fecha y la hora en que cada usuario se ha conectado por última vez. |

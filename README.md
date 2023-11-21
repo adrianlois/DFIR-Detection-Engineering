@@ -1299,7 +1299,7 @@ Estos ficheros de logs pueden variar, existir o no dependiendo del tipo de distr
 | `/var/log/faillog` | Registra los intentos fallidos de autenticación de cada usuario. Dentro del archivo se almacena una lista de usuarios, los fallos totales de cada usuario, el número de fallo máximos que permitimos y la fecha y hora del último fallo. Si un usuario supera el número de fallos máximos establecidos se deshabilitará el usuario por el tiempo que nosotros fijemos. |
 | `/var/spool/cron` | Archivos crontab para tareas programadas creadas por usuarios. |
 | `/etc/crontab` | Archivo crontab para el usuario root a nivel de general del sistema. |
-| `/etc/hosts` | investigue el archivo de hosts en busca de posibles manipulaciones de direcciones IP. |
+| `/etc/hosts` | Analizar el archivo de hosts en busca de posibles manipulaciones de direcciones IP y resolución de nombres. |
 | `/var/log/user.log` | Incluye información sobre los eventos producidos en las sesiones de los usuarios, dichos eventos incluyen errores, conexiones e interfaces de red que se encuentran activas. |
 | `/var/log/lastlog` | Ayuda a ver la fecha y la hora en que cada usuario se ha conectado por última vez. |
 | `/tmp` o `/var/tmp` | Archivos temporales que puedan contener información relevante en un análisis DFIR. |

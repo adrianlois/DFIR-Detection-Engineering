@@ -95,6 +95,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Auditoría en el uso privilegiado de los siguientes comandos en Linux](#️-auditoría-en-el-uso-privilegiado-de-los-siguientes-comandos-en-linux)
   - [✅ Redes](#-redes-1)
     - [▶️ WAF Bypass (SSRF): usar acortamiento IP local](#️-waf-bypass-ssrf-usar-acortamiento-ip-local)
+    - [▶️ Dirección IPv6 asignada a IPv4 utilizada para ofuscación](#️-dirección-ipv6-asignada-a-ipv4-utilizada-para-ofuscación)
   - [✅ Varios](#-varios-1)
     - [▶️ Forensia (Anti-Forensic)](#️-forensia-anti-forensic)
 
@@ -2207,6 +2208,25 @@ Los siguientes comandos no se instalan por defecto, no obstante en caso de insta
 | http://10.0.0.1    | http://1.1       |
 | http://127.0.0.1   | http://127.1     |
 | http://192.168.0.5 | http://192.168.5 |
+
+### ▶️ Dirección IPv6 asignada a IPv4 utilizada para ofuscación
+
+Un dirección IPv6 se puede asignar a una dirección IPv4. Por lo tanto, si un actor malicioso intenta reconocer un servidor para conectarse a una dirección IPv4 y es bloqueado por la solución de seguridad. Probar esta técnica para ofuscar la comunicación y evitar posibles detecciones.
+
+```
+ping ::ffff:8.8.8.8
+Haciendo ping a 8.8.8.8 con 32 bytes de datos:
+Respuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117
+```
+
+Incluso la parte de IPv4 también se puede convertir a hexadecimal.
+``` 
+ping ::ffff:0808:0808
+Haciendo ping a 8.8.8.8 con 32 bytes de datos:
+Respuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117
+```
+
+- Referencia: https://isc.sans.edu/diary/30466
 
 ## ✅ Varios
 

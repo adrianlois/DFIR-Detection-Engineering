@@ -70,6 +70,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp](#️-forense-android-evidencias-de-imágenes-eliminadas-y-enviadas-por-whatsapp)
   - [✅ Varios](#-varios)
     - [▶️ Artefactos en dispositivos USB en Windows, Linux y MacOS](#️-artefactos-en-dispositivos-usb-en-windows-linux-y-macos)
+    - [▶️ LogonTracer (Trazabilidad de inicios de sesión en Active Directory)](#️-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
     - [▶️ SANS DFIR - Posters \& Cheat Sheets](#️-sans-dfir---posters--cheat-sheets)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
   - [✅ Windows](#-windows-1)
@@ -470,6 +471,26 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 5447: Se ha cambiado un filtro de la plataforma de filtrado de Windows.
 ```
 
+- Eventos dispositivos USB (PNP, Plug and Play)
+```
+6416: El sistema ha reconocido un nuevo dispositivo externo conectado.
+10000: Primera conexión dispositivo USB.
+20001: Instalación o actualización de UserPNP.
+24576: Instalación correcta de controladores WPD (Windows Portable Devices).
+```
+
+- Eventos AppLocker
+```
+8003, 8006: Se permitió la ejecución de <Nombre de archivo> pero se habría impedido su ejecución si se hubiera aplicado la política de AppLocker.
+8004: Se ha impedido la ejecución de <Nombre de archivo>.
+8005: Se permitió la ejecución de <Nombre de archivo>.
+8007: Se ha impedido la ejecución de <Nombre de archivo>.
+8023: Se permitió la instalación de *<Nombre de archivo>.
+8025: Se ha impedido la ejecución de *<Nombre de archivo>.
+8028: Se permitió la ejecución de <Nombre de archivo> pero se habría impedido si se hubiera aplicado la política Config CI.
+8029: Se impidió la ejecución de <Nombre de archivo> debido a la política Config CI.
+```
+
 - Códigos de error de inicio de sesión:
 ```
 0xC0000064: El nombre de usuario no existe.
@@ -546,7 +567,7 @@ Get-WinEvent -FilterHashtable @{Logname = "Security" ; ID = 4624 } | where {$_.P
 
 `Fuerza Bruta`
 
-Para comprobar si BruteForcehay signos de ataque en los registros de eventos, podemos buscar varios login faildeventos con identificación 4625en el registro de seguridad.
+Para comprobar si BruteForcehay signos de ataque en los registros de eventos, podemos buscar varios login faildeventos con identificación 4625 en el registro de seguridad.
 ```ps
 function BruteForceDetect {
     param (
@@ -1818,6 +1839,7 @@ Un usuario envió imágenes a través de Whatsapp, después las eliminó de su d
 
 Ramas del registro USB a analizar:
 ```
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USB
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USBSTOR
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Portable Devices\Devices
 HKEY_LOCAL_MACHINE\SYSTEM\MountedDevices
@@ -1849,6 +1871,13 @@ Volume Shadow Copies
 **Event ID 6416**: El Sistema reconoció un nuevo dispositivo externo. 
 - https://learn.microsoft.com/es-es/windows/security/threat-protection/auditing/event-6416
 
+Otros eventos:
+```
+10000: Primera conexión dispositivo USB.
+20001: Instalación o actualización de UserPNP.
+24576: Instalación correcta de controladores WPD (Windows Portable Devices).
+```
+
 **Logman**: Capturar el seguimiento de eventos de USBs. 
 - https://learn.microsoft.com/es-es/windows-hardware/drivers/usbcon/how-to-capture-a-usb-event-trace
 
@@ -1879,6 +1908,12 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 `Herramientas de terceros`
 - USBDeview: https://www.nirsoft.net/utils/usb_devices_view.html
 - USB Forensic Tracker (USBFT) Windows, Linux y MacOS: https://www.orionforensics.com/forensics-tools/usb-forensic-tracker
+
+### ▶️ LogonTracer (Trazabilidad de inicios de sesión en Active Directory)
+
+Herramienta para investigar inicios de sesión maliciosos mediante la visualización y el análisis de los registros de eventos de Windows Active Directory. Asocia un nombre de host (o una dirección IP) y un nombre de cuenta encontrados en eventos relacionados con el inicio de sesión y lo muestra como un gráfico. De esta forma, es posible ver en qué cuenta se produce el intento de inicio de sesión y qué host se utiliza.
+
+- https://github.com/JPCERTCC/LogonTracer
 
 ### ▶️ SANS DFIR - Posters & Cheat Sheets
 

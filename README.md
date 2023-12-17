@@ -70,7 +70,10 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp](#️-forense-android-evidencias-de-imágenes-eliminadas-y-enviadas-por-whatsapp)
   - [✅ Varios](#-varios)
     - [▶️ Artefactos en dispositivos USB en Windows, Linux y MacOS](#️-artefactos-en-dispositivos-usb-en-windows-linux-y-macos)
+    - [▶️ Recopilación de artefactos de Paths en Windows, Linux y MacOS](#️-recopilación-de-artefactos-de-paths-en-windows-linux-y-macos)
+  - [✅ Herramientas](#-herramientas)
     - [▶️ LogonTracer (Trazabilidad de inicios de sesión en Active Directory)](#️-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
+    - [▶️ Skadi (Herramientas de análisis de artefactos e imágenes forenses)](#️-skadi-herramientas-de-análisis-de-artefactos-e-imágenes-forenses)
     - [▶️ SANS DFIR - Posters \& Cheat Sheets](#️-sans-dfir---posters--cheat-sheets)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
   - [✅ Windows](#-windows-1)
@@ -295,24 +298,24 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 
 | File Path | Info | Evidencias |
 |-----------|------|------------|
-| `%WINDIR%\System32\config` `%WINDIR%\System32\winevt\Logs` | Contiene los logs de Windows accesibles desde el visor de eventos | Casi todas. Entradas, fechas, accesos, permisos, programas, usuario, etc. |
+| `%SYSTEMROOT%\System32\config` `%SYSTEMROOT%\System32\winevt\Logs` | Contiene los logs de Windows accesibles desde el visor de eventos | Casi todas. Entradas, fechas, accesos, permisos, programas, usuario, etc. |
 
 ### ▶️ Logs de registros sobre instalaciones de Windows
 
 | File Path | Info | Evidencias |
 |-----------|------|------------|
-| `%WINDIR%\setupact.log` | Contiene información acerca de las acciones de instalación durante la misma | Podemos ver fechas de instalación, propiedades de programas instalados, rutas de acceso, copias legales, discos de instalación |
-| `%WINDIR%\setuperr.log` | Contiene información acerca de los errores de instalación durante la misma | Fallos de programas, rutas de red inaccesibles, rutas a volcados de memoria |
-| `%WINDIR%\WindowsUpdate.log` | Registra toda la información de transacción sobre la actualización del sistema y aplicaciones | Tipos de hotfix instalados, fechas de instalación, elementos por actualizar |
-| `%WINDIR%\Debug\mrt.log` | Resultados del programa de eliminación de software malintencionado de Windows | Fechas, Versión del motor, firmas y resumen de actividad |
-| `%WINDIR%\security\logs\scecomp.old` | Componentes de Windows que no han podido ser instalados | DLL's no registradas, fechas, intentos de escritura,rutas de acceso |
-| `%WINDIR%\SoftwareDistribution\ReportingEvents.log` | Contiene eventos relacionados con la actualización | Agentes de instalación, descargas incompletas o finalizadas, fechas, tipos de paquetes, rutas |
-| `%WINDIR%\Logs\CBS\CBS.log` | Ficheros pertenecientes a ‘Windows Resource Protection’ y que no se han podido restaurar | Proveedor de almacenamiento, PID de procesos, fechas, rutas |
+| `%SYSTEMROOT%\setupact.log` | Contiene información acerca de las acciones de instalación durante la misma | Podemos ver fechas de instalación, propiedades de programas instalados, rutas de acceso, copias legales, discos de instalación |
+| `%SYSTEMROOT%\setuperr.log` | Contiene información acerca de los errores de instalación durante la misma | Fallos de programas, rutas de red inaccesibles, rutas a volcados de memoria |
+| `%SYSTEMROOT%\WindowsUpdate.log` | Registra toda la información de transacción sobre la actualización del sistema y aplicaciones | Tipos de hotfix instalados, fechas de instalación, elementos por actualizar |
+| `%SYSTEMROOT%\Debug\mrt.log` | Resultados del programa de eliminación de software malintencionado de Windows | Fechas, Versión del motor, firmas y resumen de actividad |
+| `%SYSTEMROOT%\security\logs\scecomp.old` | Componentes de Windows que no han podido ser instalados | DLL's no registradas, fechas, intentos de escritura,rutas de acceso |
+| `%SYSTEMROOT%\SoftwareDistribution\ReportingEvents.log` | Contiene eventos relacionados con la actualización | Agentes de instalación, descargas incompletas o finalizadas, fechas, tipos de paquetes, rutas |
+| `%SYSTEMROOT%\Logs\CBS\CBS.log` | Ficheros pertenecientes a ‘Windows Resource Protection’ y que no se han podido restaurar | Proveedor de almacenamiento, PID de procesos, fechas, rutas |
 | `%AppData%\Local\Microsoft\Websetup` (Windows 8) | Contiene detalles de la fase de instalación web de Windows 8 | URLs de acceso, fases de instalación, fechas de creación, paquetes de programas |
 | `%AppData%\setupapi.log` | Contiene información de unidades, services pack y hotfixes | Unidades locales y extraibles, programas de instalación, programas instalados, actualizaciones de seguridad, reconocimiento de dispositivos conectados |
-| `%WINDIR%\INF\setupapi.dev.log` | Contiene información de unidades Plug and Play y la instalación de drivers | Versión de SO, Kernel, Service Pack, arquitectura, modo de inicio, fechas, rutas, lista de drivers, dispositivos conectados, dispositivos iniciados o parados |
-| `%WINDIR%\INF\setupapi.app.log` | Contiene información del registro de instalación de las aplicaciones | Fechas, rutas, sistema operativo, versiones, ficheros, firma digital, dispositivos |
-| `%WINDIR%\Performance\Winsat\winsat.log` | Contiene registros de utilización de la aplicación WINSAT que miden el rendimiento del sistema | Fechas, valores sobre la tarjeta gráfica, CPU, velocidades, puertos USB |
+| `%SYSTEMROOT%\INF\setupapi.dev.log` | Contiene información de unidades Plug and Play y la instalación de drivers | Versión de SO, Kernel, Service Pack, arquitectura, modo de inicio, fechas, rutas, lista de drivers, dispositivos conectados, dispositivos iniciados o parados |
+| `%SYSTEMROOT%\INF\setupapi.app.log` | Contiene información del registro de instalación de las aplicaciones | Fechas, rutas, sistema operativo, versiones, ficheros, firma digital, dispositivos |
+| `%SYSTEMROOT%\Performance\Winsat\winsat.log` | Contiene registros de utilización de la aplicación WINSAT que miden el rendimiento del sistema | Fechas, valores sobre la tarjeta gráfica, CPU, velocidades, puertos USB |
 | `%ProgramData%\Microsoft\Windows Defender\Support` | Contiene pruebas históricas de WD (Windows Defender). Los nombres de los archivos serán- MPLog-\*.log, MPDetection-\*.log, MPDeviceControl-\*.log | Fechas, versiones productos, servicios, notificaciones, CPU, ProcessImageName, EstimatedImpact, binarios, etc. |
 | `%ProgramData%\Microsoft\Windows Defender\Scans\Scans\History` | Cuando se detecta una amenaza, WD almacena un archivo binario "DetectionHistory" | Se pueden analizar estos archivos utilizando herramientas como DHParser |
 
@@ -1909,15 +1912,243 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 - USBDeview: https://www.nirsoft.net/utils/usb_devices_view.html
 - USB Forensic Tracker (USBFT) Windows, Linux y MacOS: https://www.orionforensics.com/forensics-tools/usb-forensic-tracker
 
+### ▶️ Recopilación de artefactos de Paths en Windows, Linux y MacOS
+
+`WINDOWS`
+
+- System Root (C:\Windows):
+```
+%SYSTEMROOT%\Tasks\*
+%SYSTEMROOT%\Prefetch\*
+%SYSTEMROOT%\System32\sru\*
+%SYSTEMROOT%\System32\winevt\Logs\*
+%SYSTEMROOT%\System32\Tasks\*
+%SYSTEMROOT%\System32\Logfiles\W3SVC1\*
+%SYSTEMROOT%\Appcompat\Programs\*
+%SYSTEMROOT%\SchedLgU.txt
+%SYSTEMROOT%\inf\setupapi.dev.log
+%SYSTEMROOT%\System32\drivers\etc\hosts
+%SYSTEMROOT%\System32\config\SAM
+%SYSTEMROOT%\System32\config\SOFTWARE
+%SYSTEMROOT%\System32\config\SECURITY
+%SYSTEMROOT%\System32\config\SOFTWARE
+%SYSTEMROOT%\System32\config\SAM.LOG1
+%SYSTEMROOT%\System32\config\SOFTWARE.LOG1
+%SYSTEMROOT%\System32\config\SECURITY.LOG1
+%SYSTEMROOT%\System32\config\SOFTWARE.LOG1
+%SYSTEMROOT%\System32\config\SAM.LOG2
+%SYSTEMROOT%\System32\config\SOFTWARE.LOG2
+%SYSTEMROOT%\System32\config\SECURITY.LOG2
+%SYSTEMROOT%\System32\config\SOFTWARE.LOG2
+```
+
+- Program Data (C:\ProgramData):
+```
+%PROGRAMDATA%\Microsoft\Windows\Start Menu\Programs\Startup\*
+```
+
+- Drive Root (C:\\)
+```
+%SYSTEMDRIVE%\$Recycle.Bin\*\$I*
+%SYSTEMDRIVE%\$Recycle.Bin\$I*
+%SYSTEMDRIVE%\$LogFile
+%SYSTEMDRIVE%\$MFT
+```
+
+- Perfiles usuarios (C:\Users\\*):
+```
+C:\Users\*\NTUser.DAT
+C:\Users\*\NTUser.DAT.LOG1
+C:\Users\*\NTUser.DAT.LOG2
+C:\Users\*\AppData\Roaming\Microsoft\Windows\Recent\*
+C:\Users\*\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+C:\Users\*\AppData\Roaming\Mozilla\Firefox\Profiles\*
+C:\Users\*\AppData\Local\Microsoft\Windows\WebCache\*
+C:\Users\*\AppData\Local\Microsoft\Windows\Explorer\*
+C:\Users\*\AppData\Local\Microsoft\Windows\UsrClass.dat
+C:\Users\*\AppData\Local\Microsoft\Windows\UsrClass.dat.LOG1
+C:\Users\*\AppData\Local\Microsoft\Windows\UsrClass.dat.LOG2
+C:\Users\*\AppData\Local\ConnectedDevicesPlatform\*
+C:\Users\*\AppData\Local\Google\Chrome\User Data\Default\History\*
+C:\Users\*\AppData\Local\Microsoft\Edge\User Data\Default\History\*
+```
+
+`LINUX`
+
+- Paths sistema:
+```
+/etc/hosts.allow
+/etc/hosts.deny
+/etc/hosts
+/etc/passwd
+/etc/group
+/etc/crontab
+/etc/cron.allow
+/etc/cron.deny
+/etc/anacrontab
+/etc/apt/sources.list
+/etc/apt/trusted.gpg
+/etc/apt/trustdb.gpg
+/etc/resolv.conf
+/etc/fstab
+/etc/issues
+/etc/issues.net
+/etc/insserv.conf
+/etc/localtime
+/etc/timezone
+/etc/pam.conf
+/etc/rsyslog.conf
+/etc/xinetd.conf
+/etc/netgroup
+/etc/nsswitch.conf
+/etc/ntp.conf
+/etc/yum.conf
+/etc/chrony.conf
+/etc/chrony
+/etc/sudoers
+/etc/logrotate.conf
+/etc/environment
+/etc/hostname
+/etc/host.conf
+/etc/fstab
+/etc/machine-id
+/etc/screen-rc
+/etc/rc.d/*
+/etc/cron.daily/*
+/etc/cron.hourly/*
+/etc/cron.weekly/*
+/etc/cron.monthly/*
+/etc/modprobe.d/*
+/etc/modprobe-load.d/*
+/etc/*-release
+/etc/pam.d/*
+/etc/rsyslog.d/*
+/etc/yum.repos.d/*
+/etc/init.d/*
+/etc/systemd.d/*
+/etc/default/*
+/var/log/*
+/var/spool/at/*
+/var/spool/cron/*
+/var/spool/anacron/cron.daily
+/var/spool/anacron/cron.hourly
+/var/spool/anacron/cron.weekly
+/var/spool/anacron/cron.monthly
+/boot/grub/grub.cfg
+/boot/grub2/grub.cfg
+/sys/firmware/acpi/tables/DSDT
+```
+
+- Paths usuarios:
+```
+/root/.*history
+/root/.*rc
+/root/.*_logout
+/root/.ssh/config
+/root/.ssh/known_hosts
+/root/.ssh/authorized_keys
+/root/.selected_editor
+/root/.viminfo
+/root/.lesshist
+/root/.profile
+/root/.selected_editor
+/home/*/.*history
+/home/*/.ssh/known_hosts
+/home/*/.ssh/config
+/home/*/.ssh/autorized_keys
+/home/*/.viminfo
+/home/*/.profile
+/home/*/.*rc
+/home/*/.*_logout
+/home/*/.selected_editor
+/home/*/.wget-hsts
+/home/*/.gitconfig
+/home/*/.mozilla/firefox/*.default*/*/*.sqlite*
+/home/*/.mozilla/firefox/*.default*/*/*.json
+/home/*/.mozilla/firefox/*.default*/*/*.txt
+/home/*/.mozilla/firefox/*.default*/*/*.db*
+/home/*/.config/google-chrome/Default/History*
+/home/*/.config/google-chrome/Default/Cookies*
+/home/*/.config/google-chrome/Default/Bookmarks*
+/home/*/.config/google-chrome/Default/Extensions/*
+/home/*/.config/google-chrome/Default/Last*
+/home/*/.config/google-chrome/Default/Shortcuts*
+/home/*/.config/google-chrome/Default/Top*
+/home/*/.config/google-chrome/Default/Visited*
+/home/*/.config/google-chrome/Default/Preferences*
+/home/*/.config/google-chrome/Default/Login Data*
+/home/*/.config/google-chrome/Default/Web Data*
+```
+
+`MACOS`
+
+Paths sistema:
+```
+/etc/hosts.allow
+/etc/hosts.deny
+/etc/hosts
+/etc/passwd
+/etc/group
+/etc/rc.d/*
+/var/log/*
+/private/etc/rc.d/*
+/private/etc/hosts.allow
+/private/etc/hosts.deny
+/private/etc/hosts
+/private/etc/passwd
+/private/etc/group
+/private/var/log/*
+/System/Library/StartupItems/*
+/System/Library/LaunchAgents/*
+/System/Library/LaunchDaemons/*
+/Library/StartupItems/*
+/Library/LaunchAgents/*
+/Library/LaunchDaemons/*
+/.fseventsd/*
+```
+
+- Paths librerías:
+```
+*/Library/*Support/Google/Chrome/Default/*
+*/Library/*Support/Google/Chrome/Default/History*
+*/Library/*Support/Google/Chrome/Default/Cookies*
+*/Library/*Support/Google/Chrome/Default/Bookmarks*
+*/Library/*Support/Google/Chrome/Default/Extensions/*
+*/Library/*Support/Google/Chrome/Default/Extensions/Last*
+*/Library/*Support/Google/Chrome/Default/Extensions/Shortcuts*
+*/Library/*Support/Google/Chrome/Default/Extensions/Top*
+*/Library/*Support/Google/Chrome/Default/Extensions/Visited*
+```
+
+- Paths usuarios:
+```
+/root/.*history
+/Users/*/.*history
+```
+
+- Otros paths:
+```
+*/places.sqlite*
+*/downloads.sqlite*
+```
+
+## ✅ Herramientas
+
 ### ▶️ LogonTracer (Trazabilidad de inicios de sesión en Active Directory)
 
 Herramienta para investigar inicios de sesión maliciosos mediante la visualización y el análisis de los registros de eventos de Windows Active Directory. Asocia un nombre de host (o una dirección IP) y un nombre de cuenta encontrados en eventos relacionados con el inicio de sesión y lo muestra como un gráfico. De esta forma, es posible ver en qué cuenta se produce el intento de inicio de sesión y qué host se utiliza.
 
 - https://github.com/JPCERTCC/LogonTracer
 
+### ▶️ Skadi (Herramientas de análisis de artefactos e imágenes forenses)
+
+Pack de herramientas que permite la recopilación, el procesamiento y el análisis avanzado de artefactos e imágenes forenses.
+
+- https://github.com/orlikoski/Skadi
+
 ### ▶️ SANS DFIR - Posters & Cheat Sheets
 
-- Referencia: https://www.sans.org/posters/?focus-area=digital-forensics
+- https://www.sans.org/posters/?focus-area=digital-forensics
 
 ---
 

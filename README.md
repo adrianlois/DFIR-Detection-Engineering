@@ -1916,7 +1916,7 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 
 `WINDOWS`
 
-- System Root (C:\Windows):
+System Root (C:\Windows):
 ```
 %SYSTEMROOT%\Tasks\*
 %SYSTEMROOT%\Prefetch\*
@@ -1942,12 +1942,12 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 %SYSTEMROOT%\System32\config\SOFTWARE.LOG2
 ```
 
-- Program Data (C:\ProgramData):
+Program Data (C:\ProgramData):
 ```
 %PROGRAMDATA%\Microsoft\Windows\Start Menu\Programs\Startup\*
 ```
 
-- Drive Root (C:\\)
+Drive Root (C:\\)
 ```
 %SYSTEMDRIVE%\$Recycle.Bin\*\$I*
 %SYSTEMDRIVE%\$Recycle.Bin\$I*
@@ -1955,7 +1955,7 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 %SYSTEMDRIVE%\$MFT
 ```
 
-- Perfiles usuarios (C:\Users\\*):
+Perfiles usuarios (C:\Users\\*):
 ```
 C:\Users\*\NTUser.DAT
 C:\Users\*\NTUser.DAT.LOG1
@@ -1975,7 +1975,7 @@ C:\Users\*\AppData\Local\Microsoft\Edge\User Data\Default\History\*
 
 `LINUX`
 
-- Paths sistema:
+Paths sistema:
 ```
 /etc/hosts.allow
 /etc/hosts.deny
@@ -2039,7 +2039,7 @@ C:\Users\*\AppData\Local\Microsoft\Edge\User Data\Default\History\*
 /sys/firmware/acpi/tables/DSDT
 ```
 
-- Paths usuarios:
+Paths usuarios:
 ```
 /root/.*history
 /root/.*rc
@@ -2107,7 +2107,7 @@ Paths sistema:
 /.fseventsd/*
 ```
 
-- Paths librerías:
+Paths librerías:
 ```
 */Library/*Support/Google/Chrome/Default/*
 */Library/*Support/Google/Chrome/Default/History*
@@ -2120,13 +2120,13 @@ Paths sistema:
 */Library/*Support/Google/Chrome/Default/Extensions/Visited*
 ```
 
-- Paths usuarios:
+Paths usuarios:
 ```
 /root/.*history
 /Users/*/.*history
 ```
 
-- Otros paths:
+Otros paths:
 ```
 */places.sqlite*
 */downloads.sqlite*

@@ -72,10 +72,10 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Artefactos en dispositivos USB en Windows, Linux y MacOS](#️-artefactos-en-dispositivos-usb-en-windows-linux-y-macos)
     - [▶️ Recopilación de artefactos de Paths en Windows, Linux y MacOS](#️-recopilación-de-artefactos-de-paths-en-windows-linux-y-macos)
   - [✅ Herramientas](#-herramientas)
-    - [▶️ LogonTracer (Trazabilidad de inicios de sesión en Active Directory)](#️-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
-    - [▶️ AuthLogParser (Análisis auth.log, resumen de registros relacionados con autenticación)](#️-authlogparser-análisis-authlog-resumen-de-registros-relacionados-con-autenticación)
-    - [▶️ WinTriage - Securizame (Análisis y extracción de artefactos forenses Windows)](#️-wintriage---securizame-análisis-y-extracción-de-artefactos-forenses-windows)
-    - [▶️ Skadi (Herramientas de análisis de artefactos e imágenes forenses)](#️-skadi-herramientas-de-análisis-de-artefactos-e-imágenes-forenses)
+    - [▶️ WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows](#️-wintriage-securizame-análisis-y-extracción-de-artefactos-forenses-windows)
+    - [▶️ LogonTracer: Trazabilidad de inicios de sesión en Active Directory](#️-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
+    - [▶️ AuthLogParser: Análisis auth.log, resumen de registros relacionados con autenticación](#️-authlogparser-análisis-authlog-resumen-de-registros-relacionados-con-autenticación)
+    - [▶️ Skadi: Análisis de artefactos e imágenes forenses](#️-skadi-análisis-de-artefactos-e-imágenes-forenses)
     - [▶️ SANS DFIR - Posters \& Cheat Sheets](#️-sans-dfir---posters--cheat-sheets)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
   - [✅ Windows](#-windows-1)
@@ -2136,27 +2136,27 @@ Otros paths:
 
 ## ✅ Herramientas
 
-### ▶️ LogonTracer (Trazabilidad de inicios de sesión en Active Directory)
-
-Herramienta para investigar inicios de sesión maliciosos mediante la visualización y el análisis de los registros de eventos de Windows Active Directory. Asocia un nombre de host (o una dirección IP) y un nombre de cuenta encontrados en eventos relacionados con el inicio de sesión y lo muestra como un gráfico. De esta forma, es posible ver en qué cuenta se produce el intento de inicio de sesión y qué host se utiliza.
-
-- https://github.com/JPCERTCC/LogonTracer
-
-### ▶️ AuthLogParser (Análisis auth.log, resumen de registros relacionados con autenticación)
-
-Análisis de registros de autenticación de Linux (auth.log). AuthLogParser escanea el archivo de registro auth.log y extrae información clave, como inicios de sesión SSH, creaciones de usuarios, nombres de eventos, direcciones IP y más. Proporciona una descripción general clara y concisa de las actividades registradas en los registros de autenticación.
-
-- https://github.com/YosfanEilay/AuthLogParser
-
-### ▶️ WinTriage - Securizame (Análisis y extracción de artefactos forenses Windows)
+### ▶️ WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows
 
 Realiza extracciones de diferentes artefactos forenses de usuario, sistema y sistema de ficheros de un ordenador, tanto en caliente como a partir de una imagen forense, para que posteriormente puedan ser analizados e interpretados en una investigación por parte de un profesional analista de DFIR.
 
 - https://www.securizame.com/wintriage
 
-### ▶️ Skadi (Herramientas de análisis de artefactos e imágenes forenses)
+### ▶️ LogonTracer: Trazabilidad de inicios de sesión en Active Directory
 
-Pack de herramientas que permite la recopilación, el procesamiento y el análisis avanzado de artefactos e imágenes forenses.
+Herramienta para investigar inicios de sesión maliciosos mediante la visualización y el análisis de los registros de eventos de Windows Active Directory. Asocia un nombre de host (o una dirección IP) y un nombre de cuenta encontrados en eventos relacionados con el inicio de sesión y lo muestra como un gráfico. De esta forma, es posible ver en qué cuenta se produce el intento de inicio de sesión y qué host se utiliza.
+
+- https://github.com/JPCERTCC/LogonTracer
+
+### ▶️ AuthLogParser: Análisis auth.log, resumen de registros relacionados con autenticación
+
+Análisis de registros de autenticación de Linux (auth.log). AuthLogParser escanea el archivo de registro auth.log y extrae información clave, como inicios de sesión SSH, creaciones de usuarios, nombres de eventos, direcciones IP y más. Proporciona una descripción general clara y concisa de las actividades registradas en los registros de autenticación.
+
+- https://github.com/YosfanEilay/AuthLogParser
+
+### ▶️ Skadi: Análisis de artefactos e imágenes forenses
+
+Pack de herramientas que permite la recopilación, el procesamiento y el análisis avanzado de artefactos e imágenes forenses. Funciona en máquinas MacOS, Windows y Linux.
 
 - https://github.com/orlikoski/Skadi
 

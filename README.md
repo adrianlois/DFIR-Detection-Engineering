@@ -76,6 +76,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ LogonTracer: Trazabilidad de inicios de sesión en Active Directory](#️-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
     - [▶️ AuthLogParser: Análisis auth.log, resumen de registros relacionados con autenticación](#️-authlogparser-análisis-authlog-resumen-de-registros-relacionados-con-autenticación)
     - [▶️ Skadi: Análisis de artefactos e imágenes forenses](#️-skadi-análisis-de-artefactos-e-imágenes-forenses)
+    - [▶️ GRR - Google Rapid Response](#️-grr---google-rapid-response)
+    - [▶️ Arkime - Almacenar e indexar el tráfico de red en formato PCAP](#️-arkime---almacenar-e-indexar-el-tráfico-de-red-en-formato-pcap)
     - [▶️ SANS DFIR - Posters \& Cheat Sheets](#️-sans-dfir---posters--cheat-sheets)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
   - [✅ Windows](#-windows-1)
@@ -2159,6 +2161,18 @@ Análisis de registros de autenticación de Linux (auth.log). AuthLogParser esca
 Pack de herramientas que permite la recopilación, el procesamiento y el análisis avanzado de artefactos e imágenes forenses. Funciona en máquinas MacOS, Windows y Linux.
 
 - https://github.com/orlikoski/Skadi
+
+### ▶️ GRR - Google Rapid Response
+
+Es un framework de respuesta a incidentes centrado en análisis forense remoto en vivo. GRR es un cliente (agente) de Python que se instala en los sistemas de destino y una infraestructura de servidor de Python que puede administrar y comunicarse con los clientes. https://grr-doc.readthedocs.io/en/latest
+
+- https://github.com/google/grr
+
+### ▶️ Arkime - Almacenar e indexar el tráfico de red en formato PCAP
+
+Almacenar e indexar el tráfico de red en formato PCAP estándar, proporcionando un acceso indexado rápido. Se proporciona una interfaz web intuitiva y sencilla para explorar, buscar y exportar PCAP.
+
+- https://github.com/arkime/arkime
 
 ### ▶️ SANS DFIR - Posters & Cheat Sheets
 

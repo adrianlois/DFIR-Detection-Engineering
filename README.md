@@ -644,6 +644,16 @@ Una forma de detectar servicios de manipulación mediante la línea de comandos 
 Get-SysmonEvents 1 | Where-Object { $_.Properties[4].Value -match "\\sc.exe" } | Format-List TimeCreated, @{label = "ParentImage" ; Expression = {$_.properties[20].value}}, @{label= "Image" ; Expression= {$_.properties[4].value}},@{label = "CommandLine" ; Expression = {$_.properties[10].value}}
 ```
 
+`Listar versiones del software instalado`
+Obteniendo listado de software instalado a través de una consulta al registro.
+```ps
+Get-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" | Select-Object DisplayName, DisplayVersion, InstallDate | Format-Table
+```
+Obteniendo listado de software instalado a través de WMI consultando la clase Win32_Product.
+```ps
+Get-WmiObject -Query "SELECT * FROM Win32_Product" | Select-Object Name, Version, Vendor, InstallDate
+```
+
 ### ▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT&CK*)
 
 Detectar persistencia en ramas del registro de Windows haciendo uso de comprobaciones de técnicas basadas en la matriz de *MITRE ATT&CK*.

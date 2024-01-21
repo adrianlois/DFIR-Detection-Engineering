@@ -20,7 +20,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
     - [▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR](#️-id-de-eventos-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
     - [▶️ Scripts para detectar actividades sospechosas en Windows](#️-scripts-para-detectar-actividades-sospechosas-en-windows)
-    - [▶️ Listar versiones del software instalado](#️-listar-versiones-del-software-instalado)
+    - [▶️ Listar y obtener versiones del software instalado](#️-listar-y-obtener-versiones-del-software-instalado)
     - [▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#️-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
     - [▶️ Artefactos de conexiones de clientes VPN](#️-artefactos-de-conexiones-de-clientes-vpn)
     - [▶️ Persistencia en servicios](#️-persistencia-en-servicios)
@@ -645,13 +645,13 @@ Una forma de detectar servicios de manipulación mediante la línea de comandos 
 Get-SysmonEvents 1 | Where-Object { $_.Properties[4].Value -match "\\sc.exe" } | Format-List TimeCreated, @{label = "ParentImage" ; Expression = {$_.properties[20].value}}, @{label= "Image" ; Expression= {$_.properties[4].value}},@{label = "CommandLine" ; Expression = {$_.properties[10].value}}
 ```
 
-### ▶️ Listar versiones del software instalado
+### ▶️ Listar y obtener versiones del software instalado
 
-Obteniendo listado de software instalado a través de una consulta al registro.
+Consulta al registro.
 ```ps
 Get-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" | Select-Object DisplayName, DisplayVersion, InstallDate | Format-Table
 ```
-Obteniendo listado de software instalado a través de WMI consultando la clase Win32_Product.
+Usando WMI consultando la clase Win32_Product.
 ```ps
 Get-WmiObject -Query "SELECT * FROM Win32_Product" | Select-Object Name, Version, Vendor, InstallDate
 ```

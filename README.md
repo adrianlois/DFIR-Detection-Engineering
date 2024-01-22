@@ -1683,9 +1683,9 @@ Listar cuentas de usuario y servicio.
 cat /etc/passwd
 ```
 
-"Comprobando el estado de la contraseña de un usuario (Marcador de posición)..."
+Listar el estado de la contraseña de un usuario.
 ```bash
-passwd -S [User_Name]
+passwd -S [USUARIO]
 ```
 
 "Listar inicios de sesión más recientes.

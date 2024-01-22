@@ -1580,12 +1580,12 @@ grep -l SSH_C /proc/*/environ
 
 ### ▶️ Recopilar información en un primer análisis de respuesta a incidentes (sistema Linux)
 
-Buscar ficheros legibles en el directorio /etc/.
+Buscar archivos legibles en el directorio /etc/.
 ```bash
 find /etc/ -readable -type f 2>/dev/null
 ```
 
-Buscar ficheros modificados en los últimos 2 días o N días.
+Buscar archivos modificados en los últimos 2 días o N días.
 ```bash
 find / -mtime -2 -ls
 find / -mtime -[N]
@@ -1593,8 +1593,8 @@ find / -mtime -[N]
 
 Buscar un archivo específico.
 ```bash
-find / -name [FICHERO]
-updatedb ; locate [FICHERO]
+find / -name [ARCHIVO]
+updatedb ; locate [ARCHIVO]
 ```
 
 Buscar archivos de más de N bytes.
@@ -1637,7 +1637,7 @@ Listar el proceso/servicio escuchando en un puerto concreto.
 lsof -i:[PUERTO]
 ```
 
-Listar ficheros abiertos para un proceso.
+Listar archivos abiertos para un proceso.
 ```bash
 lsof -p [PID]
 ```
@@ -1647,7 +1647,7 @@ Mostrar información de memoria.
 cat /proc/meminfo
 ```
 
-Mostrar sistemas de ficheros montados.
+Mostrar sistemas de archivos montados.
 ```bash
 cat /proc/mounts
 ```
@@ -1657,7 +1657,7 @@ Buscar cuentas root.
 grep :0: /etc/passwd
 ```
 
-Buscar ficheros sin usuario.
+Buscar archivos sin usuario.
 ```bash
 find / -nouser -print
 ```

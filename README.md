@@ -1627,7 +1627,7 @@ Listar procesos en formato personalizado.
 ps -eo pid,tt,user,fname,rsz
 ```
 
-Listar ficheros abiertos asociados a conexiones de red.
+Listar archivos abiertos asociados a conexiones de red.
 ```bash
 lsof -i
 ```

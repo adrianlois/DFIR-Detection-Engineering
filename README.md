@@ -58,6 +58,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Logs journalctl (systemd)](#️-logs-journalctl-systemd)
     - [▶️ Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución](#️-copiar-un-binario-malicioso-ya-eliminado-a-través-de-su-proceso-todavía-en-ejecución)
     - [▶️ Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)](#️-identificar-y-obtener-archivos-con-pid-de-procesos-maliciosos-conexiones-ssh-linux)
+    - [▶️ Recopilar información en un primer análisis de respuesta a incidentes (sistema Linux)](#️-recopilar-información-en-un-primer-análisis-de-respuesta-a-incidentes-sistema-linux)
     - [▶️ Historial de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#️-historial-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
     - [▶️ Voldado de todos los directorios y ficheros de Linux](#️-voldado-de-todos-los-directorios-y-ficheros-de-linux)
     - [▶️ Volcado de Memoria RAM en Linux con LiME (Linux Memory Extractor)](#️-volcado-de-memoria-ram-en-linux-con-lime-linux-memory-extractor)
@@ -326,11 +327,14 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 
 ### ▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR
 
-- Windows Event Log Analyst Reference (Applied Incident Response): 
+- Windows Event Log Analyst Reference (Applied Incident Response).
   + https://forwarddefense.com/media/attachments/2021/05/15/windows-event-log-analyst-reference.pdf
 
-- Buscar Events ID: Windows Security Log Events Encyclopedia (Ultimate IT Security - @randyfsmith)
+- Buscar Events ID: Windows Security Log Events Encyclopedia (Ultimate IT Security - @randyfsmith).
   + https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx
+
+- Apéndice de identificadores de eventos.
+  + https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor
 
 - Inicio de Sesión y Autenticación:
 ```
@@ -1572,6 +1576,132 @@ Esta es una forma de obtener archivos con PID de procesos maliciosos (similar a 
 
 ```bash
 grep -l SSH_C /proc/*/environ
+```
+
+### ▶️ Recopilar información en un primer análisis de respuesta a incidentes (sistema Linux)
+
+Buscar ficheros legibles en el directorio /etc/.
+```bash
+find /etc/ -readable -type f 2>/dev/null
+```
+
+Buscar ficheros modificados en los últimos 2 días o N días.
+```bash
+find / -mtime -2 -ls
+find / -mtime -[N]
+```
+
+Buscar un archivo específico.
+```bash
+find / -name [FICHERO]
+updatedb ; locate [FICHERO]
+```
+
+Buscar archivos de más de N bytes.
+```bash
+find / -size +[N]c
+```
+
+Mostrar todas las reglas iptables.
+```bash
+iptables -L -n -v
+```
+
+Mostrar el estado de todos los servicios.
+```bash
+service --status-all
+```
+
+Listar los servicios en ejecución (systemd).
+```bash
+systemctl list-units --type=service
+```
+
+Listar procesos en formato de árbol con PIDs.
+```bash
+pstree -p
+```
+
+Listar procesos en formato personalizado.
+```bash
+ps -eo pid,tt,user,fname,rsz
+```
+
+Listar ficheros abiertos asociados a conexiones de red.
+```bash
+lsof -i
+```
+
+Listar el proceso/servicio escuchando en un puerto concreto.
+```bash
+lsof -i:[PUERTO]
+```
+
+Listar ficheros abiertos para un proceso.
+```bash
+lsof -p [PID]
+```
+
+Mostrar información de memoria.
+```bash
+cat /proc/meminfo
+```
+
+Mostrar sistemas de ficheros montados.
+```bash
+cat /proc/mounts
+```
+
+Buscar cuentas root.
+```bash
+grep :0: /etc/passwd
+```
+
+Buscar ficheros sin usuario.
+```bash
+find / -nouser -print
+```
+
+Listar contraseñas cifradas e información de expiración de cuentas.
+```bash
+cat /etc/shadow
+chage --list [USUARIO]
+```
+
+Listar información de grupos del sistema y servicio.
+```bash
+cat /etc/group
+```
+
+Listar el archivo sudoers, comprobar usuarios que puedan elevarse en contexto privilegiado.
+```bash
+cat /etc/sudoers
+```
+
+Listar cuentas de usuario y servicio.
+```bash
+cat /etc/passwd
+```
+
+"Comprobando el estado de la contraseña de un usuario (Marcador de posición)..."
+```bash
+passwd -S [User_Name]
+```
+
+"Listar inicios de sesión más recientes.
+```bash
+lastlog
+```
+
+Listar los últimos usuarios conectados.
+```bash
+last
+```
+
+Listar quién está conectado y que procesos está ejecutando.
+```bash
+who
+w
 ```
 
 ### ▶️ Historial de comandos de la Shell de Linux (.bash_history & .zsh_history)

@@ -651,7 +651,7 @@ Get-SysmonEvents 1 | Where-Object { $_.Properties[4].Value -match "\\sc.exe" } |
 
 ### ▶️ Obtener software instalado y sus versiones
 
-Consulta al registro.
+Consultando el registro. Efectivo y completo, donde se lista software instalado en arquitecturas x86 y x64 (Wow6432Node), tanto a nivel general del equipo (HKLM) como en el contexto del perfil de usuario (HKCU).
 ```ps
 Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*, `
                  HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*, `
@@ -659,7 +659,7 @@ Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*, `
                  HKCU:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | `
                  ? {![string]::IsNullOrWhiteSpace($_.DisplayName) } | Select-Object DisplayName, DisplayVersion, InstallDate | Format-Table
 ```
-Usando WMI consultando la clase Win32_Product.
+Usando WMI consultando la clase Win32_Product (no lista todo el software como pasa en el método anterior).
 ```ps
 Get-WmiObject -Query "SELECT * FROM Win32_Product" | Select-Object Name, Version, Vendor, InstallDate
 Get-WmiObject -Class Win32_Product | Select-Object Name, Version, Vendor, InstallDate

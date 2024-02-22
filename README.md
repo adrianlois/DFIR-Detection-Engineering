@@ -657,7 +657,8 @@ Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*, `
                  HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*, `
                  HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*, `
                  HKCU:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | `
-                 ? {![string]::IsNullOrWhiteSpace($_.DisplayName) } | Select-Object DisplayName, DisplayVersion, InstallDate | Format-Table
+                 ? {![string]::IsNullOrWhiteSpace($_.DisplayName) } | `
+                 Select-Object DisplayName, DisplayVersion, InstallDate | Sort-Object DisplayName -Unique
 ```
 Usando WMI consultando la clase Win32_Product (no lista todo el software instalado como pasa en el método anterior).
 ```ps

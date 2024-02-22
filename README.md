@@ -20,7 +20,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
     - [▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR](#️-id-de-eventos-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
     - [▶️ Scripts para detectar actividades sospechosas en Windows](#️-scripts-para-detectar-actividades-sospechosas-en-windows)
-    - [▶️ Obtener software instalado y sus versiones](#️-obtener-software-instalado-y-sus-versiones)
+    - [▶️ Obtener software instalado y sus versiones (x86 y x64)](#️-obtener-software-instalado-y-sus-versiones-x86-y-x64)
     - [▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#️-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
     - [▶️ Artefactos de conexiones de clientes VPN](#️-artefactos-de-conexiones-de-clientes-vpn)
     - [▶️ Persistencia en servicios](#️-persistencia-en-servicios)
@@ -649,7 +649,7 @@ Una forma de detectar servicios de manipulación mediante la línea de comandos 
 Get-SysmonEvents 1 | Where-Object { $_.Properties[4].Value -match "\\sc.exe" } | Format-List TimeCreated, @{label = "ParentImage" ; Expression = {$_.properties[20].value}}, @{label= "Image" ; Expression= {$_.properties[4].value}},@{label = "CommandLine" ; Expression = {$_.properties[10].value}}
 ```
 
-### ▶️ Obtener software instalado y sus versiones
+### ▶️ Obtener software instalado y sus versiones (x86 y x64)
 
 Consultando el registro de Windows. Efectivo y completo, donde se lista software instalado en arquitecturas x86 y x64 (Wow6432Node), tanto a nivel general del equipo (HKLM) como en el contexto del perfil de usuario (HKCU).
 ```ps
@@ -659,7 +659,7 @@ Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*, `
                  HKCU:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | `
                  ? {![string]::IsNullOrWhiteSpace($_.DisplayName) } | Select-Object DisplayName, DisplayVersion, InstallDate | Format-Table
 ```
-Usando WMI consultando la clase Win32_Product (no lista todo el software como pasa en el método anterior).
+Usando WMI consultando la clase Win32_Product (no lista todo el software instalado como pasa en el método anterior).
 ```ps
 Get-WmiObject -Query "SELECT * FROM Win32_Product" | Select-Object Name, Version, Vendor, InstallDate
 Get-WmiObject -Class Win32_Product | Select-Object Name, Version, Vendor, InstallDate

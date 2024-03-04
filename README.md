@@ -121,7 +121,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 ### ▶️ Ciclo de vida - Respuesta a Incidentes
 
-[![](https://mermaid.ink/img/pako:eNpNkMFKBDEMhl-l5FRh9gXmIOzOzIKgIOtNegltxi3OpCWmiCz7VD6CL2at7OotfN9PSP4T-BQIepiX9O6PKGruD4639lEoo6CPX598U4HZbG7Nzt4FYo1z9Feza2awQ2IlvtCh0dFOIhj-pcfGJ3sgXzL97Z8a3_9wzFHLcjX7ZrbQwUqyYgz12JNjYxzokVZy0NcxoLw6cHyuOSyanj7YQ69SqIOSAyqNEV8EV-hnXN4qpRA1ycPv962EDjLyc0qXzPkb-NVh3g?type=png)](https://mermaid.live/edit#pako:eNpNkMFKBDEMhl-l5FRh9gXmIOzOzIKgIOtNegltxi3OpCWmiCz7VD6CL2at7OotfN9PSP4T-BQIepiX9O6PKGruD4639lEoo6CPX598U4HZbG7Nzt4FYo1z9Feza2awQ2IlvtCh0dFOIhj-pcfGJ3sgXzL97Z8a3_9wzFHLcjX7ZrbQwUqyYgz12JNjYxzokVZy0NcxoLw6cHyuOSyanj7YQ69SqIOSAyqNEV8EV-hnXN4qpRA1ycPv962EDjLyc0qXzPkb-NVh3g)
+[![](https://mermaid.ink/img/pako:eNpFkMFqwzAMhl_F6JRB8gI5DNokhUILpbsNX4SttGaJbVSZMUqfao-wF5vrkewmPn1C0n8HEyxBC-MUPs0VWdThrP2mOjFFZDTu59u_ZKCa5lVtq70lL250Zu1sS6eruuCF_EK7QvtqYEa72CqooxN3WWf7Yg3VmUyK9L9tKHz35BidpGmdP4WbNPu85nkHZXVX1A3UMBPP6Gz-5a69UhrkSjNpaHNpkT80aP_IHiYJb1_eQCucqIYULQr1Di-MM7QjTrdMyToJfPwLp2RUQ0T_HsLiPH4Bf1ptrQ?type=png)](https://mermaid.live/edit#pako:eNpFkMFqwzAMhl_F6JRB8gI5DNokhUILpbsNX4SttGaJbVSZMUqfao-wF5vrkewmPn1C0n8HEyxBC-MUPs0VWdThrP2mOjFFZDTu59u_ZKCa5lVtq70lL250Zu1sS6eruuCF_EK7QvtqYEa72CqooxN3WWf7Yg3VmUyK9L9tKHz35BidpGmdP4WbNPu85nkHZXVX1A3UMBPP6Gz-5a69UhrkSjNpaHNpkT80aP_IHiYJb1_eQCucqIYULQr1Di-MM7QjTrdMyToJfPwLp2RUQ0T_HsLiPH4Bf1ptrQ)
 
 <table>
   <tr>
@@ -153,7 +153,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     </td>
   </tr>
   <tr>
-    <td><strong>Erradicación y Recuperación</strong></td>
+    <td><strong>Erradicación (mitigación) y Recuperación</strong></td>
     <td>Elimina si fuera necesario los elementos comprometidos antes de iniciar la recuperación.</td>
     <td>
       - Reinstala los sistemas afectados.<br>
@@ -161,7 +161,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     </td>
   </tr>
   <tr>
-    <td><strong>Recapitulación</strong></td>
+    <td><strong>Recapitulación o Post-Incidente</strong></td>
     <td>Documenta los detalles del incidente, archiva los datos recogidos y establece un debate constructivo sobre las lecciones aprendidas.</td>
     <td>
       - Informa a los empleados del incidente y dales instrucciones para evitarlo en el futuro.<br>
@@ -174,7 +174,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 ### ▶️ Preguntas - Respuesta a Incidentes
 
-**`Quién, Qué, Dónde, Cuándo, Por qué y Cómo`**
+**`¿Quién?, ¿Qué?, ¿Dónde?, ¿Cuándo?, ¿Cómo o en qué? y ¿Por qué?`**
 
 <table>
   <tr>
@@ -191,6 +191,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     </td>
     <td><strong>Qué</strong></td>
     <td>
+      - Qué ha sucedido o cuáles son los signos de alerta?<br>
       - Son las fortalezas/debilidades?<br>
       - Es otra perspectiva?<br>
       - Es otra alternativa?<br>
@@ -204,6 +205,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   <tr>
     <td><strong>Dónde</strong></td>
     <td>
+      - Dónde ha ocurrido?<br>
       - Veríamos esto en el mundo real?<br>
       - Existen conceptos/situaciones similares?<br>
       - Existe la mayor necesidad de esto?<br>
@@ -215,6 +217,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     </td>
     <td><strong>Cuándo</strong></td>
     <td>
+      - Cuándo se produjo?<br>
       - Es esto un problema/desafío?<br>
       - Es relevante para mí/otros?<br>
       - Es este el mejor/peor escenario?<br>
@@ -226,16 +229,9 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     </td>
   </tr>
   <tr>
-    <td><strong>Por qué</strong></td>
+    <td><strong>Cómo o en qué</strong></td>
     <td>
-      - Podemos obtener más información?<br>
-      - Cuáles son las áreas de mejora?<br>
-      - Sabremos que hemos tenido éxito?<br>
-      - Podemos esperar que esto cambie?<br>
-      - Debemos pedir ayuda con esto?
-    </td>
-    <td><strong>Cómo</strong></td>
-    <td>
+      - Cómo o en qué circunstancias?<br>
       - La gente debería saber acerca de esto?<br>
       - Ha sido así durante tanto tiempo?<br>
       - Hemos permitido que esto suceda?<br>
@@ -243,6 +239,15 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
       - Esto nos hace daño a nosotros/otros?<br>
       - Vemos esto en el futuro?<br>
       - Podemos cambiar esto para nuestro bien?
+    </td>
+    <td><strong>Por qué</strong></td>
+    <td>
+      - Por qué se ha producido o cuál es su origen?<br>
+      - Podemos obtener más información?<br>
+      - Cuáles son las áreas de mejora?<br>
+      - Sabremos que hemos tenido éxito?<br>
+      - Podemos esperar que esto cambie?<br>
+      - Debemos pedir ayuda con esto?
     </td>
   </tr>
 </table>
@@ -324,6 +329,7 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 | `%SYSTEMROOT%\Performance\Winsat\winsat.log` | Contiene registros de utilización de la aplicación WINSAT que miden el rendimiento del sistema | Fechas, valores sobre la tarjeta gráfica, CPU, velocidades, puertos USB |
 | `%ProgramData%\Microsoft\Windows Defender\Support` | Contiene pruebas históricas de WD (Windows Defender). Los nombres de los archivos serán- MPLog-\*.log, MPDetection-\*.log, MPDeviceControl-\*.log | Fechas, versiones productos, servicios, notificaciones, CPU, ProcessImageName, EstimatedImpact, binarios, etc. |
 | `%ProgramData%\Microsoft\Windows Defender\Scans\Scans\History` | Cuando se detecta una amenaza, WD almacena un archivo binario "DetectionHistory" | Se pueden analizar estos archivos utilizando herramientas como DHParser |
+| `%TMP%` o `%TEMP%` | Variable de entorno que apunta a la ruta absoluta "C:\Users\USER\AppData\Local\Temp" donde se almacenan ficheros temporales en el contexto de usuario. Este directorio almacena la creación de archivos de volcado de un proceso cuando se realiza a través del taskmanager. En el contexto de sistema apunta a la ruta absoluta "C:\Windows\Temp" |
 
 ### ▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR
 

@@ -19,6 +19,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)
     - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
     - [▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR](#️-id-de-eventos-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
+    - [▶️ Artefactos de tareas programadas en Windows](#️-artefactos-de-tareas-programadas-en-windows)
     - [▶️ Scripts para detectar actividades sospechosas en Windows](#️-scripts-para-detectar-actividades-sospechosas-en-windows)
     - [▶️ Obtener software instalado y sus versiones (x86 y x64)](#️-obtener-software-instalado-y-sus-versiones-x86-y-x64)
     - [▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#️-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
@@ -72,7 +73,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp](#️-forense-android-evidencias-de-imágenes-eliminadas-y-enviadas-por-whatsapp)
   - [✅ Varios](#-varios)
     - [▶️ Artefactos en dispositivos USB en Windows, Linux y MacOS](#️-artefactos-en-dispositivos-usb-en-windows-linux-y-macos)
-    - [▶️ Recopilación de artefactos de Paths en Windows, Linux y MacOS](#️-recopilación-de-artefactos-de-paths-en-windows-linux-y-macos)
+    - [▶️ Recopilación de artefactos de paths en Windows, Linux y MacOS](#️-recopilación-de-artefactos-de-paths-en-windows-linux-y-macos)
   - [✅ Herramientas](#-herramientas)
     - [▶️ WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows](#️-wintriage-securizame-análisis-y-extracción-de-artefactos-forenses-windows)
     - [▶️ LogonTracer: Trazabilidad de inicios de sesión en Active Directory](#️-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
@@ -329,7 +330,7 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 | `%SYSTEMROOT%\Performance\Winsat\winsat.log` | Contiene registros de utilización de la aplicación WINSAT que miden el rendimiento del sistema | Fechas, valores sobre la tarjeta gráfica, CPU, velocidades, puertos USB |
 | `%ProgramData%\Microsoft\Windows Defender\Support` | Contiene pruebas históricas de WD (Windows Defender). Los nombres de los archivos serán- MPLog-\*.log, MPDetection-\*.log, MPDeviceControl-\*.log | Fechas, versiones productos, servicios, notificaciones, CPU, ProcessImageName, EstimatedImpact, binarios, etc. |
 | `%ProgramData%\Microsoft\Windows Defender\Scans\Scans\History` | Cuando se detecta una amenaza, WD almacena un archivo binario "DetectionHistory" | Se pueden analizar estos archivos utilizando herramientas como DHParser |
-| `%TMP%` o `%TEMP%` | Variable de entorno que apunta a la ruta absoluta "C:\Users\USER\AppData\Local\Temp" donde se almacenan ficheros temporales en el contexto de usuario. Este directorio almacena la creación de archivos de volcado de un proceso cuando se realiza a través del taskmanager. En el contexto de sistema apunta a la ruta absoluta "C:\Windows\Temp" |
+| `%TMP%` o `%TEMP%` | Variable de entorno que apunta a la ruta absoluta "%USERPROFILE%\AppData\Local\Temp" donde se almacenan ficheros temporales en el contexto de usuario. Este directorio almacena la creación de archivos de volcado de un proceso cuando se realiza a través del taskmanager. En el contexto de sistema apunta a la ruta absoluta "C:\Windows\Temp" |
 
 ### ▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR
 
@@ -572,6 +573,42 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 
 # Cambio de Rutas de Acceso de Archivos:
 18: Cambio de ruta de acceso de archivo. Puede indicar cambios en la ubicación de archivos sospechosos.
+```
+
+### ▶️ Artefactos de tareas programadas en Windows
+
+Distintas formas de poder visualizar y/o extraer información de las tareas programadas creadas en Windows.
+
+GUI Windows
+```
+taskschd.msc
+```
+
+Path de sistema
+```
+%SYSTEMROOT%\System32\Tasks
+```
+
+Regedit
+```
+HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks
+HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree
+```
+
+PowerShell
+```
+Get-ScheduledTask
+```
+
+PowerShell usando el módulo PSScheduledJob
+```
+Import-Module PSScheduledJob
+Get-ScheduledJob 
+```
+
+CMD
+```
+schtasks
 ```
 
 ### ▶️ Scripts para detectar actividades sospechosas en Windows
@@ -2070,7 +2107,7 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 - USBDeview: https://www.nirsoft.net/utils/usb_devices_view.html
 - USB Forensic Tracker (USBFT) Windows, Linux y MacOS: https://www.orionforensics.com/forensics-tools/usb-forensic-tracker
 
-### ▶️ Recopilación de artefactos de Paths en Windows, Linux y MacOS
+### ▶️ Recopilación de artefactos de paths en Windows, Linux y MacOS
 
 `WINDOWS`
 
@@ -2115,20 +2152,24 @@ Drive Root (C:\\)
 
 Perfiles usuarios (C:\Users\\*):
 ```
-C:\Users\*\NTUser.DAT
-C:\Users\*\NTUser.DAT.LOG1
-C:\Users\*\NTUser.DAT.LOG2
-C:\Users\*\AppData\Roaming\Microsoft\Windows\Recent\*
-C:\Users\*\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
-C:\Users\*\AppData\Roaming\Mozilla\Firefox\Profiles\*
-C:\Users\*\AppData\Local\Microsoft\Windows\WebCache\*
-C:\Users\*\AppData\Local\Microsoft\Windows\Explorer\*
-C:\Users\*\AppData\Local\Microsoft\Windows\UsrClass.dat
-C:\Users\*\AppData\Local\Microsoft\Windows\UsrClass.dat.LOG1
-C:\Users\*\AppData\Local\Microsoft\Windows\UsrClass.dat.LOG2
-C:\Users\*\AppData\Local\ConnectedDevicesPlatform\*
-C:\Users\*\AppData\Local\Google\Chrome\User Data\Default\History\*
-C:\Users\*\AppData\Local\Microsoft\Edge\User Data\Default\History\*
+%USERPROFILE%\NTUser.DAT
+%USERPROFILE%\NTUser.DAT.LOG1
+%USERPROFILE%\NTUser.DAT.LOG2
+%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Recent\*
+%USERPROFILE%\AppData\Local\Microsoft\Windows\PowerShell\*
+%USERPROFILE%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+%USERPROFILE%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\Visual Studio Code Host_history.txt
+%USERPROFILE%\AppData\Local\Microsoft\Windows\PowerShell\ScheduledJobs\*
+%USERPROFILE%\AppData\Roaming\Mozilla\Firefox\Profiles\*
+%USERPROFILE%\AppData\Local\Microsoft\Windows\WebCache\*
+%USERPROFILE%\AppData\Local\Microsoft\Windows\Explorer\*
+%USERPROFILE%\AppData\Local\Microsoft\Windows\UsrClass.dat
+%USERPROFILE%\AppData\Local\Microsoft\Windows\UsrClass.dat.LOG1
+%USERPROFILE%\AppData\Local\Microsoft\Windows\UsrClass.dat.LOG2
+%USERPROFILE%\AppData\Local\ConnectedDevicesPlatform\*
+%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Default\History\*
+%USERPROFILE%\AppData\Local\Microsoft\Edge\User Data\Default\History\*
+%USERPROFILE%\AppData\Local\Temp
 ```
 
 `LINUX`

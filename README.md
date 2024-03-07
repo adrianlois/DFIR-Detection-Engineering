@@ -22,12 +22,12 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Artefactos de Tareas programadas en Windows](#️-artefactos-de-tareas-programadas-en-windows)
     - [▶️ Scripts para detectar actividades sospechosas en Windows](#️-scripts-para-detectar-actividades-sospechosas-en-windows)
     - [▶️ Obtener software instalado y sus versiones (x86 y x64)](#️-obtener-software-instalado-y-sus-versiones-x86-y-x64)
+    - [▶️ Análisis y artefactos de ShellBags](#️-análisis-y-artefactos-de-shellbags)
     - [▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#️-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
     - [▶️ Artefactos de conexiones de clientes VPN](#️-artefactos-de-conexiones-de-clientes-vpn)
     - [▶️ Persistencia en servicios](#️-persistencia-en-servicios)
     - [▶️ ¿Han eliminado el registro de eventos de Windows?](#️-han-eliminado-el-registro-de-eventos-de-windows)
     - [▶️ Volatility: clipboard](#️-volatility-clipboard)
-    - [▶️ Análisis y artefactos de ShellBags](#️-análisis-y-artefactos-de-shellbags)
     - [▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#️-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
     - [▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#️-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
     - [▶️ Thumbcache Viewer](#️-thumbcache-viewer)
@@ -709,6 +709,53 @@ Get-WmiObject -Query "SELECT * FROM Win32_Product" | Select-Object Name, Version
 Get-WmiObject -Class Win32_Product | Select-Object Name, Version, Vendor, InstallDate
 ```
 
+### ▶️ Análisis y artefactos de ShellBags
+
+Shellbags son un conjunto de claves de registro que contienen detalles sobre la carpeta vista de un usuario, como su tamaño, posición e icono. Proporcionan marcas de tiempo, información contextual y muestran el acceso a directorios y otros recursos, lo que podría apuntar a evidencia que alguna vez existió. 
+
+Se crea una entrada de shellbag para cada carpeta recién explorada, indicaciones de actividad, actuando como un historial de qué elementos del directorio pueden haberse eliminado de un sistema desde entonces, o incluso evidenciar el acceso de dispositivos extraíbles donde están ya no adjunto.
+
+El análisis de Shellbag puede exponer información sobre:
+
+- Accesos a carpetas.
+
+Por ejemplo, elementos de escritorio, categorías/elementos del panel de control, letra de unidad, directorios o incluso archivos comprimidos.
+
+- Evidencia de eliminación, sobrescritura o cambio de nombre de carpeta.
+- Patrones transversales y de navegación de directorios.
+
+Esto también podría incluir evidencia de acceso remoto (RDP o VNC), así como la eliminación de archivos binarios o el acceso a recursos de red.
+
+**Artefactos de las Shellbags**
+
+`NTUSER.DAT`
+```
+HKCU\Software\Microsoft\Windows\Shell\Bags
+HKCU\Software\Microsoft\Windows\Shell\BagMRU
+```
+
+`USRCLASS.DAT`
+```
+HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU
+HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags
+```
+
+Descripción de valores relevantes:
+
+| Valor | Descripción |
+|-------|-------------|
+| `MRUListExt` | Valor de 4 bytes que indica el orden en el que se accedió por última vez a cada carpeta secundaria de la jerarquía BagMRU |
+| `NodeSlot` | Contiene las preferencias de visualización y la configuración de shellbag |
+| `NodeSlots` | Solo está en la clave raíz de BagMRU y se actualiza cada vez que se crea una nueva shellbag |
+
+**Referencia detallada para la interpretación de ShellBags**
+
+- https://www.4n6k.com/2013/12/shellbags-forensics-addressing.html
+
+**Herramienta para explorar y análizar Shellbags tanto de forma online como offline**
+
+-  **ShellBags Explorer** (GUI) o **SBECmd** (CLI): https://ericzimmerman.github.io/#!index.md
+
 ### ▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT&CK*)
 
 Detectar persistencia en ramas del registro de Windows haciendo uso de comprobaciones de técnicas basadas en la matriz de *MITRE ATT&CK*.
@@ -822,53 +869,6 @@ Desde un volcado de memoria, los datos del portapapeles pueden se interesantes p
 volatility.exe -f memdump.bin --profile=Win10x64_10586 clipboard
 ```
 - Referencia: https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf
-
-### ▶️ Análisis y artefactos de ShellBags
-
-Shellbags son un conjunto de claves de registro que contienen detalles sobre la carpeta vista de un usuario, como su tamaño, posición e icono. Proporcionan marcas de tiempo, información contextual y muestran el acceso a directorios y otros recursos, lo que podría apuntar a evidencia que alguna vez existió. 
-
-Se crea una entrada de shellbag para cada carpeta recién explorada, indicaciones de actividad, actuando como un historial de qué elementos del directorio pueden haberse eliminado de un sistema desde entonces, o incluso evidenciar el acceso de dispositivos extraíbles donde están ya no adjunto.
-
-El análisis de Shellbag puede exponer información sobre:
-
-- Accesos a carpetas.
-
-Por ejemplo, elementos de escritorio, categorías/elementos del panel de control, letra de unidad, directorios o incluso archivos comprimidos.
-
-- Evidencia de eliminación, sobrescritura o cambio de nombre de carpeta.
-- Patrones transversales y de navegación de directorios.
-
-Esto también podría incluir evidencia de acceso remoto (RDP o VNC), así como la eliminación de archivos binarios o el acceso a recursos de red.
-
-**Artefactos de las Shellbags**
-
-`NTUSER.DAT`
-```
-HKCU\Software\Microsoft\Windows\Shell\Bags
-HKCU\Software\Microsoft\Windows\Shell\BagMRU
-```
-
-`USRCLASS.DAT`
-```
-HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU
-HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags
-```
-
-Descripción de valores relevantes:
-
-| Valor | Descripción |
-|-------|-------------|
-| `MRUListExt` | Valor de 4 bytes que indica el orden en el que se accedió por última vez a cada carpeta secundaria de la jerarquía BagMRU |
-| `NodeSlot` | Contiene las preferencias de visualización y la configuración de shellbag |
-| `NodeSlots` | Solo está en la clave raíz de BagMRU y se actualiza cada vez que se crea una nueva shellbag |
-
-**Referencia detallada para la interpretación de ShellBags**
-
-- https://www.4n6k.com/2013/12/shellbags-forensics-addressing.html
-
-**Herramienta para explorar y análizar Shellbags tanto de forma online como offline**
-
--  **ShellBags Explorer** (GUI) o **SBECmd** (CLI): https://ericzimmerman.github.io/#!index.md
 
 ### ▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente
 

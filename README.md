@@ -19,7 +19,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)
     - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
     - [▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR](#️-id-de-eventos-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
-    - [▶️ Artefactos de tareas programadas en Windows](#️-artefactos-de-tareas-programadas-en-windows)
+    - [▶️ Artefactos de Tareas programadas en Windows](#️-artefactos-de-tareas-programadas-en-windows)
     - [▶️ Scripts para detectar actividades sospechosas en Windows](#️-scripts-para-detectar-actividades-sospechosas-en-windows)
     - [▶️ Obtener software instalado y sus versiones (x86 y x64)](#️-obtener-software-instalado-y-sus-versiones-x86-y-x64)
     - [▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#️-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
@@ -575,7 +575,7 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 18: Cambio de ruta de acceso de archivo. Puede indicar cambios en la ubicación de archivos sospechosos.
 ```
 
-### ▶️ Artefactos de tareas programadas en Windows
+### ▶️ Artefactos de Tareas programadas en Windows
 
 Distintas formas de poder visualizar y/o extraer información de las tareas programadas creadas en Windows.
 

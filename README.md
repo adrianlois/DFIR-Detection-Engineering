@@ -1755,9 +1755,9 @@ w
 
 ### ▶️ Historial de comandos de la Shell de Linux (.bash_history & .zsh_history)
 
-Realizar un backup del historial de comandos ejecutados por cualquier usuario del sistema que usen *bash_history* o *zsh_history*.
+Realizar un backup del historial de comandos ejecutados por todos los usuarios del sistema, incluido el usuario /root, donde están creados los ficheros: `.bash_history` o `.zsh_history`.
 ```bash
-for i in /home/*; do [ -d "$i" ] && { [ -s "$i"/.bash_history ] || [ -s "$i"/.zsh_history ]; } && { [ -f "$i"/.bash_history ] && cat "$i"/.bash_history || true; [ -f "$i"/.zsh_history ] && cat "$i"/.zsh_history || true; } > "$(basename "$i")_history_backup.txt"; done
+for i in /home/* /root; do [ -d "$i" ] && { [ -s "$i"/.bash_history ] || [ -s "$i"/.zsh_history ]; } && { [ -f "$i"/.bash_history ] && cat "$i"/.bash_history || true; [ -f "$i"/.zsh_history ] && cat "$i"/.zsh_history || true; } > "$(basename "$i")_history_backup.txt"; done
 ```
 
 ### ▶️ Voldado de todos los directorios y ficheros de Linux 

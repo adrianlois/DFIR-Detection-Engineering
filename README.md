@@ -81,6 +81,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Skadi: Análisis de artefactos e imágenes forenses](#️-skadi-análisis-de-artefactos-e-imágenes-forenses)
     - [▶️ GRR - Google Rapid Response](#️-grr---google-rapid-response)
     - [▶️ Arkime - Almacenar e indexar el tráfico de red en formato PCAP](#️-arkime---almacenar-e-indexar-el-tráfico-de-red-en-formato-pcap)
+    - [▶️ Live Forensicator - Recolección automatizada de información y artefactos en Windows, Linux y MacOS](#️-live-forensicator---recolección-automatizada-de-información-y-artefactos-en-windows-linux-y-macos)
     - [▶️ SANS DFIR - Posters \& Cheat Sheets](#️-sans-dfir---posters--cheat-sheets)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
   - [✅ Windows](#-windows-1)
@@ -1165,7 +1166,7 @@ Los archivos adjuntos tipo Word abiertos en directamente a través de en Outlook
 
 ### ▶️ Análisis de malware en ficheros XLSX (MS Excel)
 
-Con 7Zip podemos descomprimir el fichero .xlsx, dentro de la carpeta "XL" abrir editando el archivo llamado "workbook.xml", buscar el término **"absPath"**. Contiene la última ubicación de guardado del archivo donde veríamos al autor (C:\\<\user>\\..\\file.xlsx).
+Con 7Zip podemos descomprimir el fichero .xlsx, dentro de la carpeta "XL" abrir editando el archivo llamado "workbook.xml", buscar el término **"absPath"**. Contiene la última ubicación de guardado del archivo donde veríamos al autor (C:\\<\user>\\..\\file.xlsx) que puede ser el usuario del equipo víctima.
 
 Como técnica anti forense esta metadata se puede eliminar desde Excel "inspeccionando el documento" y borrando las "propiedades de documento e información personal".
 
@@ -2368,6 +2369,12 @@ Es un framework de respuesta a incidentes centrado en análisis forense remoto e
 Almacenar e indexar el tráfico de red en formato PCAP estándar, proporcionando un acceso indexado rápido. Se proporciona una interfaz web intuitiva y sencilla para explorar, buscar y exportar PCAP.
 
 - https://github.com/arkime/arkime
+
+### ▶️ Live Forensicator - Recolección automatizada de información y artefactos en Windows, Linux y MacOS
+
+Recopila información diferente del sistema (Windows, Linux y MacOS) para su posterior revisión en busca de comportamientos anómalos o entrada de datos inesperada, también busca archivos o actividades inusuales.
+
+- https://github.com/Johnng007/Live-Forensicator
 
 ### ▶️ SANS DFIR - Posters & Cheat Sheets
 

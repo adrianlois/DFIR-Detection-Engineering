@@ -342,7 +342,7 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
   + https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx
 
 - Apéndice de identificadores de eventos.
-  + https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor
+  + https://learn.microsoft.com/es-es/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor
 
 - Inicio de Sesión y Autenticación:
 ```
@@ -588,6 +588,7 @@ taskschd.msc
 Path de sistema
 ```
 %SYSTEMROOT%\System32\Tasks
+%SYSTEMROOT%\Tasks
 ```
 
 Regedit

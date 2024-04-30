@@ -35,6 +35,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#️-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
     - [▶️ Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#️-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
     - [▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-zoneidentifier)
+    - [▶️ Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (intento anti-forense)](#️-modificar-y-detectar-timestamps-modificados-en-ficheros-analizando-sus-metadatos-intento-anti-forense)
     - [▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#️-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
     - [▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP](#️-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
     - [▶️ Artefactos forense - MS Word](#️-artefactos-forense---ms-word)
@@ -75,6 +76,9 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Artefactos en dispositivos USB en Windows, Linux y MacOS](#️-artefactos-en-dispositivos-usb-en-windows-linux-y-macos)
     - [▶️ Recopilación de artefactos de paths en Windows, Linux y MacOS](#️-recopilación-de-artefactos-de-paths-en-windows-linux-y-macos)
   - [✅ Herramientas](#-herramientas)
+    - [▶️ Autopsy: Herramienta avanzada de análisis forense digital](#️-autopsy-herramienta-avanzada-de-análisis-forense-digital)
+    - [▶️ X-Ways Forensics: Herramienta avanzada de análisis forense digital](#️-x-ways-forensics-herramienta-avanzada-de-análisis-forense-digital)
+    - [▶️ Volatility: Análisis de volcados de memoria](#️-volatility-análisis-de-volcados-de-memoria)
     - [▶️ WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows](#️-wintriage-securizame-análisis-y-extracción-de-artefactos-forenses-windows)
     - [▶️ LogonTracer: Trazabilidad de inicios de sesión en Active Directory](#️-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
     - [▶️ AuthLogParser: Análisis auth.log, resumen de registros relacionados con autenticación](#️-authlogparser-análisis-authlog-resumen-de-registros-relacionados-con-autenticación)
@@ -598,18 +602,18 @@ HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree
 ```
 
 PowerShell
-```
+```ps
 Get-ScheduledTask
 ```
 
 PowerShell usando el módulo PSScheduledJob
-```
+```ps
 Import-Module PSScheduledJob
 Get-ScheduledJob 
 ```
 
 CMD
-```
+```cmd
 schtasks
 ```
 
@@ -1008,14 +1012,122 @@ HKCU\Software\Martin Prikryl\WinSCP 2\Sessions
 Saber si un archivo malicioso se descargó de Internet y desde que URL o se creó en el sistema local.
 
 PowerShell
-```
+```ps
 Get-Content -Path .\<FileName> -Stream Zone.Identifier -Encoding oem
 ```
 
 CMD
-```
+```cmd
 notepad <FileName>:Zone.Identifier
 ```
+
+### ▶️ Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (intento anti-forense)
+
+Es posible que un actor malicioso o un insider intente modificar las marcas de tiempo de un fichero para modificar su fecha y hora de creación, modificación y acceso con la finalidad de realizar "técnicas anti-forense" para intentar confundir, alterar y dilatar una posible investigación forense.
+
+Aunque en sistemas Windows o Linux es posible modificar los timestamps ya sea de forma nativa como usando software de terceros, es posible analizar y detectar estas alteraciones cuando se realiza un proceso de análisis forense.
+
+`Windows - Obtener y modificar Timestamps`
+
+Obtener los timestamps de un fichero con PowerShell.
+```ps
+Get-ChildItem file.txt | Format-List -Property *
+Get-Item file.txt | Format-List -Property FullName, CreationTime, CreationTimeUtc, LastAccessTime, LastAccessTimeUtc, LastWriteTime, LastWriteTimeUtc
+```
+
+**Modificar los timestamps** de creación (CreationTime), última modificación (LastWriteTime) y última vez que se leyó (LastAccessTime) un fichero con PowerShell.
+```ps
+(Get-ChildItem file.txt).LastWriteTime=$(Get-Date "16/4/2019 12:34 am")
+(Get-ChildItem file.txt).CreationTime=$(Get-Date "16/4/2019 12:34 am")
+(Get-ChildItem file.txt).LastAccessTime=$(Get-Date "16/4/2019 12:34 am")
+```
+
+Modificar timestamps UTC.
+```ps
+(Get-ChildItem file.txt).LastWriteTimeUtc=$(Get-Date "16/4/2019 12:34 am")
+(Get-ChildItem file.txt).CreationTimeUtc=$(Get-Date "16/4/2019 12:34 am")
+(Get-ChildItem file.txt).LastAccessTimeUtc=$(Get-Date "16/4/2019 12:34 am")
+```
+
+Modificar timestamps de ficheros con sofware de terceros.
+
+- BulkFileChanger: https://www.nirsoft.net/utils/bulk_file_changer.html
+- FileDate Changer: https://www.nirsoft.net/utils/filedatech.html
+- NewFileTime: https://www.softwareok.com/?seite=Microsoft/NewFileTime
+- Change Timestamp: https://www.majorgeeks.com/files/details/change_timestamp.html
+- Attribute Changer: https://www.petges.lu/download/
+- Bulk Rename Utility: https://www.bulkrenameutility.co.uk/Download.php
+- Advanced Renamer: https://www.advancedrenamer.com/download
+
+`Linux - Obtener y modificar Timestamps`
+
+El comando ***stat*** muestra información detallada sobre archivos y directorios, como su tamaño, tipo, permisos y fechas de acceso, modificación y cambio.
+```bash
+stat file.txt
+```
+
+**Modificar los timestamp** de acceso, modificación y cambio de un archivo.
+- Acceso: última vez que se leyó el archivo.
+- Modificar: última vez que se modificó el archivo (se ha modificado el contenido).
+- Cambiar: última vez que se cambiaron los metadatos del archivo (por ejemplo, los permisos)
+
+```bash
+touch -a -m -t 201912180130.09 file.txt
+# Formato: YYMMDDhhmm.SS
+# -a = accessed
+# -m = modified
+# -t = timestamp
+```
+
+**`Detectar Timestamps modificados (ExifTool y Autopsy)`**
+
+Cuando se modifican los timestamps de un fichero de forma manual no se modifican su HASH. Por lo que la detección por hash file no sería un indicativo claro para detectar esta "anti-forense".
+
+```bash
+touch -a -m -t 201712180130.09 file.txt
+sha1sum file.txt
+  63bbfea82b8880ed33cdb762aa11fab722a90a24  file.txt
+touch -a -m -t 201812180130.09 file.txt
+sha1sum file.txt
+  63bbfea82b8880ed33cdb762aa11fab722a90a24  file.txt
+```
+
+En Linux con el comando ***stat*** podemos obtener información sobre los timestamp, sin embargo no nos muestra los timestamp de metadatos del propio fichero.
+```bash
+stat file.txt
+  Access: 2019-12-18 01:30:09.000000000 +0100
+  Modify: 2019-12-18 01:30:09.000000000 +0100
+  Change: 2024-04-29 23:05:51.644885838 +0200
+  Birth: 2024-04-29 22:59:00.618199663 +0200
+```
+Para poder analizar y detectar posibles modificaciones de timestamp es posible hacerlo usando ***exiftool*** donde se muestran los metadatos del propio fichero obteniendo los timestamp originales en los atributos *"Create Date, Modify Date y Metadata Date"*.
+
+- ExifTool: https://exiftool.org
+
+```bash
+exiftool file.txt
+  File Modification Date/Time   : 2019:12:18 01:30:09+01:00
+  File Access Date/Time         : 2019:12:18 01:30:09+01:00
+  File Inode Change Date/Time   : 2024:04:29 23:05:51+02:00
+  Create Date                   : 2024:04:17 11:54:20+02:00
+  Modify Date                   : 2024:04:28 14:03:17+02:00
+  Metadata Date                 : 2024:04:28 14:03:17+02:00
+```
+
+Detectar posibles modificaciones de timestamp usando **Autopsy**. 
+
+- Autopsy: https://www.autopsy.com/download
+
+Es posible obtener los metadatos del propio archivo y comprobar los timestamps originales.
+
+1. Crear un nuevo proyecto.
+2. Add Data Source.
+3. Logical Files.
+4. Añadir los ficheros manualmente.
+5. Marcar las tres opciones que incluyen los "Timestamps" (Modified Time, Creation Time, Access Time).
+6. Pestaña "Hex" podemos analizarlo manualmente y encontrar los timestamps.
+7. También en las pestañas: "File Metadata" y "Analysis Results".
+8. Si se trata de un fichero ofimático o pdf se añadirá un nuevo desplegadable "Data Artifacts > Metadata" donde también podemos visualizar los timestamps originales.
 
 ### ▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell
 
@@ -1036,47 +1148,47 @@ En el caso de que se usara una consola bajo VSC Visual Studio Code, encontraremo
 Si tenemos acceso al propio contexto del usuario en su equipo podemos usar también la búsqueda inversa de forma repetida `CTRL+R` para poder ver el historial. `CTR+S` sería para una búsqueda directa.
 
 Comprobar si el módulo está instalado.
-```
+```ps
 Get-Module | Where-Object {$_.name -like "*PSReadline*"}
 ```
 
 Ver el historial de comandos directamente en un output de sesión PowerShell.
-```
+```ps
 Get-Content (Get-PSReadlineOption).HistorySavePath
 ```
 
 Mostrar más opciones de configuración del módulo de PSReadline.
-```
+```ps
 Get-PSReadlineOption | Select-Object HistoryNoDuplicates, MaximumHistoryCount, HistorySearchCursorMovesToEnd, HistorySearchCaseSensitive, HistorySavePath, HistorySaveStyle
 ```
 
 Mostrar directamente el path donde está ubicado el fichero *ConsoleHost_history.txt*.
-```
+```ps
 (Get-PSReadlineOption).HistorySavePath
 ```
 
 Aumentar la cantidad de comandos de PowerShell almacenados en el registro.
-```
+```ps
 Set-PSReadlineOption -MaximumHistoryCount 10000
 ```
 
 En el caso de haber establecido algún tipo de secreto, password o token. Es posible eliminar solo el comando anterior del historial.  
-```
+```ps
 Clear-History -Count 1 -Newest
 ```
 
 Eliminar todos los comandos del historial que hagan match con un patrón específico.
-```
+```ps
 Clear-History -CommandLine *set-ad*
 ```
 
 Para eliminar completamente el historial de comandos de PowerShell, se debe eliminar el archivo ConsoleHost_history.txt en el que escribe el módulo PSReadline o directamente ejecutar lo siguiente en consola.
-```
+```ps
 Remove-Item (Get-PSReadlineOption).HistorySavePath
 ```
 
 Deshabilitar completamente el almacenamiento del historial de comandos de PowerShell.
-```
+```ps
 Set-PSReadlineOption -HistorySaveStyle SaveNothing
 ```
 
@@ -2334,6 +2446,24 @@ Otros paths:
 ```
 
 ## ✅ Herramientas
+
+### ▶️ Autopsy: Herramienta avanzada de análisis forense digital
+
+Es una interfaz gráfica de usuario para Sleuth Kit que facilita la realización de análisis forenses digitales. Proporciona características avanzadas para análisis de imágenes forenses, análisis de metadatos, búsqueda avanzadas, análisis de memoria volátil, generación de informes detallados, integración con otras herramientas forenses.
+
+- https://www.autopsy.com
+
+### ▶️ X-Ways Forensics: Herramienta avanzada de análisis forense digital
+
+Es una herramienta forense que ofrece análisis detallados, adquisición, examen y presentación de evidencia digital en investigaciones forenses. Otra alternativa similar a Autopsy.
+
+- https://www.x-ways.net/forensics
+
+### ▶️ Volatility: Análisis de volcados de memoria
+
+Es una herramienta de análisis forense de memoria volátil (RAM) que puede utilizarse para analizar volcados de memoria y buscar indicadores de actividad maliciosa o manipulación de archivos en la memoria del sistema.
+
+- https://volatilityfoundation.org
 
 ### ▶️ WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows
 

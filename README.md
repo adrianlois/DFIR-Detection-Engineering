@@ -80,6 +80,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ X-Ways Forensics: Herramienta avanzada de análisis forense digital](#️-x-ways-forensics-herramienta-avanzada-de-análisis-forense-digital)
     - [▶️ Volatility: Análisis de volcados de memoria](#️-volatility-análisis-de-volcados-de-memoria)
     - [▶️ WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows](#️-wintriage-securizame-análisis-y-extracción-de-artefactos-forenses-windows)
+    - [▶️ Velociraptor: Recolección, monitorización y hunting para análisis forense digital y respuesta a incidentes en Windows](#️-velociraptor-recolección-monitorización-y-hunting-para-análisis-forense-digital-y-respuesta-a-incidentes-en-windows)
     - [▶️ LogonTracer: Trazabilidad de inicios de sesión en Active Directory](#️-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
     - [▶️ AuthLogParser: Análisis auth.log, resumen de registros relacionados con autenticación](#️-authlogparser-análisis-authlog-resumen-de-registros-relacionados-con-autenticación)
     - [▶️ Skadi: Análisis de artefactos e imágenes forenses](#️-skadi-análisis-de-artefactos-e-imágenes-forenses)
@@ -2470,6 +2471,13 @@ Es una herramienta de análisis forense de memoria volátil (RAM) que puede util
 Realiza extracciones de diferentes artefactos forenses de usuario, sistema y sistema de ficheros de un ordenador, tanto en caliente como a partir de una imagen forense, para que posteriormente puedan ser analizados e interpretados en una investigación por parte de un profesional analista de DFIR.
 
 - https://www.securizame.com/wintriage
+
+### ▶️ Velociraptor: Recolección, monitorización y hunting para análisis forense digital y respuesta a incidentes en Windows
+
+Se utiliza para recopilar información sobre sistemas Windows en tiempo real, permite obtener una visión detallada del estado de un sistema y de las actividades que se están llevando a cabo en él a través de consultas Velociraptor Query Language (VQL) donde brindan acceso a las API de Windows. La monitorización en tiempo real incluye información del sistema, actividad del usuario, registros de eventos, procesos en ejecución, archivos abiertos, conexiones de red, se puede definir y personalizar los artefactos, entre otras características.
+
+- https://github.com/Velocidex/velociraptor
+- https://docs.velociraptor.app
 
 ### ▶️ LogonTracer: Trazabilidad de inicios de sesión en Active Directory
 

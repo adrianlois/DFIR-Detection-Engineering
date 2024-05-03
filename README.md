@@ -18,7 +18,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   - [✅ Windows](#-windows)
     - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)
     - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
-    - [▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR](#️-id-de-eventos-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
+    - [▶️ Lista de Events ID de Windows y Sysmon relevantes en investigaciones DFIR](#️-lista-de-events-id-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
     - [▶️ Artefactos de Tareas programadas en Windows](#️-artefactos-de-tareas-programadas-en-windows)
     - [▶️ Scripts para detectar actividades sospechosas en Windows](#️-scripts-para-detectar-actividades-sospechosas-en-windows)
     - [▶️ Obtener software instalado y sus versiones (x86 y x64)](#️-obtener-software-instalado-y-sus-versiones-x86-y-x64)
@@ -338,7 +338,27 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 | `%ProgramData%\Microsoft\Windows Defender\Scans\Scans\History` | Cuando se detecta una amenaza, WD almacena un archivo binario "DetectionHistory" | Se pueden analizar estos archivos utilizando herramientas como DHParser |
 | `%TMP%` o `%TEMP%` | Variable de entorno que apunta a la ruta absoluta "%USERPROFILE%\AppData\Local\Temp" donde se almacenan ficheros temporales en el contexto de usuario. Este directorio almacena la creación de archivos de volcado de un proceso cuando se realiza a través del taskmanager. En el contexto de sistema apunta a la ruta absoluta "C:\Windows\Temp" |
 
-### ▶️ ID de eventos de Windows y Sysmon relevantes en investigaciones DFIR
+### ▶️ Lista de Events ID de Windows y Sysmon relevantes en investigaciones DFIR
+
+Los sistemas Windows almacenan los registros en el directorio `%SystemRoot%\System32\winevt\logs` por defecto en el formato binario XML Windows Event Logging, designado por la extensión .evtx. Los registros también se pueden almacenar de forma remota mediante suscripciones de registro. Los eventos pueden registrarse en los registros de eventos de Seguridad, Sistema y Aplicación. 
+
+El registro de eventos de instalación registra las actividades que se produjeron durante la instalación de Windows. El registro de eventos Forwarded Logs es la ubicación predeterminada para registrar los eventos recibidos de otros sistemas. Pero también hay muchos registros adicionales, listados bajo "Registros de aplicaciones y servicios" en el Visor de Eventos que registran detalles relacionados con tipos específicos de actividades.
+
+**Formato Event Log (XML Windows Event Logging)**
+
+| Campo | Descripción |
+|-------|-------------|
+| Log Name | El nombre del Registro de Eventos donde se almacena el evento. Útil cuando se procesan numerosos registros extraídos del mismo sistema. |
+| Source | El servicio, componente de Microsoft o aplicación que generó el evento. |
+| Event ID | Un código asignado a cada tipo de actividad auditada. |
+| Level | La gravedad asignada al evento en cuestión. |
+| User | La cuenta de usuario implicada en la activación de la actividad o el contexto de usuario con el que se estaba ejecutando el origen cuando registró el evento. Hay que tener en cuenta que este campo a menudo indica "System" o un usuario que no es la causa del evento que se está registrando. |
+| OpCode | Asignado por la fuente que genera el registro. Su significado queda a criterio de la fuente (Source). |
+| Logged | La fecha y hora del sistema local en que se registró el evento. |
+| Task Category | Asignada por la fuente que genera el registro. Su significado depende de la fuente (Source). |
+| Keywords | Asignada por la fuente y utilizadas para agrupar o clasificar eventos. |
+| Computer | El equipo en el que se registró el evento. Esto es útil cuando se examinan registros recogidos de múltiples sistemas, pero no debe ser considerado como el dispositivo que causó un evento (como cuando se inicia una sesión remota, el campo "Computer" seguirá mostrando el nombre del sistema que registra el evento, no la fuente de la conexión). |
+| Description | Un bloque de texto donde se registra información adicional específica del evento que se está registrando. Suele ser el campo más importante para el analista. |
 
 - Windows Event Log Analyst Reference (Applied Incident Response).
   + https://forwarddefense.com/media/attachments/2021/05/15/windows-event-log-analyst-reference.pdf
@@ -352,21 +372,73 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 - Inicio de Sesión y Autenticación:
 ```
 540: Inicio de sesión de red exitoso.
-4624: Se inició sesión exitosamente en una cuenta.
-4625: Fallo en el inicio de sesión de una cuenta.
+4624: Se inició sesión exitosamente en un sistema a través de una cuenta válida. (El Tipo 2 indica un inicio de sesión interactivo, normalmente local, mientras que el Tipo 3 indica un inicio de sesión remoto o en red).
+4625: Fallo en el inicio de sesión de una cuenta. (Hay que tener en cuenta que los inicios de sesión fallidos a través de RDP (realizados a través de la red) pueden registrarse como Tipo 3 en lugar de Tipo 10, dependiendo de los sistemas involucrados).
 4634: Cierre de sesión exitoso.
 4647: Cierre de sesión iniciado por el usuario.
 4648: Se intentó un inicio de sesión utilizando credenciales explícitas.
 4740: Se bloqueó una cuenta de usuario.
+4672: Se conceden ciertos privilegios asociados con el acceso elevado o de administrador a un inicio de sesión.
 4767: Se desbloqueó una cuenta de usuario.
 4772: Error en una solicitud de ticket de autenticación Kerberos.
 4768: Se solicitó un ticket de autenticación Kerberos (TGT).
 4771: La autenticación previa de Kerberos falló.
 4777: El controlador de dominio no pudo validar las credenciales de una cuenta.
 4778: Se volvió a conectar una sesión a una estación Windows.
+4779: Se desconecta una sesión. También puede ocurrir cuando una sesión es reconectada a través de RDP.
 4820: Se denegó un ticket de concesión de tickets (TGT) de Kerberos porque el dispositivo no cumple con las restricciones de control de acceso.
 4964: Se asignaron grupos especiales a un nuevo inicio de sesión.
 ```
+
+- Event ID 4624. Códigos de resultado Logon type:
+
+| Logon Type | Descripción |
+|------------|-------------|
+| 2 | **Interactive**. Como el inicio de sesión en el teclado y la pantalla del sistema, o de forma remota utilizando herramientas de acceso remoto de terceros como VNC, o psexec con el modificador -u. Los inicios de sesión de este tipo almacenarán en caché las credenciales del usuario en la memoria RAM durante la duración de la sesión y pueden almacenar en caché las credenciales del usuario en el disco. |
+| 3 | **Network**. Como el acceso a una carpeta compartida en este ordenador desde otro lugar de la red. Esto representa un inicio de sesión no interactivo, que no almacena en caché las credenciales del usuario en la RAM ni en el disco. |
+| 4 | **Batch** (indica una tarea programada). El tipo de inicio de sesión por lotes se utiliza en servidores por lotes, donde los procesos pueden ejecutarse en nombre de un usuario sin su intervención directa. |
+| 5 | **Service**. Indica que un servicio fue iniciado por el Service Control Manager (SCM). |
+| 7 | **Unlock**. Indica que una estación de trabajo desatendida con una pantalla protegida por contraseña está desbloqueada. |
+| 8 | **NetworkCleartext**. Indica que un usuario inició sesión en este ordenador desde la red y que la contraseña del usuario se pasó al paquete de autenticación en su forma no hash. Todos los paquetes de autenticación incorporados hacen hash de las credenciales antes de enviarlas a través de la red. Las credenciales no atraviesan la red en texto claro. La mayoría de las veces indica un inicio de sesión en Internet Information Services (IIS) con autenticación básica. |
+| 9 | **NewCredentials**. Indica que un usuario inició sesión con credenciales alternativas para realizar acciones, como con RunAs o asignando una unidad de red. Si desea realizar un seguimiento de los usuarios que intentan iniciar sesión con credenciales alternativas, buscar también el ID de evento 4648. |
+| 10 | **RemoteInteractive**. Indica que Terminal Services, Remote Desktop o Remote Assistance para un inicio de sesión interactivo. Véase la nota sobre RDP al final de esta sección para más detalles. |
+| 11 | **CachedInteractive**. Inicio de sesión con credenciales de dominio almacenadas en caché, como cuando se inicia sesión en un portátil cuando se está fuera de la red. No se contactó con el controlador de dominio para verificar la credencial, por lo que no se genera ninguna entrada de inicio de sesión de cuenta. |
+
+- Event ID 4625. Códigos de fallos de inicio sesión (Logon failure): 
+```
+0XC000005E: Actualmente no hay servidores de inicio de sesión disponibles para atender la solicitud de inicio de sesión.
+0xC0000064: Inicio de sesión de usuario con una cuenta de usuario mal escrita o incorrecta.
+0xC000006A: Inicio de sesión de usuario con contraseña mal escrita o incorrecta.
+0XC000006D: Esto se debe a un nombre de usuario incorrecto o a una información de autenticación incorrecta.
+0XC000006E: Nombre de usuario desconocido o contraseña incorrecta.
+0xC000006F: Inicio de sesión de usuario fuera del horario autorizado.
+0xC0000070: Inicio de sesión de usuario desde estación de trabajo no autorizada.
+0xC0000071: Inicio de sesión de usuario con contraseña caducada.
+0xC0000072: Inicio de sesión de usuario en cuenta desactivada por el administrador.
+0XC00000DC: Indica que el servidor se encontraba en un estado incorrecto para realizar la operación deseada.
+0XC0000133: Relojes entre el controlador de dominio y el otro equipo demasiado desincronizados.
+0XC000015B: No se ha concedido al usuario el tipo de inicio de sesión solicitado (también conocido como derecho de inicio de sesión) en este equipo.
+0XC000018C: La solicitud de inicio de sesión ha fallado porque ha fallado la relación de confianza entre el dominio principal y el dominio de confianza.
+0XC0000192: Se ha intentado iniciar sesión, pero no se ha iniciado el servicio Netlogon.
+0xC0000193: Inicio de sesión de usuario con cuenta caducada.
+0XC0000224: Se solicita al usuario que cambie la contraseña en el próximo inicio de sesión.
+0XC0000225: Evidentemente se trata de un error de Windows y no de un riesgo.
+0xC0000234: El usuario inicia sesión con la cuenta bloqueada.
+0XC00002EE: Razón del fallo: Se ha producido un error durante el inicio de sesión.
+0XC0000413: Error de inicio de sesión: La máquina en la que está iniciando sesión está protegida por un cortafuegos de autenticación. La cuenta especificada no puede autenticarse en la máquina.
+```
+
+- Event ID 4768. Códigos de resultado comunes:
+
+| Dec | Hex | Descripción |
+|-----|-----|-------------|
+| 6 | 0x6 | Nombre de usuario no válido. |
+| 12 | 0xC | Restricción de política que prohíbe este inicio de sesión (como una restricción del equipo o una restricción horaria). |
+| 18 | 0x12 | La cuenta está bloqueada, deshabilitada o ha caducado. |
+| 23 | 0x17 | La contraseña de la cuenta ha caducado. |
+| 24 | 0x18 | La contraseña es incorrecta. |
+| 32 | 0x20 | El ticket ha caducado (común en cuentas de equipo). |
+| 37 | 0x25 | La desviación del reloj es demasiado grande. |
 
 - Cuentas de usuario AD:
 ```
@@ -446,6 +518,37 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 8004: Autenticación NTLM.
 ```
 
+- Códigos de error de inicio de sesión (Event ID 4776):
+```
+0xC0000064: El nombre de usuario no existe.
+0xC000006A: El nombre de usuario es correcto pero la contraseña es incorrecta.
+0xC000006D: Fallo genérico de inicio de sesión. Posiblemente nombre de usuario o contraseña incorrectos o desajuste en el nivel de autenticación de LAN Manager entre los equipos de origen y destino.
+0xC000006F: El usuario intentó iniciar sesión fuera de sus restricciones de día de la semana u hora del día.
+0xC0000234: El usuario está bloqueado.
+0xC00000193: Expiración de la cuenta.
+0xC0000070: Restricción del puesto de trabajo.
+0xC0000071: Contraseña caducada.
+0xC0000072: La cuenta está desactivada.
+0xC0000133: Relojes entre el DC y el otro equipo demasiado desincronizados.
+0xC0000224: El usuario debe cambiar la contraseña en el siguiente inicio de sesión.
+0xC0000225: Evidentemente, se trata de un error de Windows y no de un riesgo.
+0xC000015b: Al usuario no se le ha concedido el tipo de solicitado (también conocido como derecho de inicio de sesión) en este equipo.
+0xc0000371: El almacén de cuentas local no contiene material secreto para la cuenta especificada.
+```
+
+- Códigos de error de Kerberos:
+```
+0x6: Nombre de usuario incorrecto.
+0x7: Nueva cuenta de equipo.
+0x9: El administrador debe restablecer la contraseña.
+0xC: Restricción del puesto de trabajo.
+0x12: Cuenta desactivada, caducada, bloqueada, restricción de horas de inicio de sesión.
+0x17: La contraseña del usuario ha caducado.
+0x18: Contraseña incorrecta.
+0x20: Las cuentas del equipo se registran con frecuencia.
+0x25: El reloj de la estación de trabajo está demasiado desincronizado con el del DC.
+```
+
 - Cambios en Políticas y Configuración:
 ```
 1102: Se borró el registro de auditoría.
@@ -514,35 +617,6 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 8025: Se ha impedido la ejecución de *<Nombre de archivo>.
 8028: Se permitió la ejecución de <Nombre de archivo> pero se habría impedido si se hubiera aplicado la política Config CI.
 8029: Se impidió la ejecución de <Nombre de archivo> debido a la política Config CI.
-```
-
-- Códigos de error de inicio de sesión:
-```
-0xC0000064: El nombre de usuario no existe.
-0xC000006A: El nombre de usuario es correcto pero la contraseña es incorrecta.
-0xC0000234: El usuario está bloqueado.
-0xC0000072: La cuenta está desactivada.
-0xC000006F: El usuario intentó iniciar sesión fuera de sus restricciones de día de la semana u hora del día.
-0xC0000070: Restricción del puesto de trabajo.
-0xC00000193: Expiración de la cuenta.
-0xC0000071: Contraseña caducada.
-0xC0000133: Relojes entre el DC y el otro equipo demasiado desincronizados.
-0xC0000224: El usuario debe cambiar la contraseña en el siguiente inicio de sesión.
-0xC0000225: Evidentemente, se trata de un error de Windows y no de un riesgo.
-0xC000015b: Al usuario no se le ha concedido el tipo de solicitado (también conocido como derecho de inicio de sesión) en este equipo.
-```
-
-- Códigos de error de Kerberos:
-```
-0x6: Nombre de usuario incorrecto.
-0x7: Nueva cuenta de equipo.
-0x9: El administrador debe restablecer la contraseña.
-0xC: Restricción del puesto de trabajo.
-0x12: Cuenta desactivada, caducada, bloqueada, restricción de horas de inicio de sesión.
-0x17: La contraseña del usuario ha caducado.
-0x18: Contraseña incorrecta.
-0x20: Las cuentas del equipo se registran con frecuencia.
-0x25: El reloj de la estación de trabajo está demasiado desincronizado con el del DC.
 ```
 
 - **Sysmon** 

@@ -87,6 +87,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ GRR - Google Rapid Response](#️-grr---google-rapid-response)
     - [▶️ Arkime - Almacenar e indexar el tráfico de red en formato PCAP](#️-arkime---almacenar-e-indexar-el-tráfico-de-red-en-formato-pcap)
     - [▶️ Live Forensicator - Recolección automatizada de información y artefactos en Windows, Linux y MacOS](#️-live-forensicator---recolección-automatizada-de-información-y-artefactos-en-windows-linux-y-macos)
+    - [▶️ FTK Forensic Toolkit (Exterro)](#️-ftk-forensic-toolkit-exterro)
+    - [▶️ EnCase Forensic (ondata)](#️-encase-forensic-ondata)
     - [▶️ SANS DFIR - Posters \& Cheat Sheets](#️-sans-dfir---posters--cheat-sheets)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
   - [✅ Windows](#-windows-1)
@@ -2590,6 +2592,19 @@ Almacenar e indexar el tráfico de red en formato PCAP estándar, proporcionando
 Recopila información diferente del sistema (Windows, Linux y MacOS) para su posterior revisión en busca de comportamientos anómalos o entrada de datos inesperada, también busca archivos o actividades inusuales.
 
 - https://github.com/Johnng007/Live-Forensicator
+
+### ▶️ FTK Forensic Toolkit (Exterro)
+FTK (Forensic Toolkit) de Exterro permite recopilar, procesar y analizar datos en investigaciones forenses. Facilita la identificación y preservación de evidencia digital para soportar investigaciones y litigios.
+
+- https://www.exterro.com/digital-forensics-software/forensic-toolkit
+
+### ▶️ EnCase Forensic (ondata)
+
+*EnCase Endpoint Investigator de ondata*: busca, recolecta, preserva y analiza gran cantidad de datos y genera informes detallados sobre estos hallazgos; todo de forma centralizada, con interrupciones mínimas y sin importar el tamaño ni la complejidad del entorno de red.
+
+*EnCase Forensics de ondata*: recolecta, preserva y examina evidencia de dispositivos electrónicos, apoyando investigaciones criminales y legales con capacidades avanzadas de análisis y generación de informes detallados.
+
+- https://www.ondata.es/recuperar/forensics-guidance.htm
 
 ### ▶️ SANS DFIR - Posters & Cheat Sheets
 

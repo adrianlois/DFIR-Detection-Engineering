@@ -94,7 +94,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   - [✅ Windows](#-windows-1)
     - [▶️ Comando Windows: "net" y "net1"](#️-comando-windows-net-y-net1)
     - [▶️ Detectar técnicas maliciosas realizadas a través de "certutil"](#️-detectar-técnicas-maliciosas-realizadas-a-través-de-certutil)
-    - [▶️ Detectar descarga de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"](#️-detectar-descarga-de-ficheros-realizadas-a-través-de-powershell-usando-invoke-webrequest-invoke-restmethod-bitstransfer)
+    - [▶️ Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"](#️-detectar-descargas-de-ficheros-realizadas-a-través-de-powershell-usando-invoke-webrequest-invoke-restmethod-bitstransfer)
     - [▶️ Post-Explotación - PrivEsc con scmanager](#️-post-explotación---privesc-con-scmanager)
     - [▶️ DLL Hijacking *cscapi.dll*](#️-dll-hijacking-cscapidll)
     - [▶️ Otras técnicas de ejecución de CMD o PowerShell](#️-otras-técnicas-de-ejecución-de-cmd-o-powershell)
@@ -2648,7 +2648,7 @@ certutil -decode .\malwaredll.txt exploit.dll
 regsvr32 /s /u .\exploit.dll
 ```
 
-### ▶️ Detectar descarga de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"
+### ▶️ Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"
 
 Existen multitud de técnicas para la descarga y ejecución de ficheros a través de PowerShell, estas técnicas son comunes por los actores maliciosos para poder transferirse malware a una máquina previamente comprometida o con acceso limitado o través de máquinas de salto para ejecutar después técnicas de post-explotación o movimiento lateral. Es interesante conocer las técnicas más comunes y añadir reglas de detección.
 

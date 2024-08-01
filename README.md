@@ -1570,7 +1570,7 @@ HKEY_USERS\<SID_USER>\Software\7-Zip\FM
 
 ### ▶️ LOLBins comunes y sus artefactos
 
-**LOLBins** (Living Off the Land Binaries) son principalmente ficheros ejecutables o scripts legítimos que ya están presentes en un sistema operativo y que los atacantes utilizan con fines maliciosos para los que originalmente no fueron diseñados para esos usos. Estos programas no requieren la instalación de software adicional, lo que permite a los atacantes realizar acciones maliciosas de forma desapercibida puediendo evitar la detección por parte de soluciones de seguridad tradicionales y para los equipos de monitorización y detección si no están lo suficientemente preparados.
+**LOLBins** (Living Off the Land Binaries) son principalmente ficheros ejecutables, scripts o librerías legítimas que ya están presentes en un sistema operativo y que los atacantes utilizan con fines maliciosos para los que originalmente no fueron diseñados para esos usos. Estos programas no requieren la instalación de software adicional, lo que permite a los atacantes realizar acciones maliciosas de forma desapercibida puediendo evitar la detección por parte de soluciones de seguridad tradicionales y para los equipos de monitorización y detección si no están lo suficientemente preparados.
 
 Existen multitud de LOLBins tanto para sistemas Windows [LOLBAS](https://lolbas-project.github.io/) como para sistemas basados en el kernel de Linux [GTFOBins](https://gtfobins.github.io/).
 

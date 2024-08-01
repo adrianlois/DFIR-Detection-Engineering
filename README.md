@@ -34,7 +34,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Historial de pestañas sin cerrar de Notepad.exe (Win11)](#️-historial-de-pestañas-sin-cerrar-de-notepadexe-win11)
     - [▶️ Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#️-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
     - [▶️ Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#️-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
-    - [▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-zoneidentifier)
+    - [▶️ Conocer la URL de descarga de un archivo (ADS Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-ads-zoneidentifier)
     - [▶️ Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (intento anti-forense)](#️-modificar-y-detectar-timestamps-modificados-en-ficheros-analizando-sus-metadatos-intento-anti-forense)
     - [▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#️-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
     - [▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP](#️-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
@@ -54,6 +54,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ FeatureUsage: reconstruir las actividades de los usuarios](#️-featureusage-reconstruir-las-actividades-de-los-usuarios)
     - [▶️ MRU (Most Recently Used): Artefactos de Office local y Office 365](#️-mru-most-recently-used-artefactos-de-office-local-y-office-365)
     - [▶️ Ver el úlimo fichero descomprimido 7-Zip](#️-ver-el-úlimo-fichero-descomprimido-7-zip)
+    - [▶️ LOLBins comunes y sus artefactos](#️-lolbins-comunes-y-sus-artefactos)
   - [✅ Linux](#-linux)
     - [▶️ Logs del sistema de Linux](#️-logs-del-sistema-de-linux)
     - [▶️ Logs de aplicaciones de Linux](#️-logs-de-aplicaciones-de-linux)
@@ -93,7 +94,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
   - [✅ Windows](#-windows-1)
     - [▶️ Comando Windows: "net" y "net1"](#️-comando-windows-net-y-net1)
-    - [▶️ Detectar técnicas maliciosas realizadas a través de "certutil"](#️-detectar-técnicas-maliciosas-realizadas-a-través-de-certutil)
+    - [▶️ Detectar técnicas maliciosas realizadas a través de CertUtil (LOLBin)](#️-detectar-técnicas-maliciosas-realizadas-a-través-de-certutil-lolbin)
     - [▶️ Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"](#️-detectar-descargas-de-ficheros-realizadas-a-través-de-powershell-usando-invoke-webrequest-invoke-restmethod-bitstransfer)
     - [▶️ Post-Explotación - PrivEsc con scmanager](#️-post-explotación---privesc-con-scmanager)
     - [▶️ DLL Hijacking *cscapi.dll*](#️-dll-hijacking-cscapidll)
@@ -1088,9 +1089,11 @@ HKCU\Software\SimonTatham\PuTTY\Sessions
 HKCU\Software\Martin Prikryl\WinSCP 2\Sessions
 ```
 
-### ▶️ Conocer la URL de descarga de un archivo (Zone.Identifier)
+### ▶️ Conocer la URL de descarga de un archivo (ADS Zone.Identifier)
 
 Saber si un archivo malicioso se descargó de Internet y desde que URL o se creó en el sistema local.
+
+**ADS (Alternate Data Stream)** permite almacenar archivos dentro de archivos. Es una característica de NTFS, fue diseñada para brindar compatibilidad con el sistema de archivos jerárquico de MacOS (HFS). HFS usaba una bifurcación de recursos y una bifurcación de datos (2 flujos) para almacenar los datos de un archivo. 
 
 PowerShell
 ```ps
@@ -1564,6 +1567,66 @@ Si en una investigación forense se sospecha de que el origen de ejecución de u
 HKEY_USERS\<SID_USER>\Software\7-Zip\FM
 ```
 - Valor **PanelPath0**: Este valor muestra la ruta del último fichero descomprimido usando 7-Zip.
+
+### ▶️ LOLBins comunes y sus artefactos
+
+**LOLBins** (Living Off the Land Binaries) son principalmente ficheros ejecutables o scripts legítimos que ya están presentes en un sistema operativo y que los atacantes utilizan con fines maliciosos para los que originalmente no fueron diseñados para esos usos. Estos programas no requieren la instalación de software adicional, lo que permite a los atacantes realizar acciones maliciosas de forma desapercibida puediendo evitar la detección por parte de soluciones de seguridad tradicionales y para los equipos de monitorización y detección si no están lo suficientemente preparados.
+
+Existen multitud de LOLBins tanto para sistemas Windows [LOLBAS](https://lolbas-project.github.io/) como para sistemas basados en el kernel de Linux [GTFOBins](https://gtfobins.github.io/).
+
+Los siguientes LOLBins afectan a sistemas Windows y suelen ser los más utilizados y detectados en incidentes críticos.
+
+**`te.exe`**
+
+Parte del Test Authoring and Execution Framework.
+
+**`PsExec.exe`**
+
+Herramienta para ejecutar procesos en sistemas remotos.
+
+**`CertUtil.exe`**
+
+Herramienta para gestionar información de las autoridades de certificación.
+
+**Artefactos**: 
+- <u>Artefactos de proceso</u>: eventos de creación de procesos (4688) en el registro de eventos de seguridad.
+- <u>Archivos CryptNetURLCache</u>: rutas donde se guarda la caché guarda una copia de los archivos descargado, metadatos sobre el lugar desde el que se descargó el archivo y la hora de la primera y la última descarga.
+
+***Evidencias para descargas existosas:***
+
+Contiene copias de cualquier archivo descargado por certutil.
+```
+C:\Windows\System32\config\systemprofile\AppData\LocalLow\Microsoft\CryptnetUrlCache
+C:\Windows\SysWOW64\config\systemprofile\AppData\LocalLow\Microsoft\CryptnetUrlCache
+C:\Users\<USERNAME>\AppData\LocalLow\Microsoft\CryptnetUrlCache
+```
+
+Metadata en archivos CryptNetURLCache: Contiene un archivo con información sobre la descarga, como la URL y la fecha.
+```
+C:\Users\<USERNAME>\AppData\LocalLow\Microsoft\CryptnetUrlCache\MetaData
+C:\Windows\System32\config\systemprofile\AppData\LocalLow\Microsoft\CryptnetUrlCache\MetaData
+C:\Windows\SysWOW64\config\systemprofile\AppData\LocalLow\Microsoft\CryptnetUrlCache\MetaData
+```
+
+***Evidencias para descargas fallidas:***
+
+Buscar el registro de Windows en los eventos de Windows Defender el ID 1116 que indica un evento de detección de malware u otro software potencialmente no deseado. Esta actividad está bloqueada de manera predeterminada si RTP (Real Time Protection) está habilitado.
+
+Referencias:
+- Artículo de AbdulRhman Alfaifi sobre como [analizar los archivos de metadatos de certutil](https://u0041.co/posts/articals/certutil-artifacts-analysis/) 
+- [CryptnetURLCacheParser](https://u0041.co/posts/articals/certutil-artifacts-analysis/): Herramienta de AbdulRhman Alfaifi para analizar archivos de caché CryptAPI sobre certutil
+
+**`Reg.exe`**
+
+Herramienta para la gestión del registro de Windows desde línea de comandos.
+
+**`wscript.exe`**
+
+Windows Script Host, diseñado para ejecutar scripts en lenguajes de programación.
+
+**`mshta.exe`**
+
+Diseñado para ejecutar archivos de aplicaciones HTML de Microsoft (HTA), puede ejecutar código de Windows Script Host (VBScript y JScript) incrustado en HTML.
 
 ## ✅ Linux
 
@@ -2626,7 +2689,7 @@ net1 accounts
 net accounts
 ```
 
-### ▶️ Detectar técnicas maliciosas realizadas a través de "certutil"
+### ▶️ Detectar técnicas maliciosas realizadas a través de CertUtil (LOLBin)
 
 El comando "certutil.exe" puede ser utilizado por un actor malicioso para realizar diversas acciones maliciosas. Es una buena postura de seguridad configurar reglas preventivas y alertas para detectar estas técnicas.
 

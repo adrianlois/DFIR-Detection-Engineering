@@ -1622,7 +1622,7 @@ Referencias:
 
 **`wscript.exe`**: Windows Script Host, diseñado para ejecutar scripts en lenguajes de programación.
 
-> **Los siguientes LOLBins se detectaron pero en menor medida** por los sistemas EDR/XDR pero también se registraron en los reportes de incidentes críticos de seguridad.
+> **Los siguientes LOLBins también se detectaron aunque en un menor porcentaje de uso** por los sistemas EDR/XDR pero también se registraron en los reportes de incidentes críticos de seguridad.
 
 **`mshta.exe`**: Diseñado para ejecutar archivos de aplicaciones HTML de Microsoft (HTA), puede ejecutar código de Windows Script Host (VBScript y JScript) incrustado en HTML.
 

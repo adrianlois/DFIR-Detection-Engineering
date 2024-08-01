@@ -1574,25 +1574,25 @@ HKEY_USERS\<SID_USER>\Software\7-Zip\FM
 
 Estos programas no requieren la instalación de software adicional, lo que permite a los atacantes realizar acciones maliciosas de forma desapercibida puediendo evitar la detección por parte de soluciones de seguridad tradicionales y para los equipos de monitorización y detección si no están lo suficientemente preparados.
 
-Existen multitud de LOLBins tanto para sistemas Windows [LOLBAS](https://lolbas-project.github.io/) como para sistemas basados en el kernel de Linux [GTFOBins](https://gtfobins.github.io/).
+Existen multitud de LOLBins tanto para sistemas Windows [LOLBAS](https://lolbas-project.github.io/) como para sistemas basados en el kernel de Linux [GTFOBins](https://gtfobins.github.io/), algunos también afectarían a sistemas MacOS ya que es un derivado de UNIX.
 
-Los siguientes LOLBins afectan a sistemas Windows y suelen ser los más utilizados y detectados en incidentes críticos.
+> Los siguientes LOLBins afectan a sistemas Windows serían los TOP más utilizados y detectados según las estadísticas de los fabricantes de plataformas EDR/XDR en incidentes críticos reportados.
 
-**`te.exe`**
+Listado de mayor a menor uso:
 
-Parte del Test Authoring and Execution Framework.
+**`PowerShell.exe`**: Intérprete de línea de comandos y lenguaje de scripting en Windows, utilizado en estos casos para ejecutar scripts maliciosos y comandos.
 
-**`PsExec.exe`**
+**`rundll32.exe`**: Utilidad de Windows que carga y ejecuta funciones desde bibliotecas DLL.
 
-Herramienta para ejecutar procesos en sistemas remotos.
+**`te.exe`**: Parte del Test Authoring and Execution Framework.
 
-**`CertUtil.exe`**
+**`PsExec.exe`**: Forma parte de la [suite de Sysinternals](https://learn.microsoft.com/es-es/sysinternals/downloads/psexec), es una herramienta para ejecutar procesos en sistemas remotos.
 
-Herramienta para gestionar información de las autoridades de certificación.
+**`CertUtil.exe`**: Herramienta para gestionar información de las autoridades de certificación.
 
-**Artefactos**: 
-- <u>Artefactos de proceso</u>: eventos de creación de procesos (4688) en el registro de eventos de seguridad.
-- <u>Archivos CryptNetURLCache</u>: rutas donde se guarda la caché guarda una copia de los archivos descargado, metadatos sobre el lugar desde el que se descargó el archivo y la hora de la primera y la última descarga.
+**Artefactos CertUtil**: 
+- <u>Artefactos de proceso</u>: Eventos de creación de procesos (4688) en el registro de eventos de seguridad.
+- <u>Archivos CryptNetURLCache</u>: Rutas donde se guarda la caché guarda una copia de los archivos descargado, metadatos sobre el lugar desde el que se descargó el archivo y la hora de la primera y la última descarga.
 
 ***Evidencias para descargas existosas:***
 
@@ -1618,17 +1618,35 @@ Referencias:
 - Artículo de AbdulRhman Alfaifi sobre como [analizar los archivos de metadatos de certutil](https://u0041.co/posts/articals/certutil-artifacts-analysis/) 
 - [CryptnetURLCacheParser](https://u0041.co/posts/articals/certutil-artifacts-analysis/): Herramienta de AbdulRhman Alfaifi para analizar archivos de caché CryptAPI sobre certutil
 
-**`Reg.exe`**
+**`Reg.exe`**: Herramienta para la gestión del registro de Windows desde línea de comandos.
 
-Herramienta para la gestión del registro de Windows desde línea de comandos.
+**`wscript.exe`**: Windows Script Host, diseñado para ejecutar scripts en lenguajes de programación.
 
-**`wscript.exe`**
+> Los siguientes LOLBins se detectaron en una menor medida por los sistemas EDR/XDR pero también reportados en incidentes críticos de seguridad.
 
-Windows Script Host, diseñado para ejecutar scripts en lenguajes de programación.
+**`mshta.exe`**: Diseñado para ejecutar archivos de aplicaciones HTML de Microsoft (HTA), puede ejecutar código de Windows Script Host (VBScript y JScript) incrustado en HTML.
 
-**`mshta.exe`**
+**`msiexec.exe`**: Instalador de Windows que puede ser utilizado para ejecutar archivos MSI maliciosos.
 
-Diseñado para ejecutar archivos de aplicaciones HTML de Microsoft (HTA), puede ejecutar código de Windows Script Host (VBScript y JScript) incrustado en HTML.
+**`cscript.exe`**: Intérprete de scripts de Windows que permite la ejecución de scripts VBScript y JScript.
+
+**`netsh.exe`**: Herramienta de configuración de red de Windows que puede ser utilizada para modificar configuraciones de red y establecer túneles.
+
+**`schtasks.exe`**: Utilidad para programar tareas en Windows que puede ser usada para establecer tareas persistentes o maliciosas.
+
+**`excel.exe`**: Aplicación de Microsoft Excel que puede ejecutar macros maliciosas embebidas en documentos.
+
+**`print.exe`**: Comando para gestionar trabajos de impresión, potencialmente explotable para manipular colas de impresión.
+
+**`msbuild.exe`**: Herramienta de compilación de Microsoft que puede compilar y ejecutar código malicioso.
+
+**`powerpnt.exe`**: Aplicación de Microsoft PowerPoint que puede ejecutar macros maliciosas en presentaciones.
+
+**`regsvr32.exe`**: Utilidad para registrar y anular el registro de objetos COM que puede ejecutar scripts maliciosos desde internet.
+
+**`winword.exe`**: Aplicación de Microsoft Word que puede ejecutar macros maliciosas embebidas en documentos.
+
+**`shell32.exe`**: Biblioteca de Windows que contiene funciones usadas para abrir programas y archivos, susceptible a ser explotada para ejecutar comandos arbitrarios.
 
 ## ✅ Linux
 

@@ -1576,7 +1576,7 @@ Estos programas no requieren la instalación de software adicional, lo que permi
 
 Existen multitud de LOLBins tanto para sistemas Windows [LOLBAS](https://lolbas-project.github.io/) como para sistemas basados en el kernel de Linux [GTFOBins](https://gtfobins.github.io/), algunos también afectarían a sistemas MacOS ya que es un derivado de UNIX.
 
-> Los siguientes LOLBins afectan a sistemas Windows serían los TOP más utilizados y detectados según las estadísticas de los fabricantes de plataformas EDR/XDR en incidentes críticos reportados.
+> Los siguientes LOLBins afectan a sistemas Windows **siendo los "LOLBins TOP" más utilizados** y detectados según las estadísticas de los fabricantes de plataformas EDR/XDR en incidentes críticos reportados.
 
 Listado de mayor a menor uso:
 
@@ -1622,7 +1622,7 @@ Referencias:
 
 **`wscript.exe`**: Windows Script Host, diseñado para ejecutar scripts en lenguajes de programación.
 
-> Los siguientes LOLBins se detectaron en una menor medida por los sistemas EDR/XDR pero también reportados en incidentes críticos de seguridad.
+> **Los siguientes LOLBins se detectaron en menor medida** por los sistemas EDR/XDR pero también se registraron en los reportes de incidentes críticos de seguridad.
 
 **`mshta.exe`**: Diseñado para ejecutar archivos de aplicaciones HTML de Microsoft (HTA), puede ejecutar código de Windows Script Host (VBScript y JScript) incrustado en HTML.
 

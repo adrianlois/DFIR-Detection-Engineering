@@ -1501,6 +1501,14 @@ Algunos ejemplos en procesos conocidos.
 
 ### ▶️ Herramientas para consultar y auditar: GPOs, control de accesos, usuarios, grupos y otros funciones de Active Directory y LDAP
 
+La forma más limpia y sencilla de **realizar un backup o export de las políticas locales** (GPOs locales) de un equipo.
+
+Copiar todos los ficheros de la siguiente ruta:
+```
+%systemroot%\System32\GroupPolicy
+```
+Una vez los tengamos aislados poder reemplazarlo en una nueva imagen de sistema limpia o simplemente analizarlos con la utilidad de Registry.pol Viewer Utility. 
+
 | Herramienta | Info | Link |
 |-------------|------|------|
 | `Registry.pol Viewer Utility` (sdmsoftware) | Visualizar *Registry.pol* de GPOs | https://sdmsoftware.com/389932-gpo-freeware-downloads/registry-pol-viewer-utility |

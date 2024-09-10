@@ -1942,6 +1942,13 @@ find / -size +[N]c
 Mostrar todas las reglas iptables.
 ```bash
 iptables -L -n -v
+
+# Debian/Ubuntu
+cat /etc/iptables/rules.v4
+cat /etc/iptables/rules.v6
+
+# Red Hat/CentOS
+cat /etc/sysconfig/iptables
 ```
 
 Mostrar el estado de todos los servicios.

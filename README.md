@@ -683,7 +683,7 @@ HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks
 HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree
 ```
 > [!IMPORTANT] Analizar posibles tareas programadas ocultas creadas con fines de persistencia. 
-> Revisar en la rama de *...\Schedule\Taskcache\Tree* el valor de "**Index**" será "**0**" en el caso de que se crearan tareas ocultas en las que no se mostrarán a través de la consola "**taskschd.msc**" ni tampoco vía "**schtasks /query**". 
+> Revisar en la rama de *...\Schedule\Taskcache\Tree* el valor de "**Index**" será "**0**", esta técnica se usa para ocultar tareas programadas de forma intencionada, estas no se mostrarán a través de la consola "**taskschd.msc**" ni tampoco vía "**schtasks /query**". La única forma de detectarlas sería analizarlas vía Regedit.
 
 PowerShell
 ```ps

@@ -103,7 +103,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [▶️ Bloquear conexiones USB: Rubber Ducky y Cactus WHID](#️-bloquear-conexiones-usb-rubber-ducky-y-cactus-whid)
     - [▶️ Claves de registro de Windows donde se almacenan las contraseñas](#️-claves-de-registro-de-windows-donde-se-almacenan-las-contraseñas)
     - [▶️ WDigest Authentication: Habilitado / Deshabilitado](#️-wdigest-authentication-habilitado--deshabilitado)
-    - [▶️ Detectar si un sistema es una máquina virtual con PowerShell o WMIC](#️-detectar-si-un-sistema-es-una-máquina-virtual-con-powershell-o-wmic)
+    - [▶️ Detectar si un sistema es una máquina física, tipo de hipervisor virtual o CSP (Azure, AWS, GCP)](#️-detectar-si-un-sistema-es-una-máquina-física-tipo-de-hipervisor-virtual-o-csp-azure-aws-gcp)
     - [▶️ Técnicas de ofuscación en la ejecución de comandos en Windows](#️-técnicas-de-ofuscación-en-la-ejecución-de-comandos-en-windows)
     - [▶️ Detectar acciones de AutoRun al abrir una Command Prompt (cmd)](#️-detectar-acciones-de-autorun-al-abrir-una-command-prompt-cmd)
     - [▶️ Extensiones ejecutables alternativas a .exe](#️-extensiones-ejecutables-alternativas-a-exe)
@@ -2901,11 +2901,15 @@ Habilitado:    UseLogonCredential = 1
 Deshabilitado: UseLogonCredential = 0
 ```
 
-### ▶️ Detectar si un sistema es una máquina virtual con PowerShell o WMIC
+### ▶️ Detectar si un sistema es una máquina física, tipo de hipervisor virtual o CSP (Azure, AWS, GCP) 
 
 PowerShell
 ```ps
 Get-MpComputerStatus | Select-Object "IsVirtualMachine" | fl
+```
+```ps
+Get-WmiObject -Class Win32_ComputerSystem | Select-Object -Property Model, Manufacturer
+Get-WmiObject -Class Win32_BIOS | Select-Object -Property SMBIOSBIOSVersion
 ```
 
 CMD
@@ -2916,6 +2920,16 @@ WMIC BIOS > wmic_bios.txt
 BIOSVersion     SMBIOSBIOSVersion
 {"VBOX  -1"}    VirtualBox
 ...
+```
+
+GUI
+```
+msinfo32 /report > Producto de placa base
+```
+
+**Detectar CSP (Cloud Service Provider)**: Amazon EC2, Google Cloud, Alibaba Cloud, VMware, Inc., Microsoft Hyper-V, etc.
+```ps
+("HKLM:\HARDWARE\DESCRIPTION\System", "HKLM:\HARDWARE\DESCRIPTION\System\BIOS") | ForEach-Object { Get-ItemProperty -Path $_ } | Select-Object -Property SystemBiosVersion, SystemManufacturer, SystemProductName
 ```
 
 ### ▶️ Técnicas de ofuscación en la ejecución de comandos en Windows

@@ -683,9 +683,9 @@ HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks
 HKLM\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree
 ```
 > [!TIP]
-> **Detectar tareas programadas ocultas creadas con fines de persistencia**.
+> **Detectar tareas programadas ocultas creadas con fines de persistencia**
 > 
-> Revisar en la rama de *...\Schedule\Taskcache\Tree* el valor de "**Index**" será "**0**", esta técnica se usa para ocultar tareas programadas de forma intencionada, estas no se mostrarán a través de la consola "**taskschd.msc**" ni tampoco vía "**schtasks /query**". La única forma de detectarlas sería analizarlas vía Regedit.
+> Revisar en la clave de *...\Schedule\Taskcache\Tree* el valor de "**Index**" será "**0**", esta técnica se usa para ocultar tareas programadas de forma intencionada, estas no se mostrarán a través de la consola "**taskschd.msc**" ni tampoco vía "**schtasks /query**". La única forma de detectarlas sería analizarlas vía Regedit.
 
 PowerShell
 ```ps
@@ -803,7 +803,7 @@ Get-WmiObject -Class Win32_Product | Select-Object Name, Version, Vendor, Instal
 
 ### ▶️ Análisis y artefactos de ShellBags
 
-Shellbags son un conjunto de claves de registro que contienen detalles sobre la carpeta vista de un usuario, como su tamaño, posición e icono. Proporcionan marcas de tiempo, información contextual y muestran el acceso a directorios y otros recursos, lo que podría apuntar a evidencia que alguna vez existió. 
+Shellbags son un conjunto de claves del registro que contienen detalles sobre la carpeta vista de un usuario, como su tamaño, posición e icono. Proporcionan marcas de tiempo, información contextual y muestran el acceso a directorios y otros recursos, lo que podría apuntar a evidencia que alguna vez existió. 
 
 Se crea una entrada de shellbag para cada carpeta recién explorada, indicaciones de actividad, actuando como un historial de qué elementos del directorio pueden haberse eliminado de un sistema desde entonces, o incluso evidenciar el acceso de dispositivos extraíbles donde están ya no adjunto.
 
@@ -850,7 +850,7 @@ Descripción de valores relevantes:
 
 ### ▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT&CK*)
 
-Detectar persistencia en ramas del registro de Windows haciendo uso de comprobaciones de técnicas basadas en la matriz de *MITRE ATT&CK*.
+Detectar persistencia en claves del registro de Windows haciendo uso de comprobaciones de técnicas basadas en la matriz de *MITRE ATT&CK*.
 
 Esta herramienta también compara dos shoots del registro para obtener el cambio de estado entre ambos y desde una perspectiva de persistencia (análisis de comportamiento).
 - https://github.com/amr-git-dot/Corners
@@ -920,6 +920,11 @@ HKLM:\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows - AppInit
 # Mittre Technique: T1547.001
 HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders - Startup
 ```
+
+> [!TIP]
+> **Información del Registro de Windows para usuarios avanzados**
+> 
+> Claves predefinidas y tipo datos: https://learn.microsoft.com/es-es/troubleshoot/windows-server/performance/windows-registry-advanced-users
 
 ### ▶️ Artefactos de conexiones de clientes VPN
 
@@ -1284,7 +1289,7 @@ Set-PSReadlineOption -HistorySaveStyle SaveNothing
 
 Si el equipo afectado a sido comprometido y a través de este se hizo un uso como "equipo puente" en movimientos laterales, etc. Puede resultar útil comprobar la caché almacenada de conexiones establecidas vía RDP hacia otros hosts ya sea de la misma red o de un RDP externo con el objetivo por ejemplo de exfiltrar información hacia un stage controlado por el actor malicioso.
 
-En la siguiente rama de registro podemos encontrar las conexiones remotas RDP (Remote Desktop Protocol) realizadas desde la máquina afectada. Se creará un nueva clave por cada conexión RDP.
+En la siguiente clave de registro podemos encontrar las conexiones remotas RDP (Remote Desktop Protocol) realizadas desde la máquina afectada. Se creará un nueva clave por cada conexión RDP.
 ```
 HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Servers
 HKEY_USERS\<SID_USER>\SOFTWARE\Microsoft\Terminal Server Client\Servers 
@@ -1312,7 +1317,7 @@ El valor de **"UseRWHlinkNavigation"** contiene la última URL a la que se acced
 HKEY_USERS\<SID>\SOFTWARE\Microsoft\Office\16.0\Common\Internet
 ```
 
-La siguiente rama contiene subclaves con los destinos remotos que MS Word estaba tratando de alcanzar.
+La siguiente clave contiene subclaves con los destinos remotos que MS Word estaba tratando de alcanzar.
 ```
 HKEY_USERS\<SID>\SOFTWARE\Microsoft\Office\16.0\Common\Internet\Server Cache
 ```
@@ -1480,7 +1485,7 @@ También buscamos alguna URL que sea distinta a las oficiales de Microsoft. Ejem
 
 ### ▶️ Asignación de IPs en equipos
 
-En un incidente se descubre que se envió un paquete de red mal formado desde una dirección IP, pero el atacante elimina dicho registro. Se puede consultar la siguiente rama del registro para encontrar el equipo en la red que tenía esa dirección IP. Cada subclave tendrá un registro DHCP con los valores DhcpIPAddress, DhcpNameServer, etc.
+En un incidente se descubre que se envió un paquete de red mal formado desde una dirección IP, pero el atacante elimina dicho registro. Se puede consultar la siguiente subclave del registro para encontrar el equipo en la red que tenía esa dirección IP. Cada subclave tendrá un registro DHCP con los valores DhcpIPAddress, DhcpNameServer, etc.
 ```
 HKLM\SYSTEM\ControlSet00*\Services\Tcpip\Parameters\Interfaces
 ```
@@ -2815,7 +2820,7 @@ Un actor malicioso puede crear en una nueva línea de comandos en Powershell con
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Utilities\query" /v pwned /t REG_MULTI_SZ /d 0\01\0pwned\0powershell.exe
 ```
 
-Al consultar la rama del registro se ejecutará una Powershell.exe.
+Al consultar la clave de registro se ejecutará una Powershell.exe.
 ```cmd
 query pwned
 ```
@@ -3000,14 +3005,14 @@ Una forma de poder eludir el sistema de protección por defecto de Windows es re
 
 **MsMpEng.exe** es el proceso principal de la aplicación antimalware Windows Defender. Windows Defender viene preinstalado en Windows 11 y Windows 10, ubicado en "*C:\Program Files\Windows Defender\MsMpEng.exe*"
 
-Este proceso no se puede modificar renombrándolo ya que está constantantemente en uso, aunque se esté en contexto de usuario privilegiado como administrador. Pero lo que si es posible es renombrar la llamada de este fichero en el inicio del sistema, editando previamente las claves de registro correspondientes de "ControlSet00X" de forma offline: exportando, modificando la extensión del valor modificado de MsMpEng, creando una nueva clave ControlSet donde se importará este cambio, cambiar los valores por defecto del sistema a esta nueva clave para que inicie por defecto el sistema asignando este nuevo ControlSet y finalmente reiniciar el equipo.
+Este proceso no se puede modificar renombrándolo ya que está constantantemente en uso, aunque se esté en contexto de usuario privilegiado como administrador. Pero lo que si es posible es renombrar la llamada de este fichero en el inicio del sistema, editando previamente las claves del registro correspondientes de "ControlSet00X" de forma offline: exportando, modificando la extensión del valor modificado de MsMpEng, creando una nueva clave ControlSet donde se importará este cambio, cambiar los valores por defecto del sistema a esta nueva clave para que inicie por defecto el sistema asignando este nuevo ControlSet y finalmente reiniciar el equipo.
 
 1. Regedit > export hive: `HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001` > guardar en nuevo fichero reg1.dat.
 2. Editar desde [HxD](https://mh-nexus.de/en/hxd): 
     - Abrir reg1.dat > buscar "msmpeng.exe" > establecer "text encoding: Unicode UTF-16".
 3. Renombrar extensión: "msmpeng.exe" en "msmpeng.xxx" > guardar reg1.dat.
 4. Regedit > crear nueva key vacía > `HKEY_LOCAL_MACHINE\SYSTEM\ControlSet007` > import reg1.dat.
-5. Por orden ControlSet001 es la rama que el sistema carga por defecto al iniciarse. Cambiar el orden de esta prioridad en la rama "HKLM\SYSTEM\Select" correspondiente del ControlSet creado anteriormente y correspondiente a ControlSet007:
+5. Por orden ControlSet001 es la clave que el sistema carga por defecto al iniciarse. Cambiar el orden de esta prioridad en la clave "HKLM\SYSTEM\Select" correspondiente del ControlSet creado anteriormente y correspondiente a ControlSet007:
     - Cambiar `HKEY_LOCAL_MACHINE\SYSTEM\Select` > "Current" > Value: 7
     - Cambiar `HKEY_LOCAL_MACHINE\SYSTEM\Select` > "Default" > Value: 7
     - Cambiar `HKEY_LOCAL_MACHINE\SYSTEM\Select` > "LastKnowGood" > Value: 7

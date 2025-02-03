@@ -924,7 +924,7 @@ HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders - St
 > [!TIP]
 > **Información del Registro de Windows para usuarios avanzados**
 > 
-> Claves predefinidas y tipo datos: https://learn.microsoft.com/es-es/troubleshoot/windows-server/performance/windows-registry-advanced-users
+> Claves predefinidas y tipo de datos: https://learn.microsoft.com/es-es/troubleshoot/windows-server/performance/windows-registry-advanced-users
 
 ### ▶️ Artefactos de conexiones de clientes VPN
 

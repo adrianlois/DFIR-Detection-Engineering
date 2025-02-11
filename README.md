@@ -522,7 +522,6 @@ El registro de eventos de instalación registra las actividades que se produjero
 4776: El controlador de dominio ha intentado validar las credenciales de una cuenta (NTLM).
 5136: Se modificó un objeto de servicio de directorio.
 5137: Se creó un objeto de servicio de directorio.
-8004: Autenticación NTLM.
 ```
 
 - Códigos de error de inicio de sesión (Event ID 4776):
@@ -558,7 +557,8 @@ El registro de eventos de instalación registra las actividades que se produjero
 
 - Cambios en Políticas y Configuración:
 ```
-1102: Se borró el registro de auditoría.
+1102: Se ha eliminado el registro de eventos de "Security" (este evento se mostrará en "Security").
+104: Se ha eliminado el registro de eventos de un log específico. "Application", "System" o cualquiera de los registros de aplicaciones y servicios (este evento se mostrará en "System").
 4657: Se modificó un valor de registro.
 4616: Se cambió la hora del sistema.
 ```
@@ -606,7 +606,19 @@ El registro de eventos de instalación registra las actividades que se produjero
 5447: Se ha cambiado un filtro de la plataforma de filtrado de Windows.
 ```
 
-- Eventos dispositivos USB (PNP, Plug and Play)
+- Eventos de Reinicio, Apagado e Inicio del Sistema:
+```
+6005: El servicio de registro de eventos de Windows ha sido iniciado (Se considera un equivalente a "El sistema se ha iniciado").
+6006: El servicio de registro de eventos de Windows se ha detenido correctamente (Se considera un equivalente a "El sistema se ha apagado o reiniciado").
+6008: El sistema se apaga o reinicia inesperadamente.
+1074: Un usuario o un proceso inicia un apagado o reinicio del sistema de manera intencionada.
+1076: Registra la razón del último apagado del sistema si fue forzado por un usuario.
+1: Registra la duración del proceso de arranque del sistema (Kernel-Boot).
+12: El sistema se ha iniciado correctamente (Kernel-General).
+13: El sistema se ha apagado correctamente (Kernel-General).
+```
+
+- Eventos de dispositivos USB (PNP, Plug and Play)
 ```
 6416: El sistema ha reconocido un nuevo dispositivo externo conectado.
 10000: Primera conexión dispositivo USB.
@@ -626,7 +638,7 @@ El registro de eventos de instalación registra las actividades que se produjero
 8029: Se impidió la ejecución de <Nombre de archivo> debido a la política Config CI.
 ```
 
-- **Sysmon** 
+- Eventos **Sysmon** 
   + https://learn.microsoft.com/es-es/sysinternals/downloads/sysmon#events
 
 ```bash
@@ -946,6 +958,12 @@ HKLM\SYSTEM\CurrentControlSet\Services
 ### ▶️ ¿Han eliminado el registro de eventos de Windows?
 
 ¿Los atacantes eliminaron todos los registros de eventos de Windows?
+
+Se puede detectar si los eventos 1102, 104 están presentes en System o Security.
+```
+1102: Se ha eliminado el registro de eventos de "Security" (este evento se mostrará en "Security").
+104: Se ha eliminado el registro de eventos de un log específico. "Application", "System" o cualquiera de los registros de aplicaciones y servicios (este evento se mostrará en "System").
+```
 
 VSS (Volume Shadow Copy) podría ser una opción pero hay escenarios donde esto también fue eliminado de forma intencionada.
 

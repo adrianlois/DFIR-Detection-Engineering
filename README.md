@@ -28,6 +28,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Persistencia en servicios](#-persistencia-en-servicios)
     - [📜 ¿Han eliminado el registro de eventos de Windows?](#-han-eliminado-el-registro-de-eventos-de-windows)
     - [📜 Volatility: clipboard](#-volatility-clipboard)
+    - [📜 Comprobar archivos abiertos recientemente por el usuario](#-comprobar-archivos-abiertos-recientemente-por-el-usuario)
     - [📜 Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
     - [📜 Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
     - [📜 Thumbcache Viewer](#-thumbcache-viewer)
@@ -985,18 +986,32 @@ volatility.exe -f memdump.bin --profile=Win10x64_10586 clipboard
 ```
 - Referencia: https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf
 
+### 📜 Comprobar archivos abiertos recientemente por el usuario
+
+Almacena accesos directos a los archivos abiertos recientemente por el usuario.
+
+Win+R > shell:recent
+```
+%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Recent
+```
+
+Almacena archivos recientes abiertos por el usuario en el Explorador de Windows, organizados por extensión, como .txt, .docx o .pdf. También incluye MRUList, que mantiene el orden de los archivos abiertos, y se usa para accesos rápidos en el Explorador de Windows.
+```
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs
+```
+
 ### 📜 Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente
 
 *cRecentFiles*: Historial de ubicaciones donde se encuentras los ficheros abiertos recientemente, "cX" donde X será un número asignado.
 ```
-Equipo\HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
-Equipo\HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
+HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
+HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFiles\cX
 ```
 
 *cRecentFolders*: Historial de carpetas donde se encuentran los ficheros abiertos recientemente, "cX" donde X será un número asignado.
 ```
-Equipo\HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
-Equipo\HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
+HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
+HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\AVGeneral\cRecentFolders\cX
 ```
 
 *SessionManagement*: Historial de PDFs abiertos en la última sesión de Adobe Acrobat.

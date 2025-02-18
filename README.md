@@ -187,7 +187,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
 
 ### 📜 Preguntas - Respuesta a Incidentes
 
-**`¿Quién?, ¿Qué?, ¿Dónde?, ¿Cuándo?, ¿Cómo o en qué? y ¿Por qué?`**
+**¿Quién?, ¿Qué?, ¿Dónde?, ¿Cuándo?, ¿Cómo o en qué? y ¿Por qué?**
 
 <table>
   <tbody>

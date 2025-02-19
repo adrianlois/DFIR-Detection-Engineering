@@ -304,7 +304,7 @@ Fase en la que se asegura que todo el proceso (información y procedimientos apl
 
 Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las conclusiones de todo el análisis.
 
-**`Principios que deben asegurarse en la gestión de evidencias digitales según la ENISA (European Network and Information Security Agency).`**
+**Principios que deben asegurarse en la gestión de evidencias digitales según la ENISA (European Network and Information Security Agency).**
 
 - **Integridad de los datos**: No se debe modificar ningún dato que deba usarse en la resolución de un caso por un juzgado. La persona encargada de la escena del crimen o de la recolección es la responsable de que eso no ocurra. Además, si el dispositivo recogido está encendido, la adquisición debe hacerse de forma que se modifique lo mínimo posible.
 
@@ -316,7 +316,7 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 
 - **Legalidad**: Se debe asegurar la legalidad correspondiente a lo largo de todo el proceso.
 
-- Referencia - Electronic evidence - A basic guide for First Responders - ENISA: https://www.enisa.europa.eu/publications/electronic-evidence-a-basic-guide-for-first-responders/at_download/fullReport.
+- Referencia - Electronic evidence - A basic guide for First Responders - ENISA: https://www.enisa.europa.eu/publications/electronic-evidence-a-basic-guide-for-first-responders.
 
 ## 📁 Windows
 

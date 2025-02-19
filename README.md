@@ -316,7 +316,10 @@ Donde se generan al menos un informe ejecutivo y otro técnico recogiendo las co
 
 - **Legalidad**: Se debe asegurar la legalidad correspondiente a lo largo de todo el proceso.
 
-- Referencia - Electronic evidence - A basic guide for First Responders - ENISA: https://www.enisa.europa.eu/publications/electronic-evidence-a-basic-guide-for-first-responders.
+> [!NOTE]
+> **ENISA - Electronic evidence - A basic guide for First Responders**
+> 
+> https://www.enisa.europa.eu/publications/electronic-evidence-a-basic-guide-for-first-responders
 
 ## 📁 Windows
 

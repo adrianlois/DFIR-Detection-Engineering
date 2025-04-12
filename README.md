@@ -103,7 +103,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Uso de *type* para descargar o subir ficheros](#-uso-de-type-para-descargar-o-subir-ficheros)
     - [📜 Bloquear conexiones USB: Rubber Ducky y Cactus WHID](#-bloquear-conexiones-usb-rubber-ducky-y-cactus-whid)
     - [📜 Claves de registro de Windows donde se almacenan las contraseñas](#-claves-de-registro-de-windows-donde-se-almacenan-las-contraseñas)
-    - [📜 WDigest Authentication: Habilitado / Deshabilitado](#-wdigest-authentication-habilitado--deshabilitado)
+    - [📜 WDigest Authentication (lsass.exe): Habilitado / Deshabilitado](#-wdigest-authentication-lsassexe-habilitado--deshabilitado)
     - [📜 Detectar si un sistema es una máquina física o virtual y su tipo de hipervisor o CSP (Azure, AWS, GCP)](#-detectar-si-un-sistema-es-una-máquina-física-o-virtual-y-su-tipo-de-hipervisor-o-csp-azure-aws-gcp)
     - [📜 Técnicas de ofuscación en la ejecución de comandos en Windows](#-técnicas-de-ofuscación-en-la-ejecución-de-comandos-en-windows)
     - [📜 Detectar acciones de AutoRun al abrir una Command Prompt (cmd)](#-detectar-acciones-de-autorun-al-abrir-una-command-prompt-cmd)
@@ -2932,15 +2932,19 @@ HKCU\Software\PremiumSoft\NavicatOra\Servers
 HKCU\Software\TigerVNC\WinVNC4
 ```
 
-### 📜 WDigest Authentication: Habilitado / Deshabilitado
+### 📜 WDigest Authentication (lsass.exe): Habilitado / Deshabilitado
 
-Si un malware habilita la "Autenticación WDigest" las contraseñas se almacenarán en texto claro en LSASS y en la memoria. En Windows 10 está deshabilitado de forma predeterminada.
+Si un malware habilita de forma forzada la autenticación [WDigest](https://datatracker.ietf.org/doc/html/rfc2617), las contraseñas se almacenarán en texto claro en la memoria del proceso lsass.exe (LSASS - Local Security Authority Subsystem Service). 
+
 ```
 HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest
 
-Habilitado:    UseLogonCredential = 1
-Deshabilitado: UseLogonCredential = 0
+Deshabilitado: UseLogonCredential = 0 (Seguro)
+Habilitado:    UseLogonCredential = 1 (Inseguro)
 ```
+
+> [!NOTE]
+> A partir de Windows 10 (versión 1507), esta opción está deshabilitada de forma predeterminada. En versiones anteriores de Windows, como Windows XP, 7, 8 y 8.1, está habilitada por defecto, lo que permite el almacenamiento de contraseñas en texto claro en memoria.
 
 ### 📜 Detectar si un sistema es una máquina física o virtual y su tipo de hipervisor o CSP (Azure, AWS, GCP)
 

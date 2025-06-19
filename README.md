@@ -100,8 +100,6 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Comando Windows: "net" y "net1"](#-comando-windows-net-y-net1)
     - [📜 Detectar técnicas maliciosas realizadas a través de CertUtil (LOLBin)](#-detectar-técnicas-maliciosas-realizadas-a-través-de-certutil-lolbin)
     - [📜 Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"](#-detectar-descargas-de-ficheros-realizadas-a-través-de-powershell-usando-invoke-webrequest-invoke-restmethod-bitstransfer)
-    - [📜](#)
-    - [📜](#-1)
     - [📜 Post-Explotación - PrivEsc con scmanager](#-post-explotación---privesc-con-scmanager)
     - [📜 DLL Hijacking *cscapi.dll*](#-dll-hijacking-cscapidll)
     - [📜 Otras técnicas de ejecución de CMD o PowerShell](#-otras-técnicas-de-ejecución-de-cmd-o-powershell)
@@ -2858,10 +2856,6 @@ Get-BitsTransfer -Name "TestJob1" | Complete-BitsTransfer
 ```
 
 - Más info: https://github.com/adrianlois/scripts-misc/tree/main/07.PS-IEX-WebRequest-WebClient-BitsTransfer
-
-### 📜 
-
-### 📜 
 
 ### 📜 Post-Explotación - PrivEsc con scmanager
 LPE (Local Privilege Escalation) persistente y sin uso de archivos usando sc.exe otorgando permisos del SCM (Service Control Manager).

@@ -26,6 +26,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
     - [📜 Artefactos de conexiones de clientes VPN](#-artefactos-de-conexiones-de-clientes-vpn)
     - [📜 Persistencia en servicios](#-persistencia-en-servicios)
+    - [📜 Auditar cambios de membresía en grupos críticos (últimos 15 días)](#-auditar-cambios-de-membresía-en-grupos-críticos-últimos-15-días)
     - [📜 ¿Han eliminado el registro de eventos de Windows?](#-han-eliminado-el-registro-de-eventos-de-windows)
     - [📜 Volatility: clipboard](#-volatility-clipboard)
     - [📜 Comprobar archivos abiertos recientemente por el usuario](#-comprobar-archivos-abiertos-recientemente-por-el-usuario)
@@ -55,6 +56,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 FeatureUsage: reconstruir las actividades de los usuarios](#-featureusage-reconstruir-las-actividades-de-los-usuarios)
     - [📜 MRU (Most Recently Used): Artefactos de Office local y Office 365](#-mru-most-recently-used-artefactos-de-office-local-y-office-365)
     - [📜 Ver el úlimo fichero descomprimido 7-Zip](#-ver-el-úlimo-fichero-descomprimido-7-zip)
+    - [📜 Detectar antimalware instalado y su estado usando WMI](#-detectar-antimalware-instalado-y-su-estado-usando-wmi)
+    - [📜 Detectar servicios configurados con cuentas de dominio](#-detectar-servicios-configurados-con-cuentas-de-dominio)
     - [📜 LOLBins comunes y sus artefactos](#-lolbins-comunes-y-sus-artefactos)
   - [📁 Linux](#-linux)
     - [📜 Logs del sistema de Linux](#-logs-del-sistema-de-linux)
@@ -97,6 +100,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Comando Windows: "net" y "net1"](#-comando-windows-net-y-net1)
     - [📜 Detectar técnicas maliciosas realizadas a través de CertUtil (LOLBin)](#-detectar-técnicas-maliciosas-realizadas-a-través-de-certutil-lolbin)
     - [📜 Detectar descargas de ficheros realizadas a través de PowerShell usando "Invoke-WebRequest, Invoke-RestMethod, BitsTransfer"](#-detectar-descargas-de-ficheros-realizadas-a-través-de-powershell-usando-invoke-webrequest-invoke-restmethod-bitstransfer)
+    - [📜](#)
+    - [📜](#-1)
     - [📜 Post-Explotación - PrivEsc con scmanager](#-post-explotación---privesc-con-scmanager)
     - [📜 DLL Hijacking *cscapi.dll*](#-dll-hijacking-cscapidll)
     - [📜 Otras técnicas de ejecución de CMD o PowerShell](#-otras-técnicas-de-ejecución-de-cmd-o-powershell)
@@ -959,6 +964,16 @@ Analizar ruta y parámetros del valor *"ImagePath"*.
 HKLM\SYSTEM\CurrentControlSet\Services
 ```
 
+### 📜 Auditar cambios de membresía en grupos críticos (últimos 15 días)
+
+Event IDs:
+- 4732: Se agregó un miembro a un grupo local con seguridad habilitada.
+- 4733: Un miembro fue eliminado de un grupo local con seguridad habilitada.
+
+```ps
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4732,4733; StartTime=(Get-Date).AddDays(-15)} | Format-Table TimeCreated, Message
+```
+
 ### 📜 ¿Han eliminado el registro de eventos de Windows?
 
 ¿Los atacantes eliminaron todos los registros de eventos de Windows?
@@ -1620,6 +1635,20 @@ Si en una investigación forense se sospecha de que el origen de ejecución de u
 HKEY_USERS\<SID_USER>\Software\7-Zip\FM
 ```
 - Valor **PanelPath0**: Este valor muestra la ruta del último fichero descomprimido usando 7-Zip.
+
+### 📜 Detectar antimalware instalado y su estado usando WMI
+Listará los agentes de antimalware instalados en el sistema.
+
+```ps
+Get-WmiObject -Namespace "root\SecurityCenter2" -Class AntiVirusProduct | Select-Object displayName, productState, pathToSignedReportingExe, timestamp | fl
+```
+
+### 📜 Detectar servicios configurados con cuentas de dominio
+*DOMAIN* = Sustituir por el FQDN correspondiente.
+
+```ps
+Get-WmiObject Win32_Service | Where-Object { $_.StartName -like "*DOMAIN*" } | Select-Object Name, StartName
+```
 
 ### 📜 LOLBins comunes y sus artefactos
 
@@ -2829,6 +2858,10 @@ Get-BitsTransfer -Name "TestJob1" | Complete-BitsTransfer
 ```
 
 - Más info: https://github.com/adrianlois/scripts-misc/tree/main/07.PS-IEX-WebRequest-WebClient-BitsTransfer
+
+### 📜 
+
+### 📜 
 
 ### 📜 Post-Explotación - PrivEsc con scmanager
 LPE (Local Privilege Escalation) persistente y sin uso de archivos usando sc.exe otorgando permisos del SCM (Service Control Manager).

@@ -37,7 +37,8 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
     - [📜 Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
     - [📜 Conocer la URL de descarga de un archivo (ADS Zone.Identifier)](#-conocer-la-url-de-descarga-de-un-archivo-ads-zoneidentifier)
-    - [📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (intento anti-forense)](#-modificar-y-detectar-timestamps-modificados-en-ficheros-analizando-sus-metadatos-intento-anti-forense)
+    - [📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (técnica anti-forense)](#-modificar-y-detectar-timestamps-modificados-en-ficheros-analizando-sus-metadatos-técnica-anti-forense)
+    - [📜 Windows Search Index (archivos Windows.edb, .crwl, .blf, .jrs)](#-windows-search-index-archivos-windowsedb-crwl-blf-jrs)
     - [📜 PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
     - [📜 Caché almacenada de conexiones establecidas a otros hosts vía RDP](#-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
     - [📜 Artefactos forense - MS Word](#-artefactos-forense---ms-word)
@@ -112,6 +113,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Detectar acciones de AutoRun al abrir una Command Prompt (cmd)](#-detectar-acciones-de-autorun-al-abrir-una-command-prompt-cmd)
     - [📜 Extensiones ejecutables alternativas a .exe](#-extensiones-ejecutables-alternativas-a-exe)
     - [📜 Detectar malware que se está ejecutando desde una carpeta que no permite su acceso por error de ubicación (flujo NTFS en directorios $INDEX\_ALLOCATION)](#-detectar-malware-que-se-está-ejecutando-desde-una-carpeta-que-no-permite-su-acceso-por-error-de-ubicación-flujo-ntfs-en-directorios-index_allocation)
+    - [📜 Windows Search Index: Detección de técnicas anti-forenses y evasión](#-windows-search-index-detección-de-técnicas-anti-forenses-y-evasión)
     - [📜 Deshabilitar Windows Defender para eludir la detección de AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)](#-deshabilitar-windows-defender-para-eludir-la-detección-de-amsi-en-la-ejecución-de-binarios-maliciosos-renombrar-msmpengexe-a-través-del-registro-controlset00x)
   - [📁 Linux](#-linux-1)
     - [📜 *debugfs* para eludir alertas al ejecutar comandos o acceder a ficheros con auditoria](#-debugfs-para-eludir-alertas-al-ejecutar-comandos-o-acceder-a-ficheros-con-auditoria)
@@ -1163,7 +1165,7 @@ CMD
 notepad <FileName>:Zone.Identifier
 ```
 
-### 📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (intento anti-forense)
+### 📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (técnica anti-forense)
 
 Es posible que un actor malicioso o un insider intente modificar las marcas de tiempo de un fichero para modificar su fecha y hora de creación, modificación y acceso con la finalidad de realizar "técnicas anti-forense" para intentar confundir, alterar y dilatar una posible investigación forense.
 
@@ -1270,6 +1272,40 @@ Es posible obtener los metadatos del propio archivo y comprobar los timestamps o
 6. Pestaña "Hex" podemos analizarlo manualmente y encontrar los timestamps.
 7. También en las pestañas: "File Metadata" y "Analysis Results".
 8. Si se trata de un fichero ofimático o pdf se añadirá un nuevo desplegadable "Data Artifacts > Metadata" donde también podemos visualizar los timestamps originales.
+
+### 📜 Windows Search Index (archivos Windows.edb, .crwl, .blf, .jrs)
+
+Windows Search Index es el sistema de búsqueda de Windows. Mantiene un índice interno en el archivo Windows.edb, que almacena información sobre archivos y carpetas del sistema: nombres, rutas, extensiones, fechas, e incluso contenido parcial si el tipo de archivo es indexable (como .txt, .docx, .pdf, etc.). 
+
+Este archivo funciona como una base de datos en formato [ESE (Extensible Storage Engine)](https://learn.microsoft.com/es-es/windows/win32/extensible-storage-engine/extensible-storage-engine), también conocido como Jet Blue, un motor de base de datos embebido utilizado por Windows para estructurar y acceder eficientemente a grandes volúmenes de datos indexados.
+
+Este índice contiene artefactos forenses, pudiendo obtener evidencias de archivos eliminados o modificados incluso cuando ya no existen físicamente en el sistema. Aunque también existen técnicas anti-forenses orientadas a manipular, desactivar o vaciar este índice.
+
+**Archivos relacionados y rutas clave:**
+
+- **Windows.edb**: Base de datos ESE principal del índice de búsqueda.
+  - Ruta: `C:\ProgramData\Microsoft\Search\Data\Applications\Windows\Projects\SystemIndex\`
+  - Windows.edb puede contener: Rutas de archivos borrados, metadatos (creación, modificación, acceso), texto parcial o propiedades del archivo indexado.
+
+-  **.crwl**: Logs de rastreo de archivos indexados (crawling logs).
+   - Ruta: `C:\ProgramData\Microsoft\Search\Data\Applications\Windows\GatherLogs\SystemIndex\`
+   - .crwl logs que muestran: Qué archivos fueron indexados y cuándo, errores, eventos de crawling, cambios recientes.
+
+- **.blf, .jrs, .log**: Archivos de soporte del motor ESE (logs de transacción).
+  - Ruta: `C:\ProgramData\Microsoft\Search\Data\Applications\Windows\`
+
+**Consideraciones clave**
+
+- **Windows.edb** suele estar **bloqueado** por el sistema; requiere extracción offline o con herramientas especializadas para el análisis en frío.
+- El índice puede persistir durante mucho tiempo si no es reconstruido manualmente.
+- Cada extensión tiene asociado un **PersistentHandler** que determina si el contenido es indexado.
+  - PersistentHandler: GUID que define cómo el sistema accede al contenido de un archivo, permite la indexación, lectura estructurada y extracción de metadatos.
+
+**Herramientas para analizar el fichero Windows.edb y .crwl**
+
+- [EseDatabaseView](https://www.nirsoft.net/utils/ese_database_view.html): Visualiza y exporta el contenido de Windows.edb.
+- [FTK Imager](https://accessdata.com/product-download/ftk-imager-version-4-5): Clonado y acceso forense a contenido de archivos bloqueados.
+- [EseDatabaseView – NirSoft](https://www.nirsoft.net/utils/ese_database_view.html): Lee y muestra los datos almacenados en la base de datos del motor de almacenamiento (ESE).
 
 ### 📜 PSReadLine: Historial de comandos ejecutados en una consola PowerShell
 
@@ -3066,6 +3102,28 @@ C:\malware>cd test2.::$index_allocation
 C:\malware\test2.::$index_allocation>cd ..
 C:\malware>
 ```
+
+### 📜 Windows Search Index: Detección de técnicas anti-forenses y evasión
+
+Con relación a los artefactos comentados de [Windows Search Index (archivos Windows.edb, .crwl, .blf, .jrs)](#-windows-search-index-archivos-windowsedb-crwl-blf-jrs).
+
+- **Reconstrucción del índice**: Borrar el historial indexado.
+  - `Panel de control > Opciones de indización > Avanzado > Reconstruir`
+
+- **Uso de extensiones no indexadas**: Archivos **.xyz**, **.dat** u otras extensiones no asociadas a un ***PersistentHandler*** no son indexados por defecto.
+
+- **Manipulación de PersistentHandler**: Cambiar el comportamiento de cómo se procesan los archivos.
+```reg
+[HKEY_CLASSES_ROOT\.pdf]
+@="exefile"
+"PersistentHandler"="{098f2470-bae0-11cd-b579-08002b30bfeb}"
+```
+
+- **Desactivación del servicio de búsqueda**: (previamente comprometida una cuenta privilegiada)
+  - Parar el servicio **WSearch**.
+  - Deshabilitar o configurar el servicio mediante políticas de grupo o través de configuración local en el equipo vulnerable (services.msc o regedit).
+
+- **Eliminación manual de los ficheros**: .crwl, .log y .edb
 
 ### 📜 Deshabilitar Windows Defender para eludir la detección de AMSI en la ejecución de binarios maliciosos (renombrar MsMpEng.exe a través del registro ControlSet00X)
 Una forma de poder eludir el sistema de protección por defecto de Windows es renombrar el fichero del proceso de ejecución del servicio de Windows Defender. De forma que al iniciar el sistema este no se pueda ejecutar al no encontrar correctamente el nombre de este fichero que levanta el proceso de servicio de Windows Defender. Esto permite a actores maliciosos poder ejecutar binarios maliciosos como por ejemplo Mimikatz u otros.

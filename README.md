@@ -1177,7 +1177,7 @@ HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server
 **Registro de eventos**
 
 | Evento | Logon Type | Resultado | Descripción |
-|--------|------------|-----------|-------------|
+|:------:|:----------:|:---------:|-------------|
 | 4624   | 10         | Éxito     | Inicio de sesión remoto interactivo (conexiones RDP habituales) |
 | 4624   | 12         | Éxito     | Inicio de sesión remoto con RemoteFX |
 | 4625   | 3          | Fallo     | La sesión falla antes de que se complete la sesión (NLA habilitado) |

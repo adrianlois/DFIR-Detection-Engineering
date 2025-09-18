@@ -36,6 +36,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Historial de pestañas sin cerrar de Notepad.exe (Win11)](#-historial-de-pestañas-sin-cerrar-de-notepadexe-win11)
     - [📜 Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
     - [📜 Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
+    - [📜 Artefactos y trazabilidad en conexiones RDP](#-artefactos-y-trazabilidad-en-conexiones-rdp)
     - [📜 Conocer la URL de descarga de un archivo (ADS Zone.Identifier)](#-conocer-la-url-de-descarga-de-un-archivo-ads-zoneidentifier)
     - [📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (técnica anti-forense)](#-modificar-y-detectar-timestamps-modificados-en-ficheros-analizando-sus-metadatos-técnica-anti-forense)
     - [📜 Windows Search Index (archivos Windows.edb, .crwl, .blf, .jrs)](#-windows-search-index-archivos-windowsedb-crwl-blf-jrs)
@@ -388,8 +389,8 @@ El registro de eventos de instalación registra las actividades que se produjero
 - Inicio de Sesión y Autenticación:
 ```
 540: Inicio de sesión de red exitoso.
-4624: Se inició sesión exitosamente en un sistema a través de una cuenta válida. (El Tipo 2 indica un inicio de sesión interactivo, normalmente local, mientras que el Tipo 3 indica un inicio de sesión remoto o en red).
-4625: Fallo en el inicio de sesión de una cuenta. (Hay que tener en cuenta que los inicios de sesión fallidos a través de RDP (realizados a través de la red) pueden registrarse como Tipo 3 en lugar de Tipo 10, dependiendo de los sistemas involucrados).
+4624: Se inició sesión exitosamente en un sistema a través de una cuenta válida. (Según el Logon Type indicará el método de conexión de la sesión).
+4625: Fallo en el inicio de sesión de una cuenta. (Hay que tener en cuenta que los inicios de sesión fallidos a través de RDP -acceso por red- pueden registrarse como Tipo 3 en lugar de Tipo 10 -sesión remota-, dependiendo de los sistemas involucrados).
 4634: Cierre de sesión exitoso.
 4647: Cierre de sesión iniciado por el usuario.
 4648: Se intentó un inicio de sesión utilizando credenciales explícitas.
@@ -1148,6 +1149,41 @@ HKCU\Software\SimonTatham\PuTTY\Sessions
 ```
 HKCU\Software\Martin Prikryl\WinSCP 2\Sessions
 ```
+
+### 📜 Artefactos y trazabilidad en conexiones RDP
+
+Las conexiones RDP dejan rastros en el registro y los eventos de Windows que, analizados en conjunto, permiten reconstruir la trazabilidad completa: quién se conectó, a qué servidor, si el sistema aceptaba accesos entrantes y si realmente la conexión fue exitosa, logrando así la “foto completa” de una posible intrusión remota.
+
+**Registro de Windows**
+
+Usuarios que se han conectado recientemente:
+```
+HKCU\SOFTWARE\Microsoft\Terminal Server Client\Default
+```
+
+Nombres de usuario utilizados en conexiones:
+```
+HKCU\SOFTWARE\Microsoft\Terminal Server Client\Servers
+```
+
+Comprobar si un sistema acepta RDP entrantes:
+```
+HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server
+```
+`fDenyTSConnections`
+- 0 = se permiten conexiones RDP
+- 1 = se deniegan conexiones RDP
+
+**Registro de eventos**
+
+| Evento | Logon Type | Resultado | Descripción |
+|--------|------------|-----------|-------------|
+| 4624   | 10         | Éxito     | Inicio de sesión remoto interactivo (conexiones RDP habituales) |
+| 4624   | 12         | Éxito     | Inicio de sesión remoto con RemoteFX |
+| 4625   | 3          | Fallo     | La sesión falla antes de que se complete la sesión (NLA habilitado) |
+| 4625   | 10         | Fallo     | La sesión remota se inicia primero y falla después (NLA deshabilitado o versiones antiguas) |
+| 1149   | -          | Éxito     | Conexión RDP exitosa desde un host remoto |
+| 21     | -          | Éxito     | Inicio de sesión correcto (antiguo, Terminal Services) |
 
 ### 📜 Conocer la URL de descarga de un archivo (ADS Zone.Identifier)
 

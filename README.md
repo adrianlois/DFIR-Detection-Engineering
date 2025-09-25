@@ -2398,7 +2398,7 @@ Establecer un filtro para los valores HEX de 0x22 0x34 0x46 en cualquier offset.
 udp contains 22:34:46
 ```
 
-Filtrar por flags TCP. Mostrar sólo los paquetes con la bandera SYN activada. Puede sustituir SYN por cualquier otro indicador TCP, como ACK, RST, FIN, URG o PSH.
+Filtrar por flags TCP. Mostrar sólo los paquetes con la bandera SYN activada. Se puede sustituir SYN por cualquier otro indicador TCP como: ACK, RST, FIN, URG o PSH.
 ```
 tcp.flags.syn == 1
 ```

@@ -32,7 +32,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Comprobar archivos abiertos recientemente por el usuario](#-comprobar-archivos-abiertos-recientemente-por-el-usuario)
     - [📜 Analizar ficheros Windows Prefetch (.pf)](#-analizar-ficheros-windows-prefetch-pf)
     - [📜 Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
-    - [📜 Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
+    - [📜 Ventana "Ejecutar" y "barra direcciones de Explorer.exe": Caché de historial de ficheros y paths visitados recientemente](#-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
     - [📜 Thumbcache Viewer](#-thumbcache-viewer)
     - [📜 Historial de pestañas sin cerrar de Notepad.exe (Win11)](#-historial-de-pestañas-sin-cerrar-de-notepadexe-win11)
     - [📜 Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
@@ -1080,7 +1080,7 @@ HKEY_CURRENT_USER\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev
 HKEY_USERS\<SID-USER>\Software\Adobe\Adobe Acrobat\DC\SessionManagement\cWindowsPrev\cWin0\cTab0\cPathInfo
 ```
 
-### 📜 Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente 
+### 📜 Ventana "Ejecutar" y "barra direcciones de Explorer.exe": Caché de historial de ficheros y paths visitados recientemente 
 
 Cuando escribimos nuevas rutas o ficheros a través de la barra de direcciones de un Explorador de Windows o en una vetana "Ejecutar" (Win+R). Por defecto estos se quedan almacenados con la intención de agilizar la experiencia de usuario. Estos artefactos pueden ser útiles en una recabación de información para una investigación forense con el fin de conocer los sitios, direcciones o ficheros que el usuario visitó con una salida exitosa.
 

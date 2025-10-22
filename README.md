@@ -1037,7 +1037,7 @@ PECmd.exe --help
 # Analizar un solo archivo .pf
 PECmd.exe -f "C:\Windows\Prefetch\CMD.EXE-12345678.pf"
 
-Analizar todos los .pf en una carpeta
+# Analizar todos los .pf en una carpeta
 PECmd.exe -d "C:\Windows\Prefetch"
 
 # Exportar resultados a CSV o JSON

@@ -30,6 +30,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 ¿Han eliminado el registro de eventos de Windows?](#-han-eliminado-el-registro-de-eventos-de-windows)
     - [📜 Volatility: clipboard](#-volatility-clipboard)
     - [📜 Comprobar archivos abiertos recientemente por el usuario](#-comprobar-archivos-abiertos-recientemente-por-el-usuario)
+    - [📜 Analizar ficheros Windows Prefetch (.pf)](#-analizar-ficheros-windows-prefetch-pf)
     - [📜 Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
     - [📜 Ventana "Ejecutar" y barra direcciones de Explorer.exe: Caché de historial de ficheros y paths visitados recientemente](#-ventana-ejecutar-y-barra-direcciones-de-explorerexe-caché-de-historial-de-ficheros-y-paths-visitados-recientemente)
     - [📜 Thumbcache Viewer](#-thumbcache-viewer)
@@ -46,7 +47,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Análisis de malware en ficheros XLSX (MS Excel)](#-análisis-de-malware-en-ficheros-xlsx-ms-excel)
     - [📜 Análisis de malware en ficheros MS Office (oletools)](#-análisis-de-malware-en-ficheros-ms-office-oletools)
     - [📜 Herramientas de análisis en ficheros MS Office y otros (detectar malware o phising)](#-herramientas-de-análisis-en-ficheros-ms-office-y-otros-detectar-malware-o-phising)
-    - [📜 Herramientes de análisis PDF (detectar malware o phising)](#-herramientes-de-análisis-pdf-detectar-malware-o-phising)
+    - [📜 Herramientas de análisis PDF (detectar malware o phising)](#-herramientas-de-análisis-pdf-detectar-malware-o-phising)
     - [📜 Identificar Shellcodes en ficheros y otros comandos de análisis](#-identificar-shellcodes-en-ficheros-y-otros-comandos-de-análisis)
     - [📜 Detectar URL maliciosas en el documento](#-detectar-url-maliciosas-en-el-documento)
     - [📜 Asignación de IPs en equipos](#-asignación-de-ips-en-equipos)
@@ -1019,6 +1020,46 @@ Almacena archivos recientes abiertos por el usuario en el Explorador de Windows,
 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs
 ```
 
+### 📜 Analizar ficheros Windows Prefetch (.pf)
+
+Los archivos **Prefetch (.pf)** de Windows, almacenados en `%SYSTEMROOT%\Prefetch` (C:\Windows\Prefetch), ayudan a optimizar el tiempo de carga de aplicaciones. Resultan interesantes porque almacenan información sobre **qué programas se ejecutaron**, **cuándo**, **cuántas veces**, y **qué recursos del sistema (DLL, rutas, volúmenes)** fueron accedidos.
+
+Estos datos pueden ayudar a reconstruir líneas de tiempo de ejecución, identificar actividad de malware incluso si el ejecutable fue borrado, y detectar anomalías en la carga de DLLs o ejecución de binarios o scripts camuflados, lo que puede indicar técnicas como *DLL sideloading* o *code injection*.
+
+- **[WinPrefetchView (NirSoft)](https://www.nirsoft.net/utils/win_prefetch_view.html)**: Herramienta con GUI que permite examinar archivos .pf y obtener detalles como el ejecutable, fechas y número de ejecuciones, así como los archivos cargados. En una sola vista carga todo el directorio Prefetch y sus ficheros .pf.
+
+- **[PECmd (Eric Zimmerman's tools)](https://ericzimmerman.github.io/#!index.md)**: Herramienta CLI para decodificar y analizar Prefetch. Facilita la extracción de datos de ejecución, la exportación a CSV o JSON y el procesamiento automatizado de múltiples archivos, integrándose también con *[KAPE (Kroll Artifact Parser and Extractor)](https://github.com/EricZimmerman/KapeFiles)*.
+
+```ps
+# Mostrar ayuda
+PECmd.exe --help
+
+# Analizar un solo archivo .pf
+PECmd.exe -f "C:\Windows\Prefetch\CMD.EXE-12345678.pf"
+
+Analizar todos los .pf en una carpeta
+PECmd.exe -d "C:\Windows\Prefetch"
+
+# Exportar resultados a CSV o JSON
+PECmd.exe -d "C:\Windows\Prefetch" --csv "C:\Forensics\Prefetch_CSV"
+PECmd.exe -d "C:\Windows\Prefetch" --json "C:\Forensics\Prefetch_JSON"
+PECmd.exe -d "D:\Evidence\Prefetch" --csv "D:\Output" --json "D:\Output" --debug
+
+# Filtrar solo por ciertos ejecutables
+PECmd.exe -d "C:\Windows\Prefetch" | findstr /I "powershell.exe"
+
+# Analizar Prefetch de otro sistema montado en otro volumen offline
+PECmd.exe -d "E:\Windows\Prefetch" --csv "E:\Analysis\Prefetch_Results"
+```
+
+Ver cómo está configurado Prefetch en el registro, revisando qué tipo de precarga está activada para aplicaciones y arranque.
+
+*HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters ➜ `EnablePrefetcher`*
+- 0 = Deshabilitado.
+- 1 = Precarga de ejecución de inicio de aplicación habilitada.
+- 2 = Precarga del arranque habilitada.
+- 3 = Applaunch y Boot habilitados (óptimo y predeterminado) es el valor por defecto.
+
 ### 📜 Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente
 
 *cRecentFiles*: Historial de ubicaciones donde se encuentras los ficheros abiertos recientemente, "cX" donde X será un número asignado.
@@ -1536,7 +1577,7 @@ Como técnica anti forense esta metadata se puede eliminar desde Excel "inspecci
 | [**Hachoir-subfile**](https://hachoir.readthedocs.io/en/latest/subfile.html) | Herramienta basada en hachoir-parser para buscar subarchivos en cualquier flujo binario. |
 | [**xxxswfpy**](https://hooked-on-mnemonics.blogspot.com/2011/12/xxxswfpy.html) | Escanear, comprimir, descomprimir y analizar archivos Flash SWF. |
 
-### 📜 Herramientes de análisis PDF (detectar malware o phising)
+### 📜 Herramientas de análisis PDF (detectar malware o phising)
 
 | Herramienta | Descripción |
 |-------------|-------------|

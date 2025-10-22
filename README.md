@@ -1086,7 +1086,7 @@ Cuando escribimos nuevas rutas o ficheros a través de la barra de direcciones d
 
 Con la sesión de usuario iniciada HKCU, si se analiza el registro en modo offline será necesario encontrar el SID del usuario que queremos analizar. 
 
-`Vetana "Ejecutar"`
+`Vetana "Ejecutar"` (Run.exe)
 ```
 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
 HKEY_USERS\<SID-USER>\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU

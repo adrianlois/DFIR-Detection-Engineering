@@ -38,11 +38,12 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Artefáctos forenses en AnyDesk, Team Viewer y LogMeIn](#-artefáctos-forenses-en-anydesk-team-viewer-y-logmein)
     - [📜 Sesiones de conexión remota almacenadas con PuTTY, MobaXterm, WinSCP (SSH, RDP, FTP, SFTP, SCP u otras)](#-sesiones-de-conexión-remota-almacenadas-con-putty-mobaxterm-winscp-ssh-rdp-ftp-sftp-scp-u-otras)
     - [📜 Artefactos y trazabilidad en conexiones RDP](#-artefactos-y-trazabilidad-en-conexiones-rdp)
+    - [📜 Artefactos Bitmaps y Prefetch en RDP](#-artefactos-bitmaps-y-prefetch-en-rdp)
+    - [📜 Caché almacenada de conexiones establecidas a otros hosts vía RDP](#-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
     - [📜 Conocer la URL de descarga de un archivo (ADS Zone.Identifier)](#-conocer-la-url-de-descarga-de-un-archivo-ads-zoneidentifier)
     - [📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (técnica anti-forense)](#-modificar-y-detectar-timestamps-modificados-en-ficheros-analizando-sus-metadatos-técnica-anti-forense)
     - [📜 Windows Search Index (archivos Windows.edb, .crwl, .blf, .jrs)](#-windows-search-index-archivos-windowsedb-crwl-blf-jrs)
     - [📜 PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
-    - [📜 Caché almacenada de conexiones establecidas a otros hosts vía RDP](#-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
     - [📜 Artefactos forense - MS Word](#-artefactos-forense---ms-word)
     - [📜 Análisis de malware en ficheros XLSX (MS Excel)](#-análisis-de-malware-en-ficheros-xlsx-ms-excel)
     - [📜 Análisis de malware en ficheros MS Office (oletools)](#-análisis-de-malware-en-ficheros-ms-office-oletools)
@@ -1226,6 +1227,95 @@ HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server
 | 1149   | -          | Éxito     | Conexión RDP exitosa desde un host remoto |
 | 21     | -          | Éxito     | Inicio de sesión correcto (antiguo, Terminal Services) |
 
+### 📜 Artefactos Bitmaps y Prefetch en RDP
+
+Artefactos forenses asociados al uso de RDP con especial foco en la *caché de mapa de bits* y en evidencias de *prefetch* del cliente RDP. Al menos que se indique lo contrario en el momento de conexión, la caché no se borra automáticamente al cerrar sesión RDP.
+
+**`RDP Bitmap Cache`**
+```
+C:\Users\<usuario>\AppData\Local\Microsoft\Terminal Server Client\Cache
+Cache000.bin
+Cache001.bin
+...
+```
+Estos ficheros contienen bitmaps en bruto almacenados por el cliente RDP para optimizar sesiones posteriores. Contienen fragmentos gráficos almacenados localmente durante las sesiones RDP, donde se pueden encontrar:
+
+- Fragmentos de pantallas RDP.
+- Iconos y fondos.
+- Ventanas de aplicaciones.
+- Texto visible (usuarios, aplicaciones, rutas, interfaces). 
+
+Estos artefactos pueden permitir la reconstrucción parcial de la actividad visual realizada durante sesiones RDP anteriores.
+
+**Herramientas de análisis para bitmaps de RDP (Cache000.bin, etc)**
+- ***RdpCacheStitcher***: https://github.com/BSI-Bund/RdpCacheStitcher
+- ***bmc-tools***: https://github.com/ANSSI-FR/bmc-tools
+- ***X-Ways Forensics***: https://www.x-ways.net
+- ***Autopsy***: https://www.autopsy.com
+- ***EnCase Forensic***: https://www.opentext.com/produits/encase-forensic
+
+**`Bitmap Carving manual`**
+
+Buscar cabeceras BMP:
+```
+42 4D
+```
+
+Ejemplo para buscarlo con PowerShell:
+```ps
+Get-ChildItem Cache*.bin | % {
+  Select-String -Path $_ -Pattern "BM" -AllMatches
+}
+```
+**`Archivos Prefetch (MSTSC.EXE-*.pf)`**
+
+Los archivos Prefetch asociados a "mstsc.exe" pueden aportar información relevante como:
+
+- Frecuencia de uso del cliente RDP.
+- Última ejecución.
+- Archivos y recursos accedidos.
+
+Este artefacto es útil para **corroborar el uso del cliente RDP** y establecer líneas temporales de actividad.
+
+```
+C:\Windows\Prefetch\MSTSC.EXE-*.pf
+```
+
+**`Prevención y mitigación (desactivar 'Persistent bitmap caching' en RDP)`**
+
+Para reducir la exposición forense y el riesgo de filtración, se recomiendan las siguientes medidas:
+
+- Desactivar la caché de mapas de bits en RDP:
+  - **Opción 1**, Archivo ".rdp": 
+  ```
+  En el archivo de conexión RDP, añadir explícitamente la siguiente línea: *bitmapcachepersistenable:i:0*
+  ```
+  - **Opción 2**, Interfaz gráfica del cliente RDP (mstsc.exe): 
+  ```
+  Ejecutar "mstsc.exe" > Mostrar opciones > Rendimiento > Desmarcar la opción: Persistent bitmap caching (Almacenamiento en caché persistente de mapas de bits)
+  ```
+
+  - **Opción 3**, Directiva de Grupo GPO: 
+  ```
+  Plantillas Administrativas > Componentes de Windows > Servicios de Escritorio Remoto > Host de sesión de Escritorio remoto > Entorno de sesión remota > "No usar caché de mapa de bits"
+  ```
+- **Opción manual**: Limpiar regularmente archivos temporales y la caché del sistema después de finalizar cada conexión RDP.
+
+### 📜 Caché almacenada de conexiones establecidas a otros hosts vía RDP
+
+Si el equipo afectado a sido comprometido y a través de este se hizo un uso como "equipo puente" en movimientos laterales, etc. Puede resultar útil comprobar la caché almacenada de conexiones establecidas vía RDP hacia otros hosts ya sea de la misma red o de un RDP externo con el objetivo por ejemplo de exfiltrar información hacia un stage controlado por el actor malicioso.
+
+En la siguiente clave de registro podemos encontrar las conexiones remotas RDP (Remote Desktop Protocol) realizadas desde la máquina afectada. Se creará un nueva clave por cada conexión RDP.
+```
+HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Servers
+HKEY_USERS\<SID_USER>\SOFTWARE\Microsoft\Terminal Server Client\Servers 
+```
+
+Situado en la misma ruta, se puede ver la clave "Default". Esta clave nos indica el orden de prioridad que se mostrará la lista de conexiones al desplegar la barra de la ventana de "Conexión a Escritorio remoto" que se abre al ejecutar el binario de mstsc.exe.
+```
+HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default
+```
+
 ### 📜 Conocer la URL de descarga de un archivo (ADS Zone.Identifier)
 
 Saber si un archivo malicioso se descargó de Internet y desde que URL o se creó en el sistema local.
@@ -1445,21 +1535,6 @@ Remove-Item (Get-PSReadlineOption).HistorySavePath
 Deshabilitar completamente el almacenamiento del historial de comandos de PowerShell.
 ```ps
 Set-PSReadlineOption -HistorySaveStyle SaveNothing
-```
-
-### 📜 Caché almacenada de conexiones establecidas a otros hosts vía RDP
-
-Si el equipo afectado a sido comprometido y a través de este se hizo un uso como "equipo puente" en movimientos laterales, etc. Puede resultar útil comprobar la caché almacenada de conexiones establecidas vía RDP hacia otros hosts ya sea de la misma red o de un RDP externo con el objetivo por ejemplo de exfiltrar información hacia un stage controlado por el actor malicioso.
-
-En la siguiente clave de registro podemos encontrar las conexiones remotas RDP (Remote Desktop Protocol) realizadas desde la máquina afectada. Se creará un nueva clave por cada conexión RDP.
-```
-HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Servers
-HKEY_USERS\<SID_USER>\SOFTWARE\Microsoft\Terminal Server Client\Servers 
-```
-
-Situado en la misma ruta, se puede ver la clave "Default". Esta clave nos indica el orden de prioridad que se mostrará la lista de conexiones al desplegar la barra de la ventana de "Conexión a Escritorio remoto" que se abre al ejecutar el binario de mstsc.exe.
-```
-HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default
 ```
 
 ### 📜 Artefactos forense - MS Word

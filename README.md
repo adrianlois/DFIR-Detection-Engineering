@@ -23,6 +23,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Scripts para detectar actividades sospechosas en Windows](#-scripts-para-detectar-actividades-sospechosas-en-windows)
     - [📜 Obtener software instalado y sus versiones (x86 y x64)](#-obtener-software-instalado-y-sus-versiones-x86-y-x64)
     - [📜 Análisis y artefactos de ShellBags](#-análisis-y-artefactos-de-shellbags)
+    - [📜 Análisis de memoria: Generación de línea temporal (Volatility 3)](#-análisis-de-memoria-generación-de-línea-temporal-volatility-3)
     - [📜 Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
     - [📜 Artefactos de conexiones de clientes VPN](#-artefactos-de-conexiones-de-clientes-vpn)
     - [📜 Persistencia en servicios](#-persistencia-en-servicios)
@@ -871,6 +872,56 @@ Descripción de valores relevantes:
 **Herramienta para explorar y análizar Shellbags tanto de forma online como offline**
 
 -  **ShellBags Explorer** (GUI) o **SBECmd** (CLI): https://ericzimmerman.github.io/#!index.md
+
+### 📜 Análisis de memoria: Generación de línea temporal (Volatility 3)
+
+Para crear una línea temporal de actividad del sistema, se pueden utilizar diferentes plugins de Volatility que permiten extraer artefactos de memoria relacionados con eventos del sistema, archivos y actividad del usuario.
+
+`Timeliner`
+
+El plugin *timeliner* genera una línea temporal de la actividad del sistema operativo a partir de distintos artefactos presentes en memoria, mostrando eventos relevantes junto con su fecha y hora para facilitar la reconstrucción de la actividad del sistema durante un incidente.
+
+Recopila información de múltiples fuentes de memoria:
+
+- Procesos y archivos.
+- Eventos del sistema.
+- Actividad del registro.
+
+```ps
+vol.py -f memory.raw windows.timeliner > timeline_timeliner.txt
+```
+
+`MFT Scan`
+
+El plugin *mftscan* analiza estructuras del Master File Table (MFT) presentes en memoria, la base de datos principal del sistema de archivos NTFS, para obtener información sobre archivos y directorios.
+
+Permite identificar artefactos como:
+
+- Nombre del archivo.
+- Timestamps (creación, modificación y acceso).
+- Ubicación en disco.
+- Archivos creados o modificados.
+- Artefactos de archivos eliminados.
+- Actividad reciente del sistema de archivos.
+
+```ps
+vol.py -f memory.raw windows.mftscan > timeline_mftscan.txt
+```
+
+`Shellbags`
+
+El plugin *shellbags* permite analizar los artefactos Shellbags almacenados en el registro de Windows, que contienen información sobre carpetas abiertas por el usuario en el Explorador de Windows y resultan especialmente útiles para reconstruir su actividad incluso cuando los archivos o carpetas ya han sido eliminados.
+
+Estos artefactos pueden revelar:
+
+- Rutas de carpetas abiertas.
+- Accesos a dispositivos USB.
+- Acceso a recursos compartidos de red.
+- Preferencias de visualización de carpetas.
+
+```ps
+vol.py -f memory.raw windows.registry.shellbags > timeline_shellbags.txt
+```
 
 ### 📜 Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT&CK*)
 

@@ -23,7 +23,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Scripts para detectar actividades sospechosas en Windows](#-scripts-para-detectar-actividades-sospechosas-en-windows)
     - [📜 Obtener software instalado y sus versiones (x86 y x64)](#-obtener-software-instalado-y-sus-versiones-x86-y-x64)
     - [📜 Análisis y artefactos de ShellBags](#-análisis-y-artefactos-de-shellbags)
-    - [📜 Análisis de memoria: Generación de línea temporal (Volatility 3)](#-análisis-de-memoria-generación-de-línea-temporal-volatility-3)
+    - [📜 Análisis de memoria RAM: Generación de línea temporal (Volatility 3)](#-análisis-de-memoria-ram-generación-de-línea-temporal-volatility-3)
     - [📜 Detectar peristencia de ejecutables en el registro de Windows (técnicas basadas en la matriz de *MITRE ATT\&CK*)](#-detectar-peristencia-de-ejecutables-en-el-registro-de-windows-técnicas-basadas-en-la-matriz-de-mitre-attck)
     - [📜 Artefactos de conexiones de clientes VPN](#-artefactos-de-conexiones-de-clientes-vpn)
     - [📜 Persistencia en servicios](#-persistencia-en-servicios)
@@ -873,7 +873,7 @@ Descripción de valores relevantes:
 
 -  **ShellBags Explorer** (GUI) o **SBECmd** (CLI): https://ericzimmerman.github.io/#!index.md
 
-### 📜 Análisis de memoria: Generación de línea temporal (Volatility 3)
+### 📜 Análisis de memoria RAM: Generación de línea temporal (Volatility 3)
 
 Para crear una línea temporal de actividad del sistema, se pueden utilizar diferentes plugins de Volatility que permiten extraer artefactos de memoria relacionados con eventos del sistema, archivos y actividad del usuario.
 

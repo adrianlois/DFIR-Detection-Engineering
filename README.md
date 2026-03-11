@@ -29,7 +29,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Persistencia en servicios](#-persistencia-en-servicios)
     - [📜 Auditar cambios de membresía en grupos críticos (últimos 15 días)](#-auditar-cambios-de-membresía-en-grupos-críticos-últimos-15-días)
     - [📜 ¿Han eliminado el registro de eventos de Windows?](#-han-eliminado-el-registro-de-eventos-de-windows)
-    - [📜 Volatility: clipboard](#-volatility-clipboard)
+    - [📜 Volatility 3: clipboard](#-volatility-3-clipboard)
     - [📜 Comprobar archivos abiertos recientemente por el usuario](#-comprobar-archivos-abiertos-recientemente-por-el-usuario)
     - [📜 Analizar ficheros Windows Prefetch (.pf)](#-analizar-ficheros-windows-prefetch-pf)
     - [📜 Artefactos Adobe Acrobat: Caché de historial de PDFs abiertos recientemente](#-artefactos-adobe-acrobat-caché-de-historial-de-pdfs-abiertos-recientemente)
@@ -88,7 +88,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
   - [📁 Herramientas](#-herramientas)
     - [📜 Autopsy: Herramienta avanzada de análisis forense digital](#-autopsy-herramienta-avanzada-de-análisis-forense-digital)
     - [📜 X-Ways Forensics: Herramienta avanzada de análisis forense digital](#-x-ways-forensics-herramienta-avanzada-de-análisis-forense-digital)
-    - [📜 Volatility: Análisis de volcados de memoria](#-volatility-análisis-de-volcados-de-memoria)
+    - [📜 Volatility 3: Análisis de volcados de memoria](#-volatility-3-análisis-de-volcados-de-memoria)
     - [📜 WinTriage (Securizame): Análisis y extracción de artefactos forenses Windows](#-wintriage-securizame-análisis-y-extracción-de-artefactos-forenses-windows)
     - [📜 Velociraptor: Recolección, monitorización y hunting para análisis forense digital y respuesta a incidentes en Windows](#-velociraptor-recolección-monitorización-y-hunting-para-análisis-forense-digital-y-respuesta-a-incidentes-en-windows)
     - [📜 LogonTracer: Trazabilidad de inicios de sesión en Active Directory](#-logontracer-trazabilidad-de-inicios-de-sesión-en-active-directory)
@@ -1050,13 +1050,13 @@ Get-ChildItem -Path F:\pid\ -Include *.evtx -Recurse | Copy-Item -Destination .\
 
 - Volatility - Referencia evtlogs: https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#evtlogs
 
-### 📜 Volatility: clipboard
+### 📜 Volatility 3: clipboard
 
 Desde un volcado de memoria, los datos del portapapeles pueden se interesantes para revelar información.
+
+```ps
+vol.py -f memdump.bin windows.clipboard
 ```
-volatility.exe -f memdump.bin --profile=Win10x64_10586 clipboard
-```
-- Referencia: https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf
 
 ### 📜 Comprobar archivos abiertos recientemente por el usuario
 
@@ -2378,6 +2378,7 @@ find / -type d 2> /dev/null > dump_sys_dirs.txt
 **LiME** es un LKM (Loadable Kernel Module) que permite la adquisición de memoria volátil de Linux y dispositivos basados en Linux como sistemas móviles Android. Permite capturas de memoria más sólidas que otras herramientas desde el punto de vista forense.
 
 Una vez instalado LiME y cargado el módulo en el kernel en formato lime podemos analizarlo posteriormente con **Volatility**.
+
 ```bash
 apt install build-essential linux-headers-(uname -r) ; git clone https://github.com/504ensicsLabs/LiME ; cd Lime/src ; make
 sudo insmod lime-3.5.0-23-generic.ko "path=/media/Forensics/ram.lime format=lime"
@@ -2951,7 +2952,7 @@ Es una herramienta forense que ofrece análisis detallados, adquisición, examen
 
 - https://www.x-ways.net/forensics
 
-### 📜 Volatility: Análisis de volcados de memoria
+### 📜 Volatility 3: Análisis de volcados de memoria
 
 Es una herramienta de análisis forense de memoria volátil (RAM) que puede utilizarse para analizar volcados de memoria y buscar indicadores de actividad maliciosa o manipulación de archivos en la memoria del sistema.
 

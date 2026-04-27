@@ -42,7 +42,7 @@ Análisis forense de artefactos comunes y no tan comunes, técnicas anti-forense
     - [📜 Artefactos Bitmaps y Prefetch en RDP](#-artefactos-bitmaps-y-prefetch-en-rdp)
     - [📜 Caché almacenada de conexiones establecidas a otros hosts vía RDP](#-caché-almacenada-de-conexiones-establecidas-a-otros-hosts-vía-rdp)
     - [📜 Conocer la URL de descarga de un archivo (ADS Zone.Identifier)](#-conocer-la-url-de-descarga-de-un-archivo-ads-zoneidentifier)
-    - [📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (técnica anti-forense)](#-modificar-y-detectar-timestamps-modificados-en-ficheros-analizando-sus-metadatos-técnica-anti-forense)
+    - [📜 Modificar y detectar Timestomping en ficheros (técnica anti-forense)](#-modificar-y-detectar-timestomping-en-ficheros-técnica-anti-forense)
     - [📜 Windows Search Index (archivos Windows.edb, .crwl, .blf, .jrs)](#-windows-search-index-archivos-windowsedb-crwl-blf-jrs)
     - [📜 PSReadLine: Historial de comandos ejecutados en una consola PowerShell](#-psreadline-historial-de-comandos-ejecutados-en-una-consola-powershell)
     - [📜 Artefactos forense - MS Word](#-artefactos-forense---ms-word)
@@ -1383,7 +1383,7 @@ CMD
 notepad <FileName>:Zone.Identifier
 ```
 
-### 📜 Modificar y detectar Timestamps modificados en ficheros analizando sus metadatos (técnica anti-forense)
+### 📜 Modificar y detectar Timestomping en ficheros (técnica anti-forense)
 
 Es posible que un actor malicioso o un insider intente modificar las marcas de tiempo de un fichero para modificar su fecha y hora de creación, modificación y acceso con la finalidad de realizar "técnicas anti-forense" para intentar confundir, alterar y dilatar una posible investigación forense.
 

@@ -1389,6 +1389,15 @@ Es posible que un actor malicioso o un insider intente modificar las marcas de t
 
 Aunque en sistemas Windows o Linux es posible modificar los timestamps ya sea de forma nativa como usando software de terceros, es posible analizar y detectar estas alteraciones cuando se realiza un proceso de análisis forense.
 
+`Los 4 timestamps (MACB)`
+
+| Atributo | Timestamp | Evento que lo actualiza |
+|----------|-----------|-------------------------|
+| m | Modify time | Cambios en el contenido del archivo |
+| a | Access time | Lectura/acceso al archivo |
+| c | Change time | Cambios en los metadatos (chown, rename) |
+| cr | Creation time | Momento en que el archivo fue creado |
+
 `Windows - Obtener y modificar Timestamps`
 
 Obtener los timestamps de un fichero con PowerShell.
@@ -1411,7 +1420,15 @@ Modificar timestamps UTC.
 (Get-ChildItem file.txt).LastAccessTimeUtc=$(Get-Date "16/4/2019 12:34 am")
 ```
 
-Modificar timestamps de ficheros con sofware de terceros.
+Modificar timestamps con herramientas CLI especializadas (post-explotación):
+
+- Timestomp - modifica $STANDARD_INFORMATION directamente en NTFS: https://github.com/EternalNOP/Timestomping
+- nTimetools - permite precisión en nanosegundos: https://github.com/limbenjamin/nTimetools
+
+> [!NOTE]
+> Estas herramientas generalmente solo afectan a $STANDARD_INFORMATION, no a $FILE_NAME.
+
+Modificar timestamps de ficheros con sofware de terceros (GUI).
 
 - BulkFileChanger: https://www.nirsoft.net/utils/bulk_file_changer.html
 - FileDate Changer: https://www.nirsoft.net/utils/filedatech.html
@@ -1441,18 +1458,71 @@ touch -a -m -t 201912180130.09 file.txt
 # -t = timestamp
 ```
 
-**`Detectar Timestamps modificados (ExifTool y Autopsy)`**
+Copiar los timestamps de un fichero legítimo a uno malicioso.
+```bash
+touch malicious_file -r existing_legit_file
+```
+Modificar el cr time (creation time) con debugfs (requiere root). Es el único método para alterar el timestamp de creación en Ext4, ya que touch no puede modificarlo.
 
-Cuando se modifican los timestamps de un fichero de forma manual no se modifican su HASH. Por lo que la detección por hash file no sería un indicativo claro para detectar esta "anti-forense".
+> [!WARNING]
+> Manipular directamente los inodes puede afectar la integridad del sistema de archivos.
+
+```bash
+# 1. Identificar el inode del archivo
+stat archivo | grep Inode
+
+# 2. Identificar el dispositivo
+df archivo
+
+# 3. Modificar el cr time con debugfs
+sudo debugfs -w /dev/sdX
+> set_inode_field <inode> crtime 1984-01-01 13:12:00
+> quit
+```
+
+`macOS - Obtener y modificar Timestamps`
+
+Modificar m y a:
+```bash
+touch -t 198401011312 archivo
+```
+
+Instalar y modificar con Xcode
+```bash
+# Instalar Xcode Command Line Tools (requerido para SetFile y GetFileInfo)
+xcode-select --install
+
+# Consultar timestamps del fichero
+GetFileInfo archivo.txt
+
+# Modificar fecha de creación
+SetFile -d "01/01/1984 13:12:00" archivo.txt
+
+# Modificar fecha de modificación
+SetFile -m "01/01/1984 13:12:00" archivo.txt
+```
+
+**`Detección de timestomping`**
+
+> [!IMPORTANT]
+> Modificar timestamps no altera el hash del archivo, por lo que la verificación por hash no sirve para detectar esta técnica anti-forense.
 
 ```bash
 touch -a -m -t 201712180130.09 file.txt
 sha1sum file.txt
-  63bbfea82b8880ed33cdb762aa11fab722a90a24  file.txt
+   63bbfea82b8880ed33cdb762aa11fab722a90a24 file.txt
 touch -a -m -t 201812180130.09 file.txt
 sha1sum file.txt
-  63bbfea82b8880ed33cdb762aa11fab722a90a24  file.txt
+   63bbfea82b8880ed33cdb762aa11fab722a90a24 file.txt
 ```
+
+**Linux**
+| Método | Comando / Herramienta |
+|--------|-----------------------|
+| Comparar `cr` vs `m` (si `m` < `cr` = manipulación) | `sudo debugfs -R "stat archivo" /dev/sdX \| grep -E "crtime\|mtime"` |
+| Metadatos internos del fichero | `exiftool archivo` |
+| Auditoría de cambios | `auditctl -w archivo -p wa -k ts_change` |
+| Historial sospechoso | `grep debugfs ~/.bash_history` |
 
 En Linux con el comando ***stat*** podemos obtener información sobre los timestamp, sin embargo no nos muestra los timestamp de metadatos del propio fichero.
 ```bash
@@ -1475,6 +1545,20 @@ exiftool file.txt
   Modify Date                   : 2024:04:28 14:03:17+02:00
   Metadata Date                 : 2024:04:28 14:03:17+02:00
 ```
+
+> [!NOTE]
+> Una discrepancia entre los timestamps del sistema (stat) y los metadatos internos (exiftool) es un indicador claro de manipulación.
+
+**Windows**
+| Método | Comando / Herramienta |
+|--------|-----------------------|
+| Comparar `$STANDARD_INFORMATION` vs `$FILE_NAME` | MFTECmd, Autopsy, FTK |
+| Timestamps con precisión anómala (`.0000000`) | Análisis manual del `$MFT` |
+| Registro de cambios en tiempo real | Sysmon Event ID 2 |
+| Cruce con artefactos del sistema | Prefetch, Event Log, Registro |
+
+> [!NOTE]
+> $FILE_NAME es actualizado por el kernel y es mucho más difícil de falsificar. Una discrepancia entre $STANDARD_INFORMATION y $FILE_NAME es señal clara de timestomping. Los timestamps legítimos de NTFS tienen precisión de 100 nanosegundos, si todos terminan en .0000000, puede indicar uso de herramientas de timestomping.
 
 Detectar posibles modificaciones de timestamp usando **Autopsy**. 
 

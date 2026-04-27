@@ -1420,7 +1420,7 @@ Modificar timestamps UTC.
 (Get-ChildItem file.txt).LastAccessTimeUtc=$(Get-Date "16/4/2019 12:34 am")
 ```
 
-Modificar timestamps con herramientas CLI especializadas (post-explotación):
+Modificar timestamps de ficheros con herramientas CLI (post-explotación):
 
 - Timestomp - modifica $STANDARD_INFORMATION directamente en NTFS: https://github.com/EternalNOP/Timestomping
 - nTimetools - permite precisión en nanosegundos: https://github.com/limbenjamin/nTimetools
